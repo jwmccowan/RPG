@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
@@ -14,6 +12,9 @@ public class Tile : MonoBehaviour
     /* Pos holds the x, y coordinates of the tile
      * Height is how many steps up the tile is from the base height
      * But the actual height is Height * StepHeight
+     * I tried messing with ways to get the tile to Match whenever these values were
+     * changed, but this creates issue in Unity editor.  Not too worried, not too many 
+     * clients will change these.
     */
     public Point Pos;
     public int Height;

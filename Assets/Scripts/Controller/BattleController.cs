@@ -12,8 +12,6 @@ public abstract class BattleController : StateMachine
 
     private void Start()
     {
-        //Asuming we'll have something like this
-        //Will remove comment when implemented
-        //ChangeState<InitBattleState>();
+        ChangeState<InitBattleState>();
     }
 }

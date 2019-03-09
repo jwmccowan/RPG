@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTargetState : MonoBehaviour
+public class MoveTargetState : BattleState
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void OnMove(object sender, object e)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Point p = (Point)e;
+        SelectTile(p);
     }
 }

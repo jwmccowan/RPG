@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleState : State
 {
-    BattleController owner;
+    protected BattleController owner;
     public CameraRig cameraRig { get { return owner.cameraRig; } }
     public Board board { get { return owner.board; } }
     public LevelData levelData { get { return owner.levelData; } }
@@ -28,16 +28,31 @@ public class BattleState : State
         this.RemoveListener(OnFire, InputController.moveEventNotification);
     }
 
+    /// <summary>
+    /// Virtual function that can be overridden to add battle state functionality during a fire event
+    /// </summary>
+    /// <param name="sender">Input Controller</param>
+    /// <param name="e">Point: ([-1 to 1], [-1 to 1])</param>
     protected virtual void OnMove(object sender, object e)
     {
 
     }
 
+    /// <summary>
+    /// Virtual function that can be overridden to add battle state functionality during a fire event
+    /// </summary>
+    /// <param name="sender">Input Controller</param>
+    /// <param name="e">int: 0 is left click, 1 is right click, 2 is middle click</param>
     protected virtual void OnFire(object sender, object e)
     {
 
     }
 
+    /// <summary>
+    /// An example of a method that will be used by multiple battle states
+    /// Other shared functionality should be added here
+    /// </summary>
+    /// <param name="p">Point to select</param>
     protected virtual void SelectTile(Point p)
     {
         if (pos == p || !board.tiles.ContainsKey(p))

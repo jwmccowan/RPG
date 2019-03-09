@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    public virtual State CurrentState
+    public virtual State currentState
     {
         get { return _currentState; }
         set { Transition(value); }
@@ -15,7 +15,7 @@ public class StateMachine : MonoBehaviour
     public virtual void ChangeState<T>()
         where T : State
     {
-        CurrentState = GetState<T>();
+        currentState = GetState<T>();
     }
 
     public virtual T GetState<T>() 
@@ -38,16 +38,16 @@ public class StateMachine : MonoBehaviour
 
         inTransition = true;
 
-        if (CurrentState != null)
+        if (currentState != null)
         {
-            CurrentState.Exit();
+            currentState.Exit();
         }
 
         _currentState = s;
 
         if (_currentState != null)
         {
-            CurrentState.Enter();
+            currentState.Enter();
         }
 
         inTransition = false;

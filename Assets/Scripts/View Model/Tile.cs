@@ -16,16 +16,16 @@ public class Tile : MonoBehaviour
      * changed, but this creates issue in Unity editor.  Not too worried, not too many 
      * clients will change these.
     */
-    public Point Pos;
-    public int Height;
+    public Point pos;
+    public int height;
 
-    public const float StepHeight = 0.25f;
+    public const float stepHeight = 0.25f;
     // A way for a client to center itself on the tile
-    public Vector3 Center
+    public Vector3 center
     {
         get
         {
-            return new Vector3(Pos.x, Height * StepHeight, Pos.y);
+            return new Vector3(pos.x, height * stepHeight, pos.y);
         }
     }
     #endregion
@@ -33,8 +33,8 @@ public class Tile : MonoBehaviour
     #region Public
     public void Load(Point pos, int height)
     {
-        Pos = pos;
-        Height = height;
+        this.pos = pos;
+        this.height = height;
         Match();
     }
 
@@ -46,20 +46,20 @@ public class Tile : MonoBehaviour
     // We call this method after changing coordinates to reflect changes in scale/position
     public void Match()
     {
-        transform.position = new Vector3(Pos.x, (Height * StepHeight) / 2f, Pos.y);
-        transform.localScale = new Vector3(1, Height * StepHeight, 1);
+        transform.position = new Vector3(pos.x, (height * stepHeight) / 2f, pos.y);
+        transform.localScale = new Vector3(1, height * stepHeight, 1);
     }
 
     // Some methods for the board editor to use to create a board organically
     public void Grow()
     {
-        Height++;
+        height++;
         Match();
     }
 
     public void Shrink()
     {
-        Height--;
+        height--;
         Match();
     }
     #endregion

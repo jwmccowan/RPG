@@ -4,7 +4,7 @@ namespace Notifications.Test1
 {
     public class NotificationDemo : MonoBehaviour
     {
-        public const string Notification = "Demo.Notification";
+        public const string notification = "Demo.Notification";
         public int listenerCount = 250;
         void Update()
         {
@@ -22,7 +22,7 @@ namespace Notifications.Test1
                 listeners[i].Enable();
             }
 
-            this.PostNotification(Notification);
+            this.PostNotification(notification);
 
             for (int i = 0; i < listeners.Length; ++i)
                 listeners[i].Disable();
@@ -36,13 +36,13 @@ namespace Notifications.Test1
 
         public void Enable()
         {
-            this.AddListener(OnTest, NotificationDemo.Notification);
+            this.AddListener(OnTest, NotificationDemo.notification);
             this.AddListener(OnClear, Listener.Clear);
         }
 
         public void Disable()
         {
-            this.RemoveListener(OnTest, NotificationDemo.Notification);
+            this.RemoveListener(OnTest, NotificationDemo.notification);
             this.RemoveListener(OnClear, Listener.Clear);
         }
 
@@ -54,7 +54,7 @@ namespace Notifications.Test1
 
         void OnClear(object sender, object info)
         {
-            this.RemoveListener(OnTest, NotificationDemo.Notification);
+            this.RemoveListener(OnTest, NotificationDemo.notification);
         }
     }
 }

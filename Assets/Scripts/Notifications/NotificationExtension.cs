@@ -24,11 +24,11 @@ public static class NotificationExtension
 
     public static void RemoveListener(this object obj, Handler handler, string notification)
     {
-        NotificationHandler.instance.AddListener(handler, notification);
+        NotificationHandler.instance.RemoveListener(handler, notification);
     }
 
     public static void RemoveListener(this object obj, Handler handler, string notification, object sender)
     {
-        NotificationHandler.instance.AddListener(handler, notification, sender);
+        NotificationHandler.instance.RemoveListener(handler, notification, sender);
     }
 }

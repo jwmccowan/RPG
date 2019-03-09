@@ -49,7 +49,7 @@ public class NotificationHandler
 
         List<Handler> list = subTable[key];
 
-        if (list.Contains(handler))
+        if (!list.Contains(handler))
         {
             if (invoking.Contains(list))
             {

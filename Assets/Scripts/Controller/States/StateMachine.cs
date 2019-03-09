@@ -24,14 +24,14 @@ public class StateMachine : MonoBehaviour
         T target = GetComponent<T>();
         if (target == null)
         {
-            gameObject.AddComponent<T>();
+            target = gameObject.AddComponent<T>();
         }
         return target;
     }
 
     protected virtual void Transition(State s)
     {
-        if (inTransition = true || _currentState == s)
+        if (inTransition == true || _currentState == s)
         {
             return;
         }

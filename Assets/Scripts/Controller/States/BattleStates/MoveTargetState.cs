@@ -6,7 +6,7 @@ public class MoveTargetState : BattleState
 {
     protected override void OnMove(object sender, object e)
     {
-        Point p = (Point)e;
+        Point p = (Point)e + pos;
         SelectTile(p);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BattleController : StateMachine
+public class BattleController : StateMachine
 {
     public CameraRig cameraRig;
     public Board board;

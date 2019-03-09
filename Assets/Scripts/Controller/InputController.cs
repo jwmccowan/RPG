@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    const string moveEventNotification = "InputController.MoveEventNotification";
-    const string fireEventNotification = "InputController.FireEventNotification";
+    public const string moveEventNotification = "InputController.MoveEventNotification";
+    public const string fireEventNotification = "InputController.FireEventNotification";
 
     Repeater horizontal = new Repeater("Horizontal");
     Repeater vertical = new Repeater("Vertical");

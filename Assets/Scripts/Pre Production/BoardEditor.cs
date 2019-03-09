@@ -6,26 +6,26 @@ using UnityEditor;
 public class BoardEditor : MonoBehaviour
 {
     #region Properties
-    [SerializeField] GameObject TilePrefab;
-    [SerializeField] GameObject TileSelectorPrefab;
-    [SerializeField] LevelData SavedLevelData;
+    [SerializeField] GameObject tilePrefab;
+    [SerializeField] GameObject tileSelectorPrefab;
+    [SerializeField] LevelData savedLevelData;
 
     // Max width, length, and height of our battlefield
-    [SerializeField] int Width = 10;
-    [SerializeField] int Length = 10;
-    [SerializeField] int Height = 8;
-    [SerializeField] Point Pos;
+    [SerializeField] int width = 10;
+    [SerializeField] int length = 10;
+    [SerializeField] int height = 8;
+    [SerializeField] Point pos;
 
     /*
      * Lazy Load our Tile Selection Indicator so it is there when we need it
     */
-    public Transform Selector
+    public Transform selector
     {
         get
         {
             if (_selector == null)
             {
-                GameObject instance = Instantiate(TileSelectorPrefab);
+                GameObject instance = Instantiate(tileSelectorPrefab);
                 _selector = instance.transform;
             }
             return _selector;
@@ -33,7 +33,7 @@ public class BoardEditor : MonoBehaviour
     }
     Transform _selector;
 
-    Dictionary<Point, Tile> TileData = new Dictionary<Point, Tile>();
+    Dictionary<Point, Tile> tileData = new Dictionary<Point, Tile>();
     #endregion
 
     #region Public
@@ -59,12 +59,12 @@ public class BoardEditor : MonoBehaviour
      */
     public void Raise()
     {
-        RaiseSingle(Pos);
+        RaiseSingle(pos);
     }
 
     public void Lower()
     {
-        LowerSingle(Pos);
+        LowerSingle(pos);
     }
 
     /* 
@@ -72,13 +72,13 @@ public class BoardEditor : MonoBehaviour
      */
     public void UpdateMarker()
     {
-        if (TileData.ContainsKey(Pos))
+        if (tileData.ContainsKey(pos))
         {
-            Selector.localPosition = TileData[Pos].Center;
+            selector.localPosition = tileData[pos].center;
         }
         else
         {
-            Selector.localPosition = new Vector3(Pos.x, 0.0f, Pos.y);
+            selector.localPosition = new Vector3(pos.x, 0.0f, pos.y);
         }
     }
 
@@ -91,7 +91,7 @@ public class BoardEditor : MonoBehaviour
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
-        TileData.Clear();
+        tileData.Clear();
     }
 
     /*
@@ -105,9 +105,9 @@ public class BoardEditor : MonoBehaviour
             CreateSaveDirectory();
 
         LevelData board = ScriptableObject.CreateInstance<LevelData>();
-        board.TilePositions = new List<Vector3>(TileData.Count);
-        foreach (Tile t in TileData.Values)
-            board.TilePositions.Add(new Vector3(t.Pos.x, t.Height, t.Pos.y));
+        board.tilePositions = new List<Vector3>(tileData.Count);
+        foreach (Tile t in tileData.Values)
+            board.tilePositions.Add(new Vector3(t.pos.x, t.height, t.pos.y));
 
         string fileName = string.Format("Assets/Resources/Levels/{1}.asset", filePath, name);
         AssetDatabase.CreateAsset(board, fileName);
@@ -128,16 +128,16 @@ public class BoardEditor : MonoBehaviour
     public void Load()
     {
         Clear();
-        if (SavedLevelData == null)
+        if (savedLevelData == null)
         {
             return;
         }
 
-        foreach (Vector3 v in SavedLevelData.TilePositions)
+        foreach (Vector3 v in savedLevelData.tilePositions)
         {
             Tile t = Create();
             t.Load(v);
-            TileData.Add(t.Pos, t);
+            tileData.Add(t.pos, t);
         }
     }
     #endregion
@@ -149,7 +149,7 @@ public class BoardEditor : MonoBehaviour
     void RaiseSingle(Point p)
     {
         Tile t = GetOrCreate(p);
-        if (t.Height < Height)
+        if (t.height < height)
         {
             t.Grow();
         }
@@ -161,17 +161,17 @@ public class BoardEditor : MonoBehaviour
      */
     void LowerSingle(Point p)
     {
-        if (!TileData.ContainsKey(p))
+        if (!tileData.ContainsKey(p))
         {
             return;
         }
 
-        Tile t = TileData[p];
+        Tile t = tileData[p];
         t.Shrink();
 
-        if (t.Height <= 0)
+        if (t.height <= 0)
         {
-            TileData.Remove(p);
+            tileData.Remove(p);
             Destroy(t.gameObject);
         }
     }
@@ -208,10 +208,10 @@ public class BoardEditor : MonoBehaviour
      */
     Rect GetRandomRect()
     {
-        int x = Random.Range(0, Width);
-        int y = Random.Range(0, Length);
-        int w = Random.Range(1, Width - x + 1);
-        int l = Random.Range(1, Length - y + 1);
+        int x = Random.Range(0, width);
+        int y = Random.Range(0, length);
+        int w = Random.Range(1, width - x + 1);
+        int l = Random.Range(1, length - y + 1);
         return new Rect(x, y, w, l);
     }
 
@@ -222,14 +222,14 @@ public class BoardEditor : MonoBehaviour
      */
     Tile GetOrCreate(Point p)
     {
-        if (TileData.ContainsKey(p))
+        if (tileData.ContainsKey(p))
         {
-            return TileData[p];
+            return tileData[p];
         }
 
         Tile t = Create();
         t.Load(p, 0);
-        TileData[p] = t;
+        tileData[p] = t;
 
         return t;
     }
@@ -240,7 +240,7 @@ public class BoardEditor : MonoBehaviour
      */
     Tile Create()
     {
-        GameObject instance = Instantiate(TilePrefab);
+        GameObject instance = Instantiate(tilePrefab);
         instance.transform.parent = transform;
         return instance.GetComponent<Tile>();
     }

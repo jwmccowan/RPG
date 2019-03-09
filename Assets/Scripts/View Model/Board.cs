@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject tilePrefab;
+    public Dictionary<Point, Tile> tiles = new Dictionary<Point, Tile>();
 
-    // Update is called once per frame
-    void Update()
+    public void Load(LevelData data)
     {
-        
+        List<Vector3> tilePositions = data.tilePositions;
+        for (int i = 0; i < tilePositions.Count; i++)
+        {
+            GameObject instance = Instantiate(tilePrefab);
+            Tile t = instance.GetComponent<Tile>();
+            t.Load(tilePositions[i]);
+            tiles.Add(t.pos, t);
+        }  
     }
 }

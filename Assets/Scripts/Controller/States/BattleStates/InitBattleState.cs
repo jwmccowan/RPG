@@ -6,8 +6,8 @@ public class InitBattleState : BattleState
 {
     public override void Enter()
     {
-        base.Enter();
         Debug.Log("InitBattleState Enter");
+        base.Enter();
         StartCoroutine(Init());
     }
 
@@ -20,7 +20,28 @@ public class InitBattleState : BattleState
         board.Load(levelData);
         Point p = new Point((int)levelData.tilePositions[0].x, (int)levelData.tilePositions[0].z);
         SelectTile(p);
+        SpawnTestUnits();
         yield return null;
-        owner.ChangeState<MoveTargetState>();
+        owner.ChangeState<SelectUnitState>();
+    }
+
+    void SpawnTestUnits()
+    {
+        //This is temporary code for testing
+        System.Type[] components = new System.Type[] { typeof(WalkMovement), typeof(FlyMovement), typeof(TeleportMovement) };
+
+        for (int i = 0; i < components.Length; i++)
+        {
+            GameObject instance = Instantiate(owner.heroPrefab);
+            Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
+
+            Unit unit = instance.GetComponent<Unit>();
+            unit.Place(board.GetTile(p));
+            unit.Match();
+
+            Movement m = instance.AddComponent(components[i]) as Movement;
+            m.range = 5;
+            m.jumpHeight = 1;
+        }
     }
 }

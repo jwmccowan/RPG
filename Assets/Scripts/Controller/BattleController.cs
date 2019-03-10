@@ -9,6 +9,9 @@ public class BattleController : StateMachine
     public LevelData levelData;
     public Transform tileSelectionIndicator;
     public Point pos;
+    public GameObject heroPrefab;
+    public Unit currentUnit;
+    public Tile currentTile { get { return board.GetTile(pos); } }
 
     private void Start()
     {

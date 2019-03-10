@@ -108,13 +108,13 @@ public class NotificationHandler
     {
         string[] notKeys = new string[table.Keys.Count];
         table.Keys.CopyTo(notKeys, 0);
-        for (int i = notKeys.Length - 1; i >= 0; --i)
+        for (int i = notKeys.Length - 1; i >= 0; i--)
         {
             string notificationName = notKeys[i];
             SenderTable senderTable = table[notificationName];
             object[] senKeys = new object[senderTable.Keys.Count];
             senderTable.Keys.CopyTo(senKeys, 0);
-            for (int j = senKeys.Length - 1; j >= 0; --j)
+            for (int j = senKeys.Length - 1; j >= 0; j--)
             {
                 object sender = senKeys[j];
                 List<Handler> handlers = senderTable[sender];

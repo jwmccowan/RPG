@@ -19,13 +19,13 @@ public class BattleState : State
     protected override void AddListeners()
     {
         this.AddListener(OnMove, InputController.moveEventNotification);
-        this.AddListener(OnFire, InputController.moveEventNotification);
+        this.AddListener(OnFire, InputController.fireEventNotification);
     }
 
     protected override void RemoveListeners()
     {
         this.RemoveListener(OnMove, InputController.moveEventNotification);
-        this.RemoveListener(OnFire, InputController.moveEventNotification);
+        this.RemoveListener(OnFire, InputController.fireEventNotification);
     }
 
     /// <summary>

@@ -151,7 +151,7 @@ public class BoardEditor : MonoBehaviour
         Tile t = GetOrCreate(p);
         if (t.height < height)
         {
-            t.Grow();
+            t.Raise();
         }
     }
 
@@ -167,7 +167,7 @@ public class BoardEditor : MonoBehaviour
         }
 
         Tile t = tileData[p];
-        t.Shrink();
+        t.Lower();
 
         if (t.height <= 0)
         {

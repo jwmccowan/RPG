@@ -5,6 +5,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public Tile tile { get; protected set; }
+    public Directions dir;
 
     public void Place(Tile t)
     {

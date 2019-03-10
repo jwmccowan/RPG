@@ -27,12 +27,13 @@ public class InitBattleState : BattleState
 
     void SpawnTestUnits()
     {
+        //This is temporary code for testing
         System.Type[] components = new System.Type[] { typeof(WalkMovement), typeof(FlyMovement), typeof(TeleportMovement) };
 
         for (int i = 0; i < components.Length; i++)
         {
             GameObject instance = Instantiate(owner.heroPrefab);
-            Point p = new Point((int)levelData.tilePositions[i * 5].x, (int)levelData.tilePositions[i * 5].y);
+            Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
 
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(board.GetTile(p));
@@ -40,7 +41,7 @@ public class InitBattleState : BattleState
 
             Movement m = instance.AddComponent(components[i]) as Movement;
             m.range = 5;
-            m.jumpHeight = 2;
+            m.jumpHeight = 1;
         }
     }
 }

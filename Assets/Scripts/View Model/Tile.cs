@@ -25,9 +25,10 @@ public class Tile : MonoBehaviour
     /// </summary>
     public int height
     {
-        get { return height; }
-        set { height = value; Match(); }
+        get { return _height; }
+        set { _height = value; Match(); }
     }
+    int _height;
 
     /// <summary>
     /// The gameObject currently standing on the tile
@@ -47,9 +48,19 @@ public class Tile : MonoBehaviour
     {
         get
         {
-            return new Vector3(pos.x, height * stepHeight, pos.y);
+            return new Vector3(pos.x, _height * stepHeight, pos.y);
         }
     }
+
+    /// <summary>
+    /// Only used in pathfinding
+    /// </summary>
+    [HideInInspector] public Tile prev;
+
+    /// <summary>
+    /// Only used in pathfinding
+    /// </summary>
+    [HideInInspector] public int distance;
     #endregion
 
     #region Public
@@ -61,7 +72,7 @@ public class Tile : MonoBehaviour
     public void Load(Point pos, int height)
     {
         this.pos = pos;
-        this.height = height;
+        this._height = height;
         Match();
     }
 
@@ -79,8 +90,8 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void Match()
     {
-        transform.position = new Vector3(pos.x, (height * stepHeight) / 2f, pos.y);
-        transform.localScale = new Vector3(1, height * stepHeight, 1);
+        transform.position = new Vector3(pos.x, (_height * stepHeight) / 2f, pos.y);
+        transform.localScale = new Vector3(1, _height * stepHeight, 1);
     }
 
     /// <summary>
@@ -88,7 +99,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void Raise()
     {
-        height++;
+        _height++;
         Match();
     }
 
@@ -97,7 +108,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void Lower()
     {
-        height--;
+        _height--;
         Match();
     }
     #endregion

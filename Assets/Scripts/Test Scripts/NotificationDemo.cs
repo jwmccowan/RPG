@@ -16,7 +16,7 @@ namespace Notifications.Test1
         void Test()
         {
             Listener[] listeners = new Listener[listenerCount];
-            for (int i = 0; i < listenerCount; ++i)
+            for (int i = 0; i < listenerCount; i++)
             {
                 listeners[i] = new Listener();
                 listeners[i].Enable();
@@ -24,7 +24,7 @@ namespace Notifications.Test1
 
             this.PostNotification(notification);
 
-            for (int i = 0; i < listeners.Length; ++i)
+            for (int i = 0; i < listeners.Length; i++)
                 listeners[i].Disable();
             NotificationHandler.instance.Clean();
         }

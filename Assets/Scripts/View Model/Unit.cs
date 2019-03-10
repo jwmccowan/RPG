@@ -9,21 +9,16 @@ public class Unit : MonoBehaviour
 
     public void Place(Tile t)
     {
-        if (tile.content != null)
-        {
-            return;
-        }
-
         if (tile != null && tile.content == gameObject)
         {
-            tile = null;
+            tile.content = null;
         }
 
         tile = t;
 
         if (tile != null)
         {
-            transform.position = tile.center;
+            tile.content = gameObject;
         }
     }
 

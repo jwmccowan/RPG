@@ -6,8 +6,8 @@ public class InitBattleState : BattleState
 {
     public override void Enter()
     {
-        base.Enter();
         Debug.Log("InitBattleState Enter");
+        base.Enter();
         StartCoroutine(Init());
     }
 

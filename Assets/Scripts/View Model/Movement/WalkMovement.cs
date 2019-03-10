@@ -25,7 +25,7 @@ public class WalkMovement : Movement
 
         while (t != null)
         {
-            moveTargets.Add(t);
+            moveTargets.Insert(0,t);
             t = t.prev;
         }
 
@@ -63,11 +63,12 @@ public class WalkMovement : Movement
     IEnumerator Jump(Tile t)
     {
         Tweener walkTweener = transform.MoveTo(t.center, 0.5f, EasingEquations.Linear);
+
         Tweener jumpTweener = jumper.MoveToLocal(new Vector3(0, Tile.stepHeight * 2f, 0), walkTweener.easingControl.duration / 2f, EasingEquations.EaseOutQuad);
-        jumpTweener.easingControl.loopCount = 2;
+        jumpTweener.easingControl.loopCount = 1;
         jumpTweener.easingControl.loopType = EasingControl.LoopType.PingPong;
 
-        while(walkTweener != null && jumpTweener != null)
+        while (walkTweener != null)
         {
             yield return null;
         }

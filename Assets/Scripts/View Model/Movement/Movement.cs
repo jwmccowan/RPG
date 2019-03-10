@@ -11,7 +11,7 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Awake()
     {
-        jumper = transform.Find("jumper");
+        jumper = transform.Find("Jumper");
         unit = GetComponent<Unit>();
     }
 
@@ -29,7 +29,7 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Filter(List<Tile> list)
     {
-        for (int i = list.Count - 1; i >= 0; i++)
+        for (int i = list.Count - 1; i >= 0; i--)
         {
             if (list[i].content != null)
             {

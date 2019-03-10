@@ -21,10 +21,11 @@ public class Board : MonoBehaviour
     #endregion
 
     #region
-    public List<Tile> Search(Tile start, Func<Tile,Tile, bool> addTile)
+    public List<Tile> Search(Tile start, Func<Tile, Tile, bool> addTile)
     {
         List<Tile> list = new List<Tile>();
         list.Add(start);
+
         ClearSearch();
         Queue<Tile> checkNow = new Queue<Tile>();
         Queue<Tile> checkNext = new Queue<Tile>();
@@ -32,7 +33,7 @@ public class Board : MonoBehaviour
         start.distance = 0;
         checkNow.Enqueue(start);
 
-        while(checkNow.Count > 0)
+        while (checkNow.Count > 0)
         {
             Tile t = checkNow.Dequeue();
             for (int i = 0; i < 4; i++)
@@ -43,7 +44,7 @@ public class Board : MonoBehaviour
                     continue;
                 }
 
-                if (next.distance < t.distance || list.Contains(next))
+                if ((next.distance < t.distance + 1 && list.Contains(next)))
                 {
                     continue;
                 }
@@ -63,7 +64,6 @@ public class Board : MonoBehaviour
                 SwapReference(ref checkNow, ref checkNext);
             }
         }
-
 
         return list;
     }
@@ -102,7 +102,23 @@ public class Board : MonoBehaviour
             Tile t = instance.GetComponent<Tile>();
             t.Load(tilePositions[i]);
             tiles.Add(t.pos, t);
-        }  
+        }
+    }
+
+    public void SelectTiles(List<Tile> tiles)
+    {
+        for (int i = tiles.Count - 1; i >= 0; i--)
+        {
+            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", selectedTileColor);
+        }
+    }
+
+    public void DeselectTiles(List<Tile> tiles)
+    {
+        for (int i = tiles.Count - 1; i >= 0; i--)
+        {
+            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", defaultTileColor);
+        }
     }
     #endregion
 }

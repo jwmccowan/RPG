@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131add6dac4141a47b2157ff62b11186, type: 3}
+  m_Name: TestConversation
+  m_EditorClassIdentifier: 
+  conversationData:
+  - messages:
+    - Tremble before me, puny weakling!!
+    - For I am very scary!!
+    - Are you scared yet?!
+    speaker: {fileID: 21300000, guid: 6c4e25edea65db445aa73c9dafdd3939, type: 3}
+    anchor: 2
+  - messages:
+    - Uh.. not really..
+    - Let's just get this over with..
+    speaker: {fileID: 21300000, guid: 436944dc73e6ead41b6f79cc78f58b06, type: 3}
+    anchor: 6
+  - messages:
+    - Oh.. uh..
+    speaker: {fileID: 21300000, guid: 6c4e25edea65db445aa73c9dafdd3939, type: 3}
+    anchor: 2

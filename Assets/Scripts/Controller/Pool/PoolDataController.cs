@@ -11,12 +11,12 @@ public class PoolDataController : MonoBehaviour
         public int maxCount = 1;
     }
 
-    static Dictionary<string, PoolData> poolDataMap;
+    static Dictionary<string, PoolData> poolDataMap = new Dictionary<string, PoolData>();
     static PoolDataController instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
                 GameObject obj = new GameObject("Pool Data Controller");
                 DontDestroyOnLoad(obj);
@@ -49,6 +49,7 @@ public class PoolDataController : MonoBehaviour
         PoolData poolData = poolDataMap[toPool.key];
         if (poolData.pool.Count >= poolData.maxCount)
         {
+            Destroy(toPool.gameObject);
             return false;
         }
         toPool.isPooled = true;
@@ -103,7 +104,7 @@ public class PoolDataController : MonoBehaviour
 
         for (int i = 0; i < prepopulate; i++)
         {
-            poolData.pool.Enqueue(CreateInstance(key, prefab));
+            Enqueue(CreateInstance(key, prefab));
         }
 
         return true;

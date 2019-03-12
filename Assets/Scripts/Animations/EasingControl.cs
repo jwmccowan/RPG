@@ -4,8 +4,12 @@ using System.Collections;
 
 public class EasingControl : MonoBehaviour 
 {
-	#region Events
-	public event EventHandler updateEvent;
+    #region Events
+    public const string UpdateEvent = "EasingControl.UpdateEvent";
+    public const string StateChangeEvent = "EasingControl.StateChangeEvent";
+    public const string CompletedEvent = "EasingControl.CompletedEvent";
+    public const string LoopedEvent = "EasingControl.LoopedEvent";
+    public event EventHandler updateEvent;
 	public event EventHandler stateChangeEvent;
 	public event EventHandler completedEvent;
 	public event EventHandler loopedEvent;
@@ -107,9 +111,12 @@ public class EasingControl : MonoBehaviour
 		float newValue = (endValue - startValue) * currentTime + startValue;
 		currentOffset = newValue - currentValue;
 		currentValue = newValue;
-		
-		if (updateEvent != null)
-			updateEvent(this, EventArgs.Empty);
+
+        this.PostNotification(UpdateEvent);
+        if (updateEvent != null)
+        {
+            updateEvent(this, EventArgs.Empty);
+        }
 	}
 	
 	public void SeekToBeginning ()
@@ -131,9 +138,12 @@ public class EasingControl : MonoBehaviour
 		
 		previousPlayState = playState;
 		playState = target;
-		
-		if (stateChangeEvent != null)
-			stateChangeEvent(this, EventArgs.Empty);
+
+        this.PostNotification(StateChangeEvent);
+        if (stateChangeEvent != null)
+        {
+            stateChangeEvent(this, EventArgs.Empty);
+        }
 		
 		StopCoroutine("Ticker");
 		if (IsPlaying)
@@ -179,9 +189,12 @@ public class EasingControl : MonoBehaviour
 		float frameValue = (endValue - startValue) * equation (0.0f, 1.0f, currentTime) + startValue;
 		currentOffset = frameValue - currentValue;
 		currentValue = frameValue;
-		
-		if (updateEvent != null)
-			updateEvent(this, EventArgs.Empty);
+
+        if (updateEvent != null)
+        {
+            this.PostNotification(UpdateEvent);
+            updateEvent(this, EventArgs.Empty);
+        }
 		
 		if (finished)
 		{
@@ -192,16 +205,22 @@ public class EasingControl : MonoBehaviour
 					SeekToBeginning();
 				else // PingPong
 					SetPlayState( playState == PlayState.Playing ? PlayState.Reversing : PlayState.Playing );
-				
-				if (loopedEvent != null)
-					loopedEvent(this, EventArgs.Empty);
+
+                this.PostNotification(LoopedEvent);
+                if (loopedEvent != null)
+                {
+                    loopedEvent(this, EventArgs.Empty);
+                }
 			} 
 			else
-			{
-				if (completedEvent != null)
-					completedEvent(this, EventArgs.Empty);
-				
-				Stop ();
+            {
+                this.PostNotification(CompletedEvent);
+                if (completedEvent != null)
+                {
+                    completedEvent(this, EventArgs.Empty);
+                }
+
+                Stop();
 			}
 		}
 	}

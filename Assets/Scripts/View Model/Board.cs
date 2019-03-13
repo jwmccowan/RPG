@@ -11,6 +11,8 @@ public class Board : MonoBehaviour
     Color selectedTileColor = new Color(0, 1, 1, 1);
     Color defaultTileColor = new Color(1, 1, 1, 1);
 
+    public const string TilePoolKey = "Board.TilePoolKey";
+
     Point[] dirs = new Point[4]
     {
         new Point(0,1),
@@ -96,9 +98,11 @@ public class Board : MonoBehaviour
     public void Load(LevelData data)
     {
         List<Vector3> tilePositions = data.tilePositions;
+        PoolDataController.AddKey(TilePoolKey, tilePrefab, 100, 50);
         for (int i = 0; i < tilePositions.Count; i++)
         {
-            GameObject instance = Instantiate(tilePrefab);
+            GameObject instance = PoolDataController.Dequeue(TilePoolKey).gameObject;
+            instance.SetActive(true);
             Tile t = instance.GetComponent<Tile>();
             t.Load(tilePositions[i]);
             tiles.Add(t.pos, t);

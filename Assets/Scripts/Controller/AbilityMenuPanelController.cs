@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class AbilityMenuPanelController : MonoBehaviour
 {
-    const string Show = "Show";
-    const string Hide = "Hide";
+    const string ShowKey = "Show";
+    const string HideKey = "Hide";
     const string AbilityMenuItemPoolKey = "AbilityMenuItemPoolKey";
     const int MenuCount = 4;
 
@@ -24,7 +24,7 @@ public class AbilityMenuPanelController : MonoBehaviour
 
     void Start()
     {
-        panel.SetPosition(Hide, false);
+        panel.SetPosition(HideKey, false);
         canvas.gameObject.SetActive(true);
     }
 
@@ -55,6 +55,72 @@ public class AbilityMenuPanelController : MonoBehaviour
             menuEntries[selection].isSelected = true;
         }
         return true;
+    }
+
+    public void Next()
+    {
+        for (int i = selection + 1; i < selection + menuEntries.Count; i++)
+        {
+            int index = i % menuEntries.Count;
+            if (SetSelection(index))
+            {
+                break;
+            }
+        }
+    }
+
+    public void Previous()
+    {
+        for (int i = selection - 1 + menuEntries.Count; i > selection; i--)
+        {
+            int index = i % menuEntries.Count;
+            if (SetSelection(index))
+            {
+                break;
+            }
+        }
+    }
+
+    public void Show(string title, string[] options)
+    {
+        canvas.SetActive(true);
+        Clear();
+        titleLabel.text = title;
+        for (int i = 0; i < options.Length; i++)
+        {
+            AbilityMenuItem item = Dequeue();
+            item.labelText = options[i];
+            menuEntries.Add(item);
+        }
+        SetSelection(0);
+        TogglePos(ShowKey);
+    }
+
+    public void SetLocked(int index, bool value)
+    {
+        if (index < 0 || index >= menuEntries.Count)
+        {
+            return;
+        }
+
+        menuEntries[index].isLocked = value;
+        if (value && selection == index)
+        {
+            Next();
+        }
+    }
+
+    public void Hide()
+    {
+        Tweener t = TogglePos(HideKey);
+        this.AddListener(OnHideCompleted, EasingControl.CompletedEvent);
+    }
+
+    void OnHideCompleted(object sender, object e)
+    {
+        Clear();
+        canvas.SetActive(false);
+        this.RemoveListener(OnHideCompleted, EasingControl.CompletedEvent);
     }
 
     AbilityMenuItem Dequeue()

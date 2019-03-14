@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Flags]
-public enum Action
+public enum ActionType
 {
     StandardAction = 0,
     MoveAction= 1 << 0,

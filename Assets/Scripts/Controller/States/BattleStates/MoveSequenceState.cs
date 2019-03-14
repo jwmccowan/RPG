@@ -13,7 +13,7 @@ public class MoveSequenceState : BattleState
 
     IEnumerator Sequence()
     {
-        Movement m = owner.currentUnit.GetComponent<Movement>();
+        Movement m = owner.turn.actor.GetComponent<Movement>();
         yield return m.Traverse(owner.currentTile);
         owner.ChangeState<SelectUnitState>();
     }

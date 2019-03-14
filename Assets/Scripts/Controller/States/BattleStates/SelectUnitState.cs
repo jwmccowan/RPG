@@ -22,7 +22,7 @@ public class SelectUnitState : BattleState
         GameObject content = owner.currentTile.content;
         if (content != null)
         {
-            owner.currentUnit = content.GetComponent<Unit>();
+            owner.turn.actor = content.GetComponent<Unit>();
             owner.ChangeState<MoveTargetState>();
         }
     }

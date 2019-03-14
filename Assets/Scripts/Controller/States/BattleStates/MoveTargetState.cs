@@ -10,7 +10,7 @@ public class MoveTargetState : BattleState
     {
         Debug.Log("MoveTargetState Enter");
         base.Enter();
-        Movement movement = owner.currentUnit.GetComponent<Movement>();
+        Movement movement = owner.turn.actor.GetComponent<Movement>();
         tiles = movement.GetTilesInRange(board);
         board.SelectTiles(tiles);
     }

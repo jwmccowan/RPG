@@ -22,22 +22,4 @@ public class SelectUnitState : BattleState
         yield return null;
         owner.ChangeState<CommandSelectionState>();
     }
-    /*
-    protected override void OnMove(object sender, object e)
-    {
-        Point p = (Point)e;
-        SelectTile(pos + p);
-    }
-
-    protected override void OnFire(object sender, object e)
-    {
-        int i = (int)e;
-        GameObject content = owner.currentTile.content;
-        if (content != null)
-        {
-            owner.turn.actor = content.GetComponent<Unit>();
-            owner.ChangeState<MoveTargetState>();
-        }
-    }
-    */
 }

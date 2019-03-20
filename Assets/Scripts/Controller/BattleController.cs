@@ -12,7 +12,7 @@ public class BattleController : StateMachine
     public Point pos;
     public GameObject heroPrefab;
     public Tile currentTile { get { return board.GetTile(pos); } }
-    public Turn turn;
+    public Turn turn = new Turn();
     public List<Unit> units = new List<Unit>();
 
     private void Start()

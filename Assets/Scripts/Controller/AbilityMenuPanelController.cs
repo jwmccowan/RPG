@@ -81,12 +81,12 @@ public class AbilityMenuPanelController : MonoBehaviour
         }
     }
 
-    public void Show(string title, string[] options)
+    public void Show(string title, List<string> options)
     {
         canvas.SetActive(true);
         Clear();
         titleLabel.text = title;
-        for (int i = 0; i < options.Length; i++)
+        for (int i = 0; i < options.Count; i++)
         {
             AbilityMenuItem item = Dequeue();
             item.labelText = options[i];
@@ -118,9 +118,12 @@ public class AbilityMenuPanelController : MonoBehaviour
 
     void OnHideCompleted(object sender, object e)
     {
-        Clear();
-        canvas.SetActive(false);
-        this.RemoveListener(OnHideCompleted, EasingControl.CompletedEvent);
+        if (panel.CurrentPosition == panel[HideKey])
+        {
+            Clear();
+            canvas.SetActive(false);
+            this.RemoveListener(OnHideCompleted, EasingControl.CompletedEvent);
+        }
     }
 
     AbilityMenuItem Dequeue()
@@ -136,7 +139,7 @@ public class AbilityMenuPanelController : MonoBehaviour
 
     void Enqueue(AbilityMenuItem item)
     {
-        Poolable p = GetComponent<Poolable>();
+        Poolable p = item.GetComponent<Poolable>();
         PoolDataController.Enqueue(p);
     }
 

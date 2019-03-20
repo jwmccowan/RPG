@@ -103,9 +103,8 @@ public class ConversationController : MonoBehaviour
 
     void OnCompletedEvent(object sender, object e)
     {
-        if (sender == transition.easingControl)
+        if ((object)sender == transition.easingControl)
         {
-            Debug.Log("hello");
             conversation.MoveNext();
             this.RemoveListener(OnCompletedEvent, EasingControl.CompletedEvent);
         }

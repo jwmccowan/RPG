@@ -60,8 +60,9 @@ public class AbilityMenuItem : MonoBehaviour
         get { return _state; }
         set
         {
-            if (state != value)
+            if (_state != value)
             {
+                _state = value;
                 if (isLocked)
                 {
                     bulletSprite.sprite = lockedBulletSprite;

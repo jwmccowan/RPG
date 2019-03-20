@@ -5,10 +5,13 @@ using UnityEngine;
 public class BattleState : State
 {
     protected BattleController owner;
+    public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
     public CameraRig cameraRig { get { return owner.cameraRig; } }
     public Board board { get { return owner.board; } }
     public LevelData levelData { get { return owner.levelData; } }
     public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
+    public Turn turn { get { return owner.turn; } }
+    public List<Unit> units { get { return owner.units; } }
     public Point pos { get { return owner.pos; } set { owner.pos = value; } }
 
     protected virtual void Awake()

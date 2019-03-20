@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class SelectUnitState : BattleState
 {
+    int currentUnitIndex = -1;
+
     public override void Enter()
     {
         Debug.Log("SelectUnitState Enter");
         base.Enter();
+
+        StartCoroutine("SelectUnit");
     }
 
-    protected override void OnMove(object sender, object e)
+    //TODO: select unit a bit more smart.  this is temp until we get stats up
+    IEnumerator SelectUnit()
     {
-        Point p = (Point)e;
-        SelectTile(pos + p);
-    }
-
-    protected override void OnFire(object sender, object e)
-    {
-        int i = (int)e;
-        GameObject content = owner.currentTile.content;
-        if (content != null)
-        {
-            owner.currentUnit = content.GetComponent<Unit>();
-            owner.ChangeState<MoveTargetState>();
-        }
+        currentUnitIndex = (currentUnitIndex + 1) % units.Count;
+        turn.Change(units[currentUnitIndex]);
+        yield return null;
+        owner.ChangeState<CommandSelectionState>();
     }
 }

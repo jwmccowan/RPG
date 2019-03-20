@@ -10,7 +10,7 @@ public class MoveTargetState : BattleState
     {
         Debug.Log("MoveTargetState Enter");
         base.Enter();
-        Movement movement = owner.currentUnit.GetComponent<Movement>();
+        Movement movement = owner.turn.actor.GetComponent<Movement>();
         tiles = movement.GetTilesInRange(board);
         board.SelectTiles(tiles);
     }
@@ -30,9 +30,16 @@ public class MoveTargetState : BattleState
 
     protected override void OnFire(object sender, object e)
     {
-        if (tiles.Contains(owner.currentTile))
+        int i = (int)e;
+        if (i == 0)
         {
-            owner.ChangeState<MoveSequenceState>();
+            if (tiles.Contains(owner.currentTile))
+            {
+                owner.ChangeState<MoveSequenceState>();
+            }
+        } else
+        {
+            owner.ChangeState<CommandSelectionState>();
         }
     }
 }

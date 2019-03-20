@@ -30,9 +30,16 @@ public class MoveTargetState : BattleState
 
     protected override void OnFire(object sender, object e)
     {
-        if (tiles.Contains(owner.currentTile))
+        int i = (int)e;
+        if (i == 0)
         {
-            owner.ChangeState<MoveSequenceState>();
+            if (tiles.Contains(owner.currentTile))
+            {
+                owner.ChangeState<MoveSequenceState>();
+            }
+        } else
+        {
+            owner.ChangeState<CommandSelectionState>();
         }
     }
 }

@@ -13,9 +13,9 @@ public class Turn
 
     public void Act(ActionType actionType)
     {
-        usedMoveAction = (actionType == (ActionType.FullRoundAction | ActionType.MoveAction));
-        usedStandardAction = (actionType == (ActionType.FullRoundAction | ActionType.StandardAction));
-        usedSwiftAction = (actionType == (ActionType.SwiftAction));
+        usedMoveAction |= (actionType == ActionType.FullRoundAction || actionType == ActionType.MoveAction);
+        usedStandardAction |= (actionType == ActionType.FullRoundAction || actionType == ActionType.StandardAction);
+        usedSwiftAction |= (actionType == ActionType.SwiftAction);
     }
 
     public void Change(Unit newActor)

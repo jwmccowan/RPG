@@ -5,6 +5,15 @@ using UnityEngine;
 public class CharacterSheet : MonoBehaviour
 {
     #region constants
+    static StatTypes[] abilityScores = new StatTypes[6] 
+    {
+        StatTypes.Strength,
+        StatTypes.Dexterity,
+        StatTypes.Constitution,
+        StatTypes.Intelligence,
+        StatTypes.Wisdom,
+        StatTypes.Charisma
+    };
     static Dictionary<StatTypes, StatTypes> abilityScoresBonuses = new Dictionary<StatTypes, StatTypes>()
     {
         { StatTypes.Strength, StatTypes.Strength_Bonus },

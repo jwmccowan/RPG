@@ -12,13 +12,13 @@ public class DivideValueModifier : ValueModifier
         this.toDivide = toDivide;
     }
 
-    public override int Modify(int value)
+    public override int Modify(int fromValue, int toValue)
     {
-        if (value == 0)
+        if (toValue == 0)
         {
             Debug.LogError("Divide by zero error in DivideValueModifier.");
             return int.MaxValue;
         }
-        return toDivide / value;
+        return toDivide / toValue;
     }
 }

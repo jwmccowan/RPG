@@ -12,8 +12,8 @@ public class AddValueModifier : ValueModifier
         this.toAdd = toAdd;
     }
 
-    public override int Modify(int value)
+    public override int Modify(int fromValue, int toValue)
     {
-        return toAdd + value;
+        return toAdd + toValue;
     }
 }

@@ -8,5 +8,5 @@ public abstract class ValueModifier : Modifier
         : base(sortOrder)
     { }
 
-    public abstract int Modify(int value);
+    public abstract int Modify(int fromValue, int toValue);
 }

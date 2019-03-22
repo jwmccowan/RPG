@@ -10,6 +10,7 @@ public class BaseException
     public BaseException(bool defaultToggle)
     {
         this.defaultToggle = defaultToggle;
+        toggle = defaultToggle;
     }
 
     public void FlipToggle()

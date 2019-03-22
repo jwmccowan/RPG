@@ -12,8 +12,8 @@ public class MultValueModifier : ValueModifier
         this.toMultiply = toMultiply;
     }
 
-    public override int Modify(int value)
+    public override int Modify(int fromValue, int toValue)
     {
-        return toMultiply * value;
+        return toMultiply * toValue;
     }
 }

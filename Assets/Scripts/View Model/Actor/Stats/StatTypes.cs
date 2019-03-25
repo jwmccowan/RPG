@@ -27,6 +27,7 @@ public enum StatTypes
     Initiative,
     BAB,
     To_Hit,
+    Dexterity_Bonus_To_AC,
 
     Count
 }

@@ -1,30 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CharacterSheet : MonoBehaviour
 {
-    #region constants
-    static StatTypes[] abilityScores = new StatTypes[6] 
-    {
-        StatTypes.Strength,
-        StatTypes.Dexterity,
-        StatTypes.Constitution,
-        StatTypes.Intelligence,
-        StatTypes.Wisdom,
-        StatTypes.Charisma
-    };
-    static Dictionary<StatTypes, StatTypes> abilityScoresBonuses = new Dictionary<StatTypes, StatTypes>()
-    {
-        { StatTypes.Strength, StatTypes.Strength_Bonus },
-        { StatTypes.Dexterity, StatTypes.Dexterity_Bonus },
-        { StatTypes.Constitution, StatTypes.Constitution_Bonus },
-        { StatTypes.Intelligence, StatTypes.Intelligence_Bonus },
-        { StatTypes.Wisdom, StatTypes.Wisdom_Bonus },
-        { StatTypes.Charisma, StatTypes.Charisma_Bonus }
-    };
-    #endregion
-
     #region fields
     Stats stats;
     #endregion
@@ -32,49 +12,118 @@ public class CharacterSheet : MonoBehaviour
     #region MonoBehaviour
     void OnEnable()
     {
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Strength), stats);
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Dexterity), stats);
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Constitution), stats);
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Intelligence), stats);
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Wisdom), stats);
-        this.AddListener(OnAbilityScoreDidChange, Stats.DidChangeNotification(StatTypes.Charisma), stats);
+        Init();
     }
 
     void Awake()
     {
         stats = GetComponent<Stats>();
     }
-    #endregion
 
-    #region events
-    void OnAbilityScoreDidChange(object sender, object e)
+    void OnDisable()
     {
-        // We set all bonuses any time any ability score changes.  This is to save on code space.
-        // Since we don't change ability scores that often, it seems a decent tradeoff.
-        // If I see this to be a significant part to optimize, it should be done ASAP
-        foreach (KeyValuePair<StatTypes, StatTypes> pair in abilityScoresBonuses)
-        {
-            SetBonus(pair.Key);
-        }
+        RemoveListeners();
     }
     #endregion
 
-    #region public
+    #region events
+    void OnAbilityScoreChange(object sender, object e)
+    {
+        Info<StatTypes, int> info = (Info<StatTypes, int>)e;
+        SetBonus(info.arg0);
+    }
 
+    void OnDerivedStatChange(object sender, object e)
+    {
+        Info<StatTypes, int> info = (Info<StatTypes, int>)e;
+        int delta = stats[info.arg0] - info.arg1;
+        SetDerivedStat(info.arg0, delta);
+    }
     #endregion
 
     #region private
+    void Init()
+    {
+        InitValues();
+        InitAbilityScores();
+        InitDerivedStats();
+    }
+
+    void RemoveListeners()
+    {
+        RemoveAbilityScores();
+        RemoveDerivedStats();
+    }
+
+    void InitAbilityScores()
+    {
+        foreach (KeyValuePair<StatTypes, StatTypes> kvp in DataController.abilityScoresBonuses)
+        {
+            SetBonus(kvp.Key);
+            this.AddListener(OnAbilityScoreChange, Stats.DidChangeNotification(kvp.Key), stats);
+            stats[kvp.Key] = 14;
+        }
+    }
+
+    void InitDerivedStats()
+    {
+        foreach (KeyValuePair<StatTypes, List<StatTypes>> kvp in DataController.derivedStats)
+        {
+            SetDerivedStat(kvp.Key, stats[kvp.Key]);
+            this.AddListener(OnDerivedStatChange, Stats.DidChangeNotification(kvp.Key), stats);
+        }
+    }
+
+    void InitValues()
+    {
+        stats.SetValue(StatTypes.AC, 10, false);
+    }
+
+    void RemoveAbilityScores()
+    {
+        foreach (KeyValuePair<StatTypes, StatTypes> kvp in DataController.abilityScoresBonuses)
+        {
+            this.RemoveListener(OnAbilityScoreChange, Stats.DidChangeNotification(kvp.Key), stats);
+        }
+    }
+
+    void RemoveDerivedStats() 
+    {
+        foreach (KeyValuePair<StatTypes, List<StatTypes>> kvp in DataController.derivedStats)
+        {
+            foreach (StatTypes stat in kvp.Value)
+            {
+                this.RemoveListener(OnDerivedStatChange, Stats.DidChangeNotification(kvp.Key), stats);
+            }
+        }
+    }
+
+    void SetDerivedStat(StatTypes baseStat, int delta)
+    {
+        if (DataController.derivedStats.ContainsKey(baseStat))
+        {
+            foreach (StatTypes stat in DataController.derivedStats[baseStat])
+            {
+                stats[stat] += delta;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("There isn't a corresponding derived stat bonus for type: {0}", baseStat.ToString()));
+        }
+    }
+
     void SetBonus(StatTypes s)
     {
-        if (abilityScoresBonuses.ContainsKey(s))
+        if (DataController.abilityScoresBonuses.ContainsKey(s))
         {
             int bonus = Mathf.FloorToInt((stats[s] - 10) / 2);
-            stats.SetValue(abilityScoresBonuses[s], bonus, false);
+            stats.SetValue(DataController.abilityScoresBonuses[s], bonus, false);
         }
         else
         {
             Debug.LogError(string.Format("There isn't a corresponding ability bonus for type: {0}", s.ToString()));
-        }   
+        }
     }
     #endregion
 }

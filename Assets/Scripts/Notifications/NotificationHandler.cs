@@ -40,7 +40,7 @@ public class NotificationHandler
 
         SenderTable subTable = table[notification];
 
-        System.Object key = (sender == null) ? this : sender;
+        System.Object key = sender ?? (this);
 
         if (!subTable.ContainsKey(key))
         {
@@ -85,7 +85,7 @@ public class NotificationHandler
         }
 
         SenderTable subTable = table[notification];
-        System.Object key = (sender == null) ? this : sender;
+        System.Object key = sender ?? (this);
 
         if (!subTable.ContainsKey(key))
         {

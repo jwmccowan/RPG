@@ -56,7 +56,7 @@ public class Stats : MonoBehaviour
         }
 
         data[(int)s] = value;
-        this.PostNotification(DidChangeNotification(s), oldValue);
+        this.PostNotification(DidChangeNotification(s), new Info<StatTypes, int>(s, oldValue));
     }
 
 

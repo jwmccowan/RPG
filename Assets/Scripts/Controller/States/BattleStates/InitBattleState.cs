@@ -18,6 +18,7 @@ public class InitBattleState : BattleState
     IEnumerator Init()
     {
         board.Load(levelData);
+        DataController.instance.Load();
         Point p = new Point((int)levelData.tilePositions[0].x, (int)levelData.tilePositions[0].z);
         SelectTile(p);
         SpawnTestUnits();

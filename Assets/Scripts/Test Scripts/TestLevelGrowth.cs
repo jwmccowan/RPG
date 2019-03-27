@@ -8,6 +8,7 @@ public class TestLevelGrowth : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        DataController.instance.Load(null);
         this.AddListener(OnLevelChange, Stats.DidChangeNotification(StatTypes.Level));
         this.AddListener(OnExperienceException, Stats.WillChangeNotification(StatTypes.Experience));
     }
@@ -96,6 +97,7 @@ public class TestLevelGrowth : MonoBehaviour
             actor.AddComponent<Stats>();
             Level level = actor.AddComponent<Level>();
             level.Init((int)Random.Range(1, 5));
+            actor.AddComponent<CharacterSheet>();
             heroes.Add(actor);
         }
 
@@ -115,7 +117,10 @@ public class TestLevelGrowth : MonoBehaviour
         {
             GameObject actor = p[i];
             Level level = actor.GetComponent<Level>();
+            Stats stats = actor.GetComponent<Stats>();
             Debug.Log(string.Format("Name: {0}\tLevel: {1}\tExp: {2}", actor.name, level.level, level.experience));
+            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus]));
+            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}\tDexterityBonusToAC: {2}\tAC: {3}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus], stats[StatTypes.Dexterity_Bonus_To_AC], stats[StatTypes.AC]));
         }
     }
 

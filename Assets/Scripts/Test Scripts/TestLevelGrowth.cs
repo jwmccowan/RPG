@@ -133,7 +133,8 @@ public class TestLevelGrowth : MonoBehaviour
     void OnExperienceException(object sender, object args)
     {
         GameObject actor = (sender as Stats).gameObject;
-        ValueChangeException vce = args as ValueChangeException;
+        Info<StatTypes, ValueChangeException> info = args as Info<StatTypes, ValueChangeException>;
+        ValueChangeException vce = info.arg1;
         int roll = Random.Range(0, 5);
         switch (roll)
         {

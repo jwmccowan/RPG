@@ -49,7 +49,8 @@ public class Level : MonoBehaviour
     #region events
     void OnExpWillChange(object sender, object e)
     {
-        ValueChangeException vce = e as ValueChangeException;
+        Info<StatTypes, ValueChangeException> info = e as Info<StatTypes, ValueChangeException>;
+        ValueChangeException vce = info.arg1;
         vce.AddModifier(new ClampValueModifier(int.MaxValue, experience, maxExperience));
     }
 

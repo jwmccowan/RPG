@@ -39,7 +39,7 @@ public class Equipment : MonoBehaviour
 
     public void Unequip(EquipSlots slots)
     {
-        for (int i = 0; i < itemList.Count; i++)
+        for (int i = itemList.Count - 1; i >= 0; i--)
         {
             if ((itemList[i].slots & slots) != EquipSlots.None)
             {

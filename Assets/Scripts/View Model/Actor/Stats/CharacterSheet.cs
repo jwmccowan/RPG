@@ -6,7 +6,7 @@ using System;
 public class CharacterSheet : MonoBehaviour
 {
     #region fields
-    Stats stats;
+    public Stats stats;
     Dictionary<StatTypes, Dictionary<BonusTypes, List<Bonus>>> bonusMap;
     #endregion
 
@@ -18,7 +18,7 @@ public class CharacterSheet : MonoBehaviour
 
     void Awake()
     {
-        stats = GetComponent<Stats>();
+        stats = gameObject.AddComponent<Stats>();
         bonusMap = new Dictionary<StatTypes, Dictionary<BonusTypes, List<Bonus>>>();
     }
 

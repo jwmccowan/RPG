@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 /// <summary>
 /// A generic object that can contain up to three other objects.
 /// To be sent with notifications that require more information.
@@ -14,6 +15,7 @@ public class Info<T0>
         this.arg0 = arg0;
     }
 }
+
 public class Info<T0, T1> : Info<T0>
 {
     public T1 arg1;
@@ -22,6 +24,7 @@ public class Info<T0, T1> : Info<T0>
         this.arg1 = arg1;
     }
 }
+
 public class Info<T0, T1, T2> : Info<T0, T1>
 {
     public T2 arg2;

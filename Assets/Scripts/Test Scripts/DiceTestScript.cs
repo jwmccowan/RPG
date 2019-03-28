@@ -54,9 +54,9 @@ public class DiceTestScript : MonoBehaviour
     void InitHero()
     {
         hero = new GameObject("Hero");
-        stats = hero.AddComponent<Stats>();
-        hero.AddComponent<CharacterSheet>();
+        CharacterSheet sheet = hero.AddComponent<CharacterSheet>();
         level = hero.AddComponent<Level>();
+        stats = sheet.stats;
         stats[StatTypes.HP_Increases] = 15;
         stats[StatTypes.Strength] = 16;
         this.AddListener(OnLevelUp, Stats.DidChangeNotification(StatTypes.Level), stats);

@@ -73,8 +73,8 @@ public class EquipmentTestScript : MonoBehaviour
     GameObject CreateActor(string title)
     {
         GameObject actor = new GameObject(title);
-        Stats s = actor.AddComponent<Stats>();
-        actor.AddComponent<CharacterSheet>();
+        CharacterSheet sheet = actor.AddComponent<CharacterSheet>();
+        Stats s = sheet.stats;
         s[StatTypes.Dexterity] = 16;
         s[StatTypes.HP_Increases] = Random.Range(45, 90);
         s[StatTypes.HP] = s[StatTypes.Max_HP];

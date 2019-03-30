@@ -35,8 +35,9 @@ public class InitBattleState : BattleState
         {
             GameObject instance = Instantiate(owner.heroPrefab);
             CharacterSheet sheet = instance.AddComponent<CharacterSheet>();
-            sheet.AddClassLevel(ClassType.Fighter);
-            sheet.AddClassLevel(ClassType.Fighter);
+            sheet.level.experience += Level.ExperienceForLevel(2);
+            sheet.level.AddClassLevel(ClassType.Fighter);
+            sheet.level.AddClassLevel(ClassType.Fighter);
             sheet.stats[StatTypes.Dexterity] = 15;
             sheet.stats[StatTypes.Wisdom] = 12;
 

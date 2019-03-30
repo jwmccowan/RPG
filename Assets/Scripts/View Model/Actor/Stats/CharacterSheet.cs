@@ -10,7 +10,7 @@ public class CharacterSheet : MonoBehaviour
     AbilityScores abilityScores;
     DerivedStats derivedStats;
     BonusHandler bonusHandler;
-    Level level;
+    public Level level;
     #endregion
 
     #region MonoBehaviour
@@ -41,11 +41,6 @@ public class CharacterSheet : MonoBehaviour
     public void RemoveBonus(Bonus bonus)
     {
         bonusHandler.RemoveBonus(bonus);
-    }
-
-    public void AddClassLevel(ClassType type)
-    {
-        level.AddClassLevel(type);
     }
     #endregion
 

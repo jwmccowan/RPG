@@ -7,6 +7,7 @@ public class DataController
 {
     public static Dictionary<StatTypes, StatTypes> abilityScoresBonuses = new Dictionary<StatTypes, StatTypes>();
     public static Dictionary<StatTypes, List<StatTypes>> derivedStats = new Dictionary<StatTypes, List<StatTypes>>();
+    public static Dictionary<ClassType, Classes> classes = new Dictionary<ClassType, Classes>();
     public static DataController instance = new DataController();
     public DatabaseService data;
 
@@ -18,6 +19,7 @@ public class DataController
             complete?.Invoke();
             GetAbilityScoreEntries();
             GetDerivedStats();
+            GetClasses();
         }); 
     }
 
@@ -53,6 +55,16 @@ public class DataController
         }
     }
 
+    void GetClasses()
+    {
+        classes.Clear();
+        var classesTable = data.connection.Table<Classes>();
+        foreach(Classes c in classesTable)
+        {
+            classes[(ClassType)c.class_id] = c;
+        }
+    }
+
     private DataController()
     {
 
@@ -77,5 +89,18 @@ public class DataController
         public int id { get; set; }
         public int stat_id { get; set; }
         public int bonus_id { get; set; }
+    }
+
+    public class Classes
+    {
+        [PrimaryKey, AutoIncrement]
+        public int class_id { get; set; }
+        public string name { get; set; }
+        public int hit_die { get; set; }
+        public int growth_rate { get; set; }
+        public int fortitude_growth_rate { get; set; }
+        public int reflex_growth_rate { get; set; }
+        public int will_growth_rate { get; set; }
+        public int skill_ranks { get; set; }
     }
 }

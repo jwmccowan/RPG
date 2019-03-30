@@ -49,4 +49,9 @@ public class Roll
         }
         return result;
     }
+
+    public void LoadDie(int loadedRoll)
+    {
+        value = Mathf.Clamp(loadedRoll, numDice + bonus, (numDice * numSides) + bonus);
+    }
 }

@@ -28,6 +28,10 @@ public enum StatTypes
     BAB,
     To_Hit,
     Dexterity_Bonus_To_AC,
+    Will,
+    Reflex,
+    Fortitude,
+    Movement,
 
     Count
 }

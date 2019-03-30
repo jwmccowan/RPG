@@ -10,6 +10,7 @@ public class CharacterSheet : MonoBehaviour
     AbilityScores abilityScores;
     DerivedStats derivedStats;
     BonusHandler bonusHandler;
+    Level level;
     #endregion
 
     #region MonoBehaviour
@@ -24,6 +25,7 @@ public class CharacterSheet : MonoBehaviour
         abilityScores = gameObject.AddComponent<AbilityScores>();
         derivedStats = gameObject.AddComponent<DerivedStats>();
         bonusHandler = gameObject.AddComponent<BonusHandler>();
+        level = gameObject.AddComponent<Level>(); 
     }
     #endregion
 
@@ -31,15 +33,6 @@ public class CharacterSheet : MonoBehaviour
     #endregion
 
     #region public
-
-    #endregion
-
-    #region private
-    void Init()
-    {
-        stats[StatTypes.AC] += 10;
-    }
-
     public void AddBonus(Bonus bonus)
     {
         bonusHandler.AddBonus(bonus);
@@ -48,6 +41,18 @@ public class CharacterSheet : MonoBehaviour
     public void RemoveBonus(Bonus bonus)
     {
         bonusHandler.RemoveBonus(bonus);
+    }
+
+    public void AddClassLevel(ClassType type)
+    {
+        level.AddClassLevel(type);
+    }
+    #endregion
+
+    #region private
+    void Init()
+    {
+        stats[StatTypes.AC] += 10;
     }
     #endregion
 }

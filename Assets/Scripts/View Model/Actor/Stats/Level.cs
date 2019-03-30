@@ -94,7 +94,7 @@ public class Level : MonoBehaviour
         {
             ClassLevel classLevel = new ClassLevel(type, GetNumClassLevels(type) + 1);
             classLevelList.Add(classLevel);
-            classLevel.Apply(stats, classLevelList.Count == 0);
+            classLevel.Apply(stats, classLevelList.Count == 1);
             this.PostNotification(Level.ClassLevelAddedNotification, null);
         }
     }

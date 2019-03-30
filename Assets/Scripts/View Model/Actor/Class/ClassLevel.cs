@@ -14,8 +14,6 @@ public class ClassLevel
 
     int bab;
 
-    bool firstLevel;
-
     Roll hpRoll;
 
     bool isApplied;

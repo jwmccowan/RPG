@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
-    int[] data = new int[(int)StatTypes.Count];
+    [SerializeField] int[] data = new int[(int)StatTypes.Count];
 
     public int this[StatTypes s]
     {

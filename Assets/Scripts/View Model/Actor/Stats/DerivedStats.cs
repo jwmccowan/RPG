@@ -12,7 +12,7 @@ public class DerivedStats : MonoBehaviour
     #endregion
 
     #region MonoBehaviour
-    private void Awake()
+    void Awake()
     {
         stats = GetComponent<Stats>();
         Init();

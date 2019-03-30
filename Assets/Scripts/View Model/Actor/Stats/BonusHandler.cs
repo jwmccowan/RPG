@@ -9,8 +9,8 @@ public class BonusHandler : MonoBehaviour
 
     void Awake()
     {
-        stats = GetComponent<Stats>();
         bonusMap = new Dictionary<StatTypes, Dictionary<BonusTypes, List<Bonus>>>();
+        stats = GetComponent<Stats>();
     }
 
     public void AddBonus(Bonus bonus)

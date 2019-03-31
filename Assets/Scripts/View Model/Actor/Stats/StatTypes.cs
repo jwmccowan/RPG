@@ -1,5 +1,6 @@
 ﻿public enum StatTypes
 {
+    Null,
     Level,
     Experience,
     HP,
@@ -28,6 +29,7 @@
     Reflex,
     Fortitude,
     Movement,
+    Con_Bonus_To_HP,
 
     Count
 }

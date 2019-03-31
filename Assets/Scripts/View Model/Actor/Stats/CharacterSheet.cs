@@ -10,6 +10,7 @@ public class CharacterSheet : MonoBehaviour
     AbilityScores abilityScores;
     DerivedStats derivedStats;
     BonusHandler bonusHandler;
+    public Health health;
     public Level level;
     #endregion
 
@@ -25,7 +26,8 @@ public class CharacterSheet : MonoBehaviour
         abilityScores = gameObject.AddComponent<AbilityScores>();
         derivedStats = gameObject.AddComponent<DerivedStats>();
         bonusHandler = gameObject.AddComponent<BonusHandler>();
-        level = gameObject.AddComponent<Level>(); 
+        level = gameObject.AddComponent<Level>();
+        health = gameObject.AddComponent<Health>();
     }
     #endregion
 

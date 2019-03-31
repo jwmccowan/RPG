@@ -41,7 +41,7 @@ public class ClassLevel
             {
                 hpRoll.LoadDie(int.MaxValue);
             }
-            stats[StatTypes.HP_Increases] += hpRoll.value;
+            stats[StatTypes.HP_Rolled] += hpRoll.value;
             //TODO: attach abilities to character
             stats[StatTypes.Movement] += 2; //this is fake, done by race and feats
         }
@@ -56,7 +56,7 @@ public class ClassLevel
             stats[StatTypes.Reflex] -= reflexSave;
             stats[StatTypes.Fortitude] -= fortitudeSave;
             stats[StatTypes.BAB] -= bab;
-            stats[StatTypes.HP_Increases] -= hpRoll.value;
+            stats[StatTypes.HP_Rolled] -= hpRoll.value;
             //TODO: attach abilities to character
             stats[StatTypes.Movement] -= 2; // fake
         }

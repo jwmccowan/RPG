@@ -40,6 +40,7 @@ public class InitBattleState : BattleState
             sheet.level.AddClassLevel(ClassType.Fighter);
             sheet.stats[StatTypes.Dexterity] = 15;
             sheet.stats[StatTypes.Wisdom] = 12;
+            sheet.stats[StatTypes.Constitution] = 12;
 
             Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
 

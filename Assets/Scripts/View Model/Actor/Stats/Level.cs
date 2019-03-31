@@ -19,6 +19,11 @@ public class Level : MonoBehaviour
         get { return stats[StatTypes.Level]; }
     }
 
+    public int classLevelCount
+    {
+        get { return classLevelList.Count; }
+    }
+
     public int experience
     {
         get { return stats[StatTypes.Experience]; }

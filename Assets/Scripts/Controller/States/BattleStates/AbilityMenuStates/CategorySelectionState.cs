@@ -6,6 +6,19 @@ public class CategorySelectionState : BaseAbilityMenuState
 {
     //The following is all temporarily hard coded
 
+    public override void Enter()
+    {
+        Debug.Log("CommandSelectionState Enter");
+        base.Enter();
+        statPanelController.ShowPrimary(turn.actor.gameObject);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        statPanelController.HidePrimary();
+    }
+
     protected override void Cancel()
     {
         owner.ChangeState<CommandSelectionState>();

@@ -14,11 +14,18 @@ public class SelectUnitState : BattleState
         StartCoroutine("SelectUnit");
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+        statPanelController.HidePrimary();
+    }
+
     //TODO: select unit a bit more smart.  this is temp until we get stats up
     IEnumerator SelectUnit()
     {
         currentUnitIndex = (currentUnitIndex + 1) % units.Count;
         turn.Change(units[currentUnitIndex]);
+        RefreshPrimaryStatPanel(pos);
         yield return null;
         owner.ChangeState<CommandSelectionState>();
     }

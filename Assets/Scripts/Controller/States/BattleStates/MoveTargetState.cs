@@ -13,6 +13,7 @@ public class MoveTargetState : BattleState
         Movement movement = owner.turn.actor.GetComponent<Movement>();
         tiles = movement.GetTilesInRange(board);
         board.SelectTiles(tiles);
+        statPanelController.ShowPrimary(turn.actor.gameObject);
     }
 
     public override void Exit()
@@ -20,6 +21,7 @@ public class MoveTargetState : BattleState
         base.Exit();
         board.DeselectTiles(tiles);
         tiles = null;
+        statPanelController.HidePrimary();
     }
 
     protected override void OnMove(object sender, object e)

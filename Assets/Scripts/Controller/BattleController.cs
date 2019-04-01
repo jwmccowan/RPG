@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleController : StateMachine
 {
     public AbilityMenuPanelController abilityMenuPanelController;
+    public StatPanelController statPanelController;
     public CameraRig cameraRig;
     public Board board;
     public LevelData levelData;

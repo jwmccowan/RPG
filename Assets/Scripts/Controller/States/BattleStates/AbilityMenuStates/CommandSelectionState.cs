@@ -8,6 +8,13 @@ public class CommandSelectionState : BaseAbilityMenuState
     {
         Debug.Log("CommandSelectionState Enter");
         base.Enter();
+        statPanelController.ShowPrimary(turn.actor.gameObject);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        statPanelController.HidePrimary();
     }
 
     protected override void Cancel()

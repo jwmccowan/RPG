@@ -34,6 +34,14 @@ public class InitBattleState : BattleState
         for (int i = 0; i < components.Length; i++)
         {
             GameObject instance = Instantiate(owner.heroPrefab);
+            CharacterSheet sheet = instance.AddComponent<CharacterSheet>();
+            sheet.level.experience += Level.ExperienceForLevel(2);
+            sheet.level.AddClassLevel(ClassType.Fighter);
+            sheet.level.AddClassLevel(ClassType.Fighter);
+            sheet.stats[StatTypes.Dexterity] = 15;
+            sheet.stats[StatTypes.Wisdom] = 12;
+            sheet.stats[StatTypes.Constitution] = 12;
+
             Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
 
             Unit unit = instance.GetComponent<Unit>();
@@ -41,8 +49,6 @@ public class InitBattleState : BattleState
             unit.Match();
 
             Movement m = instance.AddComponent(components[i]) as Movement;
-            m.range = 5;
-            m.jumpHeight = 1;
             units.Add(unit);
         }
     }

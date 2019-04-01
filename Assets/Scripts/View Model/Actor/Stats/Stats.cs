@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
-    int[] data = new int[(int)StatTypes.Count];
+    [SerializeField] int[] data = new int[(int)StatTypes.Count];
 
     public int this[StatTypes s]
     {
@@ -45,7 +45,7 @@ public class Stats : MonoBehaviour
         if (allowExceptions)
         {
             ValueChangeException exc = new ValueChangeException(oldValue, value);
-            this.PostNotification(WillChangeNotification(s), exc);
+            this.PostNotification(WillChangeNotification(s), new Info<StatTypes, ValueChangeException>(s, exc));
 
             value = exc.GetModifiedValue();
 

@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class ExploreState : BattleState
 {
+    public override void Enter()
+    {
+        Debug.Log("ExploreState Enter");
+        base.Enter();
+        statPanelController.ShowPrimary(turn.actor.gameObject);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        statPanelController.HidePrimary();
+    }
+
     protected override void OnFire(object sender, object e)
     {
         owner.ChangeState<CommandSelectionState>();

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    public int range;
-    public int jumpHeight;
+    Stats stats;
+    public int range { get { return stats[StatTypes.Movement]; } }
+    public int jumpHeight { get { return Mathf.FloorToInt(stats[StatTypes.Movement] / 4); } }
     protected Unit unit;
     protected Transform jumper;
 
@@ -13,6 +14,11 @@ public abstract class Movement : MonoBehaviour
     {
         jumper = transform.Find("Jumper");
         unit = GetComponent<Unit>();
+    }
+
+    protected virtual void Start()
+    {
+        stats = GetComponent<Stats>();
     }
 
     public List<Tile> GetTilesInRange(Board board)

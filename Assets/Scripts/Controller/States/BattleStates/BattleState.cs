@@ -6,6 +6,7 @@ public class BattleState : State
 {
     protected BattleController owner;
     public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
+    public StatPanelController statPanelController { get { return owner.statPanelController; } }
     public CameraRig cameraRig { get { return owner.cameraRig; } }
     public Board board { get { return owner.board; } }
     public LevelData levelData { get { return owner.levelData; } }
@@ -65,5 +66,40 @@ public class BattleState : State
 
         pos = p;
         tileSelectionIndicator.localPosition = board.tiles[p].center;
+    }
+
+    protected virtual Unit GetUnit(Point p)
+    {
+        Tile t = board.GetTile(p);
+        if (t.content == null) return null;
+        Unit unit = t.content.GetComponent<Unit>();
+        if (unit == null) return null;
+        return unit;
+    }
+
+    protected virtual void RefreshPrimaryStatPanel(Point p)
+    {
+        Unit unit = GetUnit(p);
+        if (unit == null)
+        {
+            statPanelController.HidePrimary();
+        }
+        else
+        {
+            statPanelController.ShowPrimary(unit.gameObject);
+        }
+    }
+
+    protected virtual void RefreshSecondaryStatPanel(Point p)
+    {
+        Unit unit = GetUnit(p);
+        if (unit == null)
+        {
+            statPanelController.HideSecondary();
+        }
+        else
+        {
+            statPanelController.ShowSecondary(unit.gameObject);
+        }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum StatTypes
+﻿public enum StatTypes
 {
+    Null,
     Level,
     Experience,
     HP,
@@ -28,6 +25,11 @@ public enum StatTypes
     BAB,
     To_Hit,
     Dexterity_Bonus_To_AC,
+    Will,
+    Reflex,
+    Fortitude,
+    Movement,
+    Con_Bonus_To_HP,
 
     Count
 }

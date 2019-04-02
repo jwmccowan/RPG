@@ -8,6 +8,11 @@ public class Board : MonoBehaviour
     [SerializeField] GameObject tilePrefab;
     public Dictionary<Point, Tile> tiles = new Dictionary<Point, Tile>();
 
+    public Point min { get { return _min; } }
+    public Point max { get { return _max; } }
+    Point _min;
+    Point _max;
+
     Color selectedTileColor = new Color(0, 1, 1, 1);
     Color defaultTileColor = new Color(1, 1, 1, 1);
 
@@ -99,6 +104,8 @@ public class Board : MonoBehaviour
     {
         List<Vector3> tilePositions = data.tilePositions;
         PoolDataController.AddKey(TilePoolKey, tilePrefab, 100, 50);
+        _min = new Point(int.MaxValue, int.MaxValue);
+        _max = new Point(int.MinValue, int.MinValue);
         for (int i = 0; i < tilePositions.Count; i++)
         {
             GameObject instance = PoolDataController.Dequeue(TilePoolKey).gameObject;
@@ -106,6 +113,11 @@ public class Board : MonoBehaviour
             Tile t = instance.GetComponent<Tile>();
             t.Load(tilePositions[i]);
             tiles.Add(t.pos, t);
+
+            _min.x = Mathf.Min(min.x, t.pos.x);
+            _min.y = Mathf.Min(min.y, t.pos.y);
+            _max.x = Mathf.Max(max.x, t.pos.x);
+            _max.y = Mathf.Max(max.y, t.pos.y);
         }
     }
 
@@ -113,7 +125,7 @@ public class Board : MonoBehaviour
     {
         for (int i = tiles.Count - 1; i >= 0; i--)
         {
-            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", selectedTileColor);
+            tiles[i].SetColor(selectedTileColor);
         }
     }
 
@@ -121,7 +133,7 @@ public class Board : MonoBehaviour
     {
         for (int i = tiles.Count - 1; i >= 0; i--)
         {
-            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", defaultTileColor);
+            tiles[i].SetColor(defaultTileColor);
         }
     }
     #endregion

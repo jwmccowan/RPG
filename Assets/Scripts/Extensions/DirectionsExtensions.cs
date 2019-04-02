@@ -10,7 +10,7 @@ public static class DirectionsExtensions
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    public static Directions GetDirections(this Tile from, Tile to)
+    public static Directions GetDirection(this Tile from, Tile to)
     {
         Point p = to.pos - from.pos;
         if (Mathf.Abs(p.x) > Mathf.Abs(p.y))
@@ -37,7 +37,7 @@ public static class DirectionsExtensions
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    public static Directions GetDirectionsFast(this Tile from, Tile to)
+    public static Directions GetDirectionFast(this Tile from, Tile to)
     {
         if (from.pos.y < to.pos.y)
         {
@@ -51,6 +51,14 @@ public static class DirectionsExtensions
         {
             return Directions.East;
         }
+        return Directions.West;
+    }
+
+    public static Directions GetDirection(this Point p)
+    {
+        if (p.y > 0) return Directions.North;
+        if (p.x > 0) return Directions.East;
+        if (p.y < 0) return Directions.South;
         return Directions.West;
     }
 

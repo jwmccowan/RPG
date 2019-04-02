@@ -51,7 +51,7 @@ public class StatPanelController : MonoBehaviour
 
     public void HideSecondary()
     {
-        MovePanel(secondaryPanel, showKey, ref secondaryTransition);
+        MovePanel(secondaryPanel, hideKey, ref secondaryTransition);
     }
     #endregion
 

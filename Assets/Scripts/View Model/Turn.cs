@@ -10,6 +10,7 @@ public class Turn
     public Unit actor;
     public Tile startTile;
     public Directions startDir;
+    public GameObject ability;
 
     public void Act(ActionType actionType)
     {

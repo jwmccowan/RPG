@@ -26,8 +26,8 @@ public class ActionSelectionState : BaseAbilityMenuState
 
     protected override void Confirm()
     {
-        turn.Act(actionType);
-        owner.ChangeState<CommandSelectionState>();
+        turn.ability = turn.actor.GetComponentInChildren<AbilityRange>().gameObject;
+        owner.ChangeState<AbilityTargetState>();
     }
 
     protected override void LoadMenu()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// This component stores the coordinates and dimensions of a tile in our game board,
@@ -110,6 +111,15 @@ public class Tile : MonoBehaviour
     {
         _height--;
         Match();
+    }
+
+    public void SetColor(Color color)
+    {
+        Renderer[] rendererList = GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < rendererList.Length; i++)
+        {
+            rendererList[i].material.SetColor("_Color", color);
+        }
     }
     #endregion
 }

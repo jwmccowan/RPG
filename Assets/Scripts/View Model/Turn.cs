@@ -9,6 +9,7 @@ public class Turn
     public bool usedSwiftAction { get; private set; }
     public Unit actor;
     public Tile startTile;
+    public List<Tile> targets;
     public Directions startDir;
     public GameObject ability;
 

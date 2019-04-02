@@ -42,8 +42,11 @@ public class AbilityTargetState : BattleState
     {
         if ((int)e == 0)
         {
-            turn.Act(ActionSelectionState.actionType);
-            owner.ChangeState<CommandSelectionState>();
+            //turn.Act(ActionSelectionState.actionType);
+            if (ar.directionOriented || tiles.Contains(board.GetTile(pos)))
+            {
+                owner.ChangeState<ConfirmAbilityTargetState>();
+            }
         }
         else
         {

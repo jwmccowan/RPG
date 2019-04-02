@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    int hp
+    public int hp
     {
         get { return stats[StatTypes.HP]; }
         set { stats[StatTypes.HP] = value; }
     }
 
-    int maxHP
+    public int maxHP
     {
         get { return stats[StatTypes.Max_HP]; }
     }
 
-    int negativeConstitution
+    public int negativeConstitution
     {
         get { return stats[StatTypes.Constitution] * -1; }
     }

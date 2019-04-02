@@ -95,12 +95,10 @@ public class BattleState : State
         Unit unit = GetUnit(p);
         if (unit == null)
         {
-            Debug.Log("hide");
             statPanelController.HideSecondary();
         }
         else
         {
-            Debug.Log("show");
             statPanelController.ShowSecondary(unit.gameObject);
         }
     }

@@ -22,6 +22,7 @@ public class InitBattleState : BattleState
         Point p = new Point((int)levelData.tilePositions[0].x, (int)levelData.tilePositions[0].z);
         SelectTile(p);
         SpawnTestUnits();
+        owner.round = owner.gameObject.AddComponent<InitiativeController>().Round();
         yield return null;
         owner.ChangeState<CutSceneState>();
     }
@@ -38,7 +39,7 @@ public class InitBattleState : BattleState
             sheet.level.experience += Level.ExperienceForLevel(2);
             sheet.level.AddClassLevel(ClassType.Fighter);
             sheet.level.AddClassLevel(ClassType.Fighter);
-            sheet.stats[StatTypes.Dexterity] = 15;
+            sheet.stats[StatTypes.Dexterity] = Random.Range(9,18);
             sheet.stats[StatTypes.Wisdom] = 12;
             sheet.stats[StatTypes.Constitution] = 12;
 

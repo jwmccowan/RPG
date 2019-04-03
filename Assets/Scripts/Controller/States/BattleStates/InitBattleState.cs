@@ -31,10 +31,11 @@ public class InitBattleState : BattleState
     {
         //This is temporary code for testing
         System.Type[] components = new System.Type[] { typeof(WalkMovement), typeof(FlyMovement), typeof(TeleportMovement) };
-
+        string[] name = new string[3] { "Cooper", "Anna", "Cat"};
         for (int i = 0; i < components.Length; i++)
         {
             GameObject instance = Instantiate(owner.heroPrefab);
+            instance.name = name[i];
             CharacterSheet sheet = instance.AddComponent<CharacterSheet>();
             sheet.level.experience += Level.ExperienceForLevel(2);
             sheet.level.AddClassLevel(ClassType.Fighter);

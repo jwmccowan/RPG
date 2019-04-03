@@ -12,6 +12,7 @@ public enum BonusTypes
     Inherent,
     Luck,
     NaturalArmor,
+    Morale,
     Racial,
     Resistance,
     Shield,

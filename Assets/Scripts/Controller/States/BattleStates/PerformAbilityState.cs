@@ -17,6 +17,8 @@ public class PerformAbilityState : BattleState
 
         FakeAttack();
 
+        //turn.actor.transform.Find("Jumper").GetComponent<Animator>().SetTrigger("attack");
+
         owner.ChangeState<CommandSelectionState>();
     }
 
@@ -25,7 +27,7 @@ public class PerformAbilityState : BattleState
         for (int i = 0; i < turn.targets.Count; i++)
         {
             GameObject obj = turn.targets[i].content;
-            CharacterSheet sheet = obj != null ? obj.GetComponent<CharacterSheet>() : null;
+            CharacterSheet sheet = obj?.GetComponent<CharacterSheet>();
             if (sheet != null)
             {
                 sheet.health.hp -= new Roll(1, 8, 2).value;

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Roll
 {
+    static Random random;
+
     public int numDice { get; private set; }
     public int numSides { get; private set; }
     public int bonus { get; private set; }
     public int value { get; private set; }
-    Random random;
 
     public Roll(int numSides)
     {
@@ -27,11 +29,13 @@ public class Roll
 
     void Init(int nd, int ns, int b)
     {
+        if (random == null)
+        {
+            random = new Random();
+        }
         numDice = nd;
         numSides = ns;
         bonus = b;
-        random = new Random();
-        NewRoll();
     }
 
     public int NewRoll()

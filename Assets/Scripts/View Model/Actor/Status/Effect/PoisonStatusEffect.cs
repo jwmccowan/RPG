@@ -5,12 +5,11 @@ using UnityEngine;
 public class PoisonStatusEffect : StatusEffect
 {
     Unit unit;
-    public Roll roll;
+    public Roll roll = new Roll(4);
 
     void OnEnable()
     {
         unit = GetComponentInParent<Unit>();
-        if (roll == null) roll = new Roll(4);
         this.AddListener(OnTurnBegan, InitiativeController.TurnBeganNotification, unit);
     }
 

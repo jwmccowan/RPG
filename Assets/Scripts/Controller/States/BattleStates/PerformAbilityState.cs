@@ -30,7 +30,7 @@ public class PerformAbilityState : BattleState
             CharacterSheet sheet = obj?.GetComponent<CharacterSheet>();
             if (sheet != null)
             {
-                sheet.health.hp -= new Roll(1, 8, 2).value;
+                sheet.health.hp -= new Roll(1, 8, 2).NewRoll();
                 if (sheet.health.hp <= 0)
                 {
                     Debug.Log(string.Format("Knocked out {0}", obj));

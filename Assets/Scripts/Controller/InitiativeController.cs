@@ -5,11 +5,11 @@ using UnityEngine;
 public class InitiativeController : MonoBehaviour
 {
     #region notifications
-    const string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
-    const string RoundBeganNotification = "InitiativeController.RoundBeganNotification";
-    const string TurnBeganNotification = "InitiativeController.TurnBeganNotification";
-    const string TurnEndedNotification = "InitiativeController.TurnEndedNotification";
-    const string RoundEndedNotification = "InitiativeController.RoundEndedNotification";
+    public  string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
+    public const string RoundBeganNotification = "InitiativeController.RoundBeganNotification";
+    public const string TurnBeganNotification = "InitiativeController.TurnBeganNotification";
+    public const string TurnEndedNotification = "InitiativeController.TurnEndedNotification";
+    public const string RoundEndedNotification = "InitiativeController.RoundEndedNotification";
     #endregion
 
     #region fields
@@ -44,6 +44,7 @@ public class InitiativeController : MonoBehaviour
                     bc.turn.Change(units[i]);
                     yield return units[i];
                 }
+                units[i].PostNotification(TurnEndedNotification);
             }
 
             this.PostNotification(RoundEndedNotification);
@@ -55,7 +56,7 @@ public class InitiativeController : MonoBehaviour
     bool CanTakeTurn(Unit unit)
     {
         BaseException exc = new BaseException(true);
-        this.PostNotification(TurnBeganNotification, exc);
+        unit.PostNotification(TurnBeganNotification, exc);
         return exc.toggle;
     }
 

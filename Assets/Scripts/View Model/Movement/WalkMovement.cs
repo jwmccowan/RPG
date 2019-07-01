@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class WalkMovement : Movement
 {
+    //Animator anim;
+
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+    //    anim = jumper.GetComponent<Animator>();
+    //}
+
     protected override bool ExpandSearch(Tile from, Tile to)
     {
         if (Mathf.Abs(from.height - to.height) > jumpHeight)
@@ -29,6 +37,8 @@ public class WalkMovement : Movement
             t = t.prev;
         }
 
+        //anim.SetBool("isWalking", true);
+
         for (int i = 1; i < moveTargets.Count; i++)
         {
             Tile from = moveTargets[i - 1];
@@ -48,6 +58,7 @@ public class WalkMovement : Movement
                 yield return StartCoroutine(Jump(to));
             }
         }
+        //anim.SetBool("isWalking", false);
         yield return null;
     }
 
@@ -68,9 +79,12 @@ public class WalkMovement : Movement
         jumpTweener.easingControl.loopCount = 1;
         jumpTweener.easingControl.loopType = EasingControl.LoopType.PingPong;
 
+        //anim.SetBool("isWalking", false);
+
         while (walkTweener != null)
         {
             yield return null;
         }
+        //anim.SetBool("isWalking", true);
     }
 }

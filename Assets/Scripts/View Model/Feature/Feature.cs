@@ -29,7 +29,6 @@ public abstract class Feature : MonoBehaviour
 
     public void Apply(GameObject target)
     {
-
         this.target = target;
         OnApply();
         this.target = null;

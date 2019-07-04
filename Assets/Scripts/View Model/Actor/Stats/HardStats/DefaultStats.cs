@@ -20,7 +20,7 @@ public class DefaultStats : StatCollection
         mobility.statName = "Mobility";
         mobility.statBaseValue = 16f;
 
-        StatAttribute health = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Max_HP);
+        StatRange health = GetOrCreateStat<StatRange>(StatTypes.Stat_Max_HP);
         health.statName = "Health";
         health.statBaseValue = 80f;
         health.AddLinker(new StatLinkerBasic(constitution, 2f));

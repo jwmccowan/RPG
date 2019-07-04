@@ -12,7 +12,7 @@ public class StatTest : MonoBehaviour
 
         DisplayStats();
 
-        StatMeter health = stats.GetStat<StatMeter>(StatTypes.Stat_Max_HP);
+        StatRange health = stats.GetStat<StatRange>(StatTypes.Stat_Max_HP);
         health.AddListener(OnHealthWillChange, "StatMeterValueWillChange");
         health.AddListener(OnHealthDidChange, "StatMeterValueDidChange");
 
@@ -27,13 +27,13 @@ public class StatTest : MonoBehaviour
 
     void OnHealthWillChange(object sender, object e)
     {
-        StatMeter health = sender as StatMeter;
+        StatRange health = sender as StatRange;
         Debug.Log(string.Format("Health will change from {0}", health.currentValue));
     }
 
     void OnHealthDidChange(object sender, object e)
     {
-        StatMeter health = sender as StatMeter;
+        StatRange health = sender as StatRange;
         Debug.Log(string.Format("Health did change to {0}", health.currentValue));
     }
 

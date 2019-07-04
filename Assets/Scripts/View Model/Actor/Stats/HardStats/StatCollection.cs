@@ -2,6 +2,11 @@
 
 public class StatCollection
 {
+    public static string StatValueWillChangeNotification = "StatCollection.StatValueWillChangeNotification";
+    public static string StatValueDidChangeNotification = "StatCollection.StatValueDidChangeNotification";
+    public static string StatCurrentValueWillChangeNotification = "StatCollection.StatCurrentValueWillChangeNotification";
+    public static string StatCurrentValueDidChangeNotification = "StatCollection.StatCurrentValueDidChangeNotification";
+
     private Dictionary<StatTypes, Stat> statCollection;
 
     public StatCollection()

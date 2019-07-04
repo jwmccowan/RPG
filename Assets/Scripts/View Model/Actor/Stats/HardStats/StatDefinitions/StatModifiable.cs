@@ -36,7 +36,7 @@ public class StatModifiable : Stat, IStatModifiable
 
     public void UpdateModifiers()
     {
-        _statModifierValue = 0f;
+        float newStatModifierValue = 0f;
         float baseAddValue = 0f;
         float basePercentValue = 0f;
         float totalAddValue = 0f;
@@ -61,7 +61,11 @@ public class StatModifiable : Stat, IStatModifiable
             }
         }
 
-        _statModifierValue = (statBaseValue * basePercentValue) + baseAddValue;
-        _statModifierValue += (statValue * totalPercentValue) + totalAddValue;
+        newStatModifierValue = (statBaseValue * basePercentValue) + baseAddValue;
+        newStatModifierValue += (statValue * totalPercentValue) + totalAddValue;
+
+        this.PostNotification(StatCollection.StatValueWillChangeNotification);
+        _statModifierValue = newStatModifierValue;
+        this.PostNotification(StatCollection.StatValueDidChangeNotification);
     }
 }

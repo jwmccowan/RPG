@@ -29,7 +29,6 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
     {
         get
         {
-            UpdateLinkers();
             return _statLinkerValue;
         }
     }
@@ -42,16 +41,34 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
     public void AddLinker(StatLinker statLinker)
     {
         statLinkers.Add(statLinker);
+        this.AddListener(OnLinkedStatValueChanged, StatLinker.LinkedValueDidChange, statLinker);
+        UpdateLinkers();
+    }
+
+    public void RemoveLinker(StatLinker statLinker)
+    {
+        statLinkers.Remove(statLinker);
+        statLinker.RemoveListener(OnLinkedStatValueChanged, StatLinker.LinkedValueDidChange);
     }
 
     public void ClearLinkers()
     {
+        foreach (StatLinker statLinker in statLinkers)
+        {
+            statLinker.RemoveListener(OnLinkedStatValueChanged, StatLinker.LinkedValueDidChange);
+        }
         statLinkers.Clear();
     }
 
     public void ScaleStat(int level)
     {
         _statLevelValue = level;
+        PostValueDidChange();
+    }
+
+    private void OnLinkedStatValueChanged(object sender, object e)
+    {
+        UpdateLinkers();
     }
 
     public void UpdateLinkers()
@@ -61,5 +78,11 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
         {
             _statLinkerValue += statLinkers[i].value;
         }
+        PostValueDidChange();
+    }
+
+    private void PostValueDidChange()
+    {
+        this.PostNotification(StatCollection.StatValueDidChangeNotification);
     }
 }

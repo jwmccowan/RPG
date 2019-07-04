@@ -13,8 +13,10 @@ public class StatTest : MonoBehaviour
         DisplayStats();
 
         StatRange health = stats.GetStat<StatRange>(StatTypes.Stat_Max_HP);
-        health.AddListener(OnHealthWillChange, "StatMeterValueWillChange");
-        health.AddListener(OnHealthDidChange, "StatMeterValueDidChange");
+        this.AddListener(OnHealthWillChange, StatCollection.StatCurrentValueWillChangeNotification, health);
+        this.AddListener(OnHealthDidChange, StatCollection.StatCurrentValueDidChangeNotification, health);
+        StatAttribute constitution = stats.GetStat<StatAttribute>(StatTypes.Ability_Score_Constitution);
+        constitution.ScaleStat(5);
 
         health.SetCurrentValueToMax();
         health.currentValue -= 20f;

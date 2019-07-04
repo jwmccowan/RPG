@@ -6,6 +6,8 @@ public abstract class StatLinker
 {
     private Stat _stat;
 
+    public const string LinkedValueDidChange = "StatLinker.LinkedValueDidChange";
+
     public Stat stat
     {
         get { return _stat; }
@@ -15,6 +17,18 @@ public abstract class StatLinker
 
     public StatLinker(Stat stat)
     {
-        this._stat = stat;
+        _stat = stat;
+        this.AddListener(OnValueChanged, StatCollection.StatValueDidChangeNotification, stat);
+    }
+
+    private void OnValueChanged(object sender, object e)
+    {
+        Debug.Log("Linker got the value changed event");
+        PostLinkedChangeEvent();
+    }
+
+    private void PostLinkedChangeEvent()
+    {
+        this.PostNotification(LinkedValueDidChange, this);
     }
 }

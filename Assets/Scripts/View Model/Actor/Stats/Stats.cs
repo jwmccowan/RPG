@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
-    [SerializeField] int[] data = new int[(int)StatTypes.Count];
+    [SerializeField] Stat[] data = new Stat[(int)StatTypes.Count];
 
     public int this[StatTypes s]
     {
-        get { return data[(int)s]; }
+        get { return Mathf.FloorToInt(data[(int)s].statValue); }
         set { SetValue(s, value, true); }
     }
 
@@ -35,7 +35,7 @@ public class Stats : MonoBehaviour
 
     public void SetValue(StatTypes s, int value, bool allowExceptions)
     {
-        int oldValue = this[s];
+        int oldValue = Mathf.FloorToInt(data[(int) s].statValue);
 
         if (oldValue == value)
         {
@@ -55,7 +55,7 @@ public class Stats : MonoBehaviour
             }
         }
 
-        data[(int)s] = value;
+        data[(int) s].statBaseValue = value;
         this.PostNotification(DidChangeNotification(s), new Info<StatTypes, int>(s, oldValue));
     }
 

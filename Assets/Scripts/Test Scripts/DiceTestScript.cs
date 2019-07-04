@@ -56,15 +56,16 @@ public class DiceTestScript : MonoBehaviour
         hero = new GameObject("Hero");
         CharacterSheet sheet = hero.AddComponent<CharacterSheet>();
         stats = sheet.stats;
-        stats[StatTypes.HP_Increases] = 15;
+        /*stats[StatTypes.HP_Increases] = 15;
         stats[StatTypes.Strength] = 16;
+        */
         this.AddListener(OnLevelUp, Stats.DidChangeNotification(StatTypes.Level), stats);
         HPGrowth = new Roll(1, 8, 2);
     }
 
     void LevelUp()
     {
-        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Max_HP]));
+        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Stat_Max_HP]));
         level.experience += Level.ExperienceForLevel(2);
         level.experience += Level.ExperienceForLevel(3);
         level.experience += Level.ExperienceForLevel(4);
@@ -81,8 +82,8 @@ public class DiceTestScript : MonoBehaviour
         Info<StatTypes, int> info = e as Info<StatTypes, int>;
         StatTypes s = info.arg0;
         Debug.Log("Got to Level " + stats[StatTypes.Level]);
-        stats[StatTypes.HP_Increases] += HPGrowth.NewRoll();
+        //stats[StatTypes.HP_Increases] += HPGrowth.NewRoll();
         Debug.Log(string.Format("Rolled a {0} with 1d8+2", HPGrowth.value));
-        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Max_HP]));
+        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Stat_Max_HP]));
     }
 }

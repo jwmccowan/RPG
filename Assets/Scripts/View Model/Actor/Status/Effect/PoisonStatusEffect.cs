@@ -23,6 +23,6 @@ public class PoisonStatusEffect : StatusEffect
         CharacterSheet sheet = GetComponentInParent<CharacterSheet>();
         int damage = roll.NewRoll();
         Debug.Log(string.Format("Doing {0} points of poison damage", damage));
-        sheet.stats.SetValue(StatTypes.HP, sheet.stats[StatTypes.HP] - damage, false);
+        //sheet.stats.SetValue(StatTypes.HP, sheet.stats[StatTypes.HP] - damage, false);
     }
 }

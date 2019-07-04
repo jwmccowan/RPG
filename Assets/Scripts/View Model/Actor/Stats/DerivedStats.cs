@@ -25,6 +25,13 @@ public class DerivedStats : MonoBehaviour
     #endregion
 
     #region events
+    void OnConstitutionChanged(object sender, object e)
+    {
+        stats[StatTypes.Stat_Max_HP] = Mathf.FloorToInt(stats[StatTypes.Ability_Score_Constitution] * 0.03f);
+    }
+
+    //void OnPerceptionChanged
+
     void OnDerivedStatChange(object sender, object e)
     {
         Info<StatTypes, int> info = (Info<StatTypes, int>)e;

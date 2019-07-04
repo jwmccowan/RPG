@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClassLevel
 {
-    public ClassType classType { get; private set; }
+    /*public ClassType classType { get; private set; }
     int level;
     float growthRate;
 
@@ -112,5 +112,5 @@ public class ClassLevel
         Poor = 1,
         Medium = 2,
         Good = 3
-    }
+    }*/
 }

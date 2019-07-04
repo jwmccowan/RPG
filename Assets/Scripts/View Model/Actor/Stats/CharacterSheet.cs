@@ -1,10 +1,32 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 
 public class CharacterSheet : MonoBehaviour
 {
+    static Dictionary<StatTypes, string> _willChangeBonusNotifications = new Dictionary<StatTypes, string>();
+    static Dictionary<StatTypes, string> _didChangeBonusNotifications = new Dictionary<StatTypes, string>();
+    static Dictionary<StatTypes, string> _didChangeFinalNotifications = new Dictionary<StatTypes, string>();
+
+    public static string WillChangeBonusNotification(StatTypes type)
+    {
+        if (!_willChangeBonusNotifications.ContainsKey(type))
+        {
+            _willChangeBonusNotifications.Add(type, string.Format("Stats.{0}WillChange", type.ToString()));
+        }
+        return _willChangeBonusNotifications[type];
+    }
+
+    public static string DidChangeNotification(StatTypes type)
+    {
+        /*if (!_didChangeBonusNotifications.ContainsKey(type))
+        {
+            _didChangeNotifications.Add(type, string.Format("Stats.{0}DidChange", type.ToString()));
+        }
+        return _didChangeNotifications[type];
+        */
+        return "";
+    }
+
     #region fields
     public Stats stats;
     AbilityScores abilityScores;
@@ -12,6 +34,7 @@ public class CharacterSheet : MonoBehaviour
     BonusHandler bonusHandler;
     public Health health;
     public Level level;
+    public Accuracy accuracy;
     #endregion
 
     #region MonoBehaviour
@@ -23,11 +46,11 @@ public class CharacterSheet : MonoBehaviour
     void Awake()
     {
         stats = gameObject.AddComponent<Stats>();
-        abilityScores = gameObject.AddComponent<AbilityScores>();
         derivedStats = gameObject.AddComponent<DerivedStats>();
         bonusHandler = gameObject.AddComponent<BonusHandler>();
         level = gameObject.AddComponent<Level>();
         health = gameObject.AddComponent<Health>();
+        accuracy = gameObject.AddComponent<Accuracy>();
     }
     #endregion
 
@@ -49,7 +72,8 @@ public class CharacterSheet : MonoBehaviour
     #region private
     void Init()
     {
-        stats[StatTypes.AC] += 10;
+        stats[StatTypes.Stat_Deflection] += 10;
+        health.hp = health.maxMaxHP;
     }
     #endregion
 }

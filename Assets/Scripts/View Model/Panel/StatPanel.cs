@@ -21,10 +21,11 @@ public class StatPanel : MonoBehaviour
         nameLabel.text = obj.name;
         Stats stats = obj.GetComponent<Stats>();
         if (stats)
-        {
+        {/*TOREMOVE:
             hpLabel.text = string.Format("{0} / {1}", stats[StatTypes.HP], stats[StatTypes.Max_HP]);
-            strLabel.text = string.Format("To Hit: {0}", stats[StatTypes.Strength]);
-            acLabel.text = string.Format("AC: {0}", stats[StatTypes.AC]);
+            strLabel.text = string.Format("Acc.: {0}", stats[StatTypes.Accuracy]);
+            acLabel.text = string.Format("Def.: {0}", stats[StatTypes.Deflection]);
+            */
         }
     }
 }

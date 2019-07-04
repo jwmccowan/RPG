@@ -93,6 +93,8 @@ public class Level : MonoBehaviour
         stats.SetValue(StatTypes.Experience, ExperienceForLevel(lvl), false);
     }
 
+    // TOREMOVE:
+    /*
     public void AddClassLevel(ClassType type)
     {
         if (classLevelList.Count < level)
@@ -115,6 +117,6 @@ public class Level : MonoBehaviour
             }
         }
         return retValue;
-    }
+    }*/
     #endregion
 }

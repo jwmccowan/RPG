@@ -5,14 +5,12 @@ using UnityEngine;
 public class AbilityScores : MonoBehaviour
 {
     #region constants
-    static StatTypes[] abilityScores = new StatTypes[6] 
+    static StatTypes[] abilityScores = new StatTypes[4] 
     {
-        StatTypes.Strength,
-        StatTypes.Dexterity,
-        StatTypes.Constitution,
-        StatTypes.Intelligence,
-        StatTypes.Wisdom,
-        StatTypes.Charisma
+        StatTypes.Ability_Score_Might,
+        StatTypes.Ability_Score_Constitution,
+        StatTypes.Ability_Score_Perception,
+        StatTypes.Ability_Score_Mobility
     };
     #endregion
 
@@ -52,6 +50,7 @@ public class AbilityScores : MonoBehaviour
         {
             SetAbilityScoreBonus(kvp.Key);
             this.AddListener(OnAbilityScoreChange, Stats.DidChangeNotification(kvp.Key), stats);
+            // TOREMOVE is it 10?
             stats[kvp.Key] = 10;
         }
     }

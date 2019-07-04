@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class Movement : MonoBehaviour
 {
     Stats stats;
-    public int range { get { return stats[StatTypes.Movement]; } }
-    public int jumpHeight { get { return Mathf.FloorToInt(stats[StatTypes.Movement] / 4); } }
+    public int range { get { return stats[StatTypes.Stat_Movement]; } }
+    public int jumpHeight { get { return Mathf.FloorToInt(stats[StatTypes.Stat_Movement] / 4); } }
     protected Unit unit;
     protected Transform jumper;
 

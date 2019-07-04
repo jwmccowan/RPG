@@ -119,8 +119,8 @@ public class TestLevelGrowth : MonoBehaviour
             Level level = actor.GetComponent<Level>();
             Stats stats = actor.GetComponent<Stats>();
             Debug.Log(string.Format("Name: {0}\tLevel: {1}\tExp: {2}", actor.name, level.level, level.experience));
-            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus]));
-            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}\tDexterityBonusToAC: {2}\tAC: {3}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus], stats[StatTypes.Dexterity_Bonus_To_AC], stats[StatTypes.AC]));
+            Debug.Log(string.Format("Perception: {0}\tAccuracy: {1}", stats[StatTypes.Ability_Score_Perception], stats[StatTypes.Stat_Accuracy]));
+            Debug.Log(string.Format("Mobility: {0}\tDeflection: {1}\tDexterityBonusToAC: {2}\tAC: {3}", stats[StatTypes.Ability_Score_Mobility], stats[StatTypes.Stat_Deflection]));
         }
     }
 

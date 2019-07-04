@@ -70,23 +70,6 @@ public class BonusHandler : MonoBehaviour
         if (bonusMap[s][b].Count == 0)
         {
             bonusMap[s][b].Add(new Bonus(s, b, 0));
-            //this.AddListener(OnStatChanged, Stats.WillChangeNotification(s), stats);
         }
     }
-
-    //void OnStatChanged(object sender, object e)
-    //{
-    //    Info<StatTypes, ValueChangeException> info = e as Info<StatTypes, ValueChangeException>;
-    //    StatTypes s = info.arg0;
-    //    ValueChangeException vce = info.arg1;
-    //    Dictionary<BonusTypes, List<Bonus>> bm = bonusMap[s];
-
-    //    int bonus = 0;
-    //    foreach(KeyValuePair<BonusTypes, List<Bonus>> kvp in bm)
-    //    {
-    //        bonus += GetHighestBonus(s, kvp.Key).value;
-    //    }
-
-    //    vce.AddModifier(new AddValueModifier(0, bonus));
-    //}
 }

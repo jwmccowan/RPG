@@ -77,7 +77,7 @@ public class StatModifiable : Stat, IStatModifiable
                 typedTotal += max;
             }
 
-            newStatModifierValue = group.First().ApplyModifier(statBaseValue + newStatModifierValue, untypedTotal + typedTotal);
+            newStatModifierValue += group.First().ApplyModifier(statBaseValue + newStatModifierValue, untypedTotal + typedTotal);
         }
 
         this.PostNotification(StatCollection.StatValueWillChangeNotification);

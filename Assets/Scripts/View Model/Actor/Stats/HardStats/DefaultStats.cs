@@ -24,7 +24,7 @@ public class DefaultStats : StatCollection
         mobility.statName = "Mobility";
         mobility.statBaseValue = 10f;
 
-        StatAttribute health = GetOrCreateStat<StatHealth>(StatTypes.Stat_Max_HP);
+        StatAttribute health = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Max_HP);
         health.statName = "Health";
         health.statBaseValue = 20f;
         health.AddAbilityScorePercentModifier(constitution, .05f);

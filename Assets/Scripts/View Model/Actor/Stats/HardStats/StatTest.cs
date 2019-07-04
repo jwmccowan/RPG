@@ -8,7 +8,7 @@ public class StatTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats = new DefaultStats();
+        stats = GetComponent<DefaultStats>();
 
         DisplayStats();
 
@@ -16,7 +16,7 @@ public class StatTest : MonoBehaviour
         this.AddListener(OnHealthWillChange, StatCollection.StatCurrentValueWillChangeNotification, health);
         this.AddListener(OnHealthDidChange, StatCollection.StatCurrentValueDidChangeNotification, health);
         StatAttribute constitution = stats.GetStat<StatAttribute>(StatTypes.Ability_Score_Constitution);
-        constitution.ScaleStat(5);
+        constitution.ScaleStat(8);
 
         health.SetCurrentValueToMax();
         health.currentValue -= 20f;

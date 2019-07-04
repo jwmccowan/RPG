@@ -1,24 +1,42 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class StatCollection
+public class StatCollection : MonoBehaviour
 {
     public static string StatValueWillChangeNotification = "StatCollection.StatValueWillChangeNotification";
     public static string StatValueDidChangeNotification = "StatCollection.StatValueDidChangeNotification";
     public static string StatCurrentValueWillChangeNotification = "StatCollection.StatCurrentValueWillChangeNotification";
     public static string StatCurrentValueDidChangeNotification = "StatCollection.StatCurrentValueDidChangeNotification";
 
-    private Dictionary<StatTypes, Stat> statCollection;
+    private Dictionary<StatTypes, Stat> _statCollection;
 
-    public StatCollection()
+    public Dictionary<StatTypes, Stat> statCollection
     {
-        statCollection = new Dictionary<StatTypes, Stat>();
-        ConfigureStats();
+        get
+        {
+            if (_statCollection == null)
+            {
+                _statCollection = new Dictionary<StatTypes, Stat>();
+                ConfigureStats();
+            }
+            return _statCollection;
+        }
     }
 
-    protected virtual void ConfigureStats()
+    public float this[StatTypes s]
     {
-
+        get
+        {
+            Stat stat = GetStat(s);
+            if (stat != null)
+            {
+                return stat.statValue;
+            }
+            return -1f;
+        }
     }
+
+    protected virtual void ConfigureStats() { }
 
     public bool Contains(StatTypes s)
     {
@@ -54,5 +72,85 @@ public class StatCollection
             stat = CreateStat<T>(s);
         }
         return stat;
+    }
+
+    public void AddStatModifier(StatTypes statType, StatModifier modifier)
+    {
+        if (!Contains(statType))
+        {
+            Debug.LogError(string.Format("Trying to add modifier to {0}, which doesn't exist.", statType.ToString()));
+            return;
+        }
+        var stat = GetStat(statType) as IStatModifiable;
+        if (stat == null)
+        {
+            Debug.LogError(string.Format("Trying to add modifier to {0}, which isn't modifiable.", statType.ToString()));
+            return;
+        }
+        stat.AddModifier(modifier);
+    }
+
+    public void RemoveStatModifier(StatTypes statType, StatModifier modifier)
+    {
+        if (!Contains(statType))
+        {
+            Debug.LogError(string.Format("Trying to remove modifier to {0}, which doesn't exist.", statType.ToString()));
+            return;
+        }
+        var stat = GetStat(statType) as IStatModifiable;
+        if (stat == null)
+        {
+            Debug.LogError(string.Format("Trying to remove modifier to {0}, which isn't modifiable.", statType.ToString()));
+            return;
+        }
+        stat.RemoveModifier(modifier);
+    }
+
+    public void ClearStatModifiers(StatTypes statType)
+    {
+        if (!Contains(statType))
+        {
+            Debug.LogError(string.Format("Trying to clear modifiers for {0}, which doesn't exist.", statType.ToString()));
+            return;
+        }
+        var stat = GetStat(statType) as IStatModifiable;
+        if (stat == null)
+        {
+            Debug.LogError(string.Format("Trying to clear modifiers for {0}, which isn't modifiable.", statType.ToString()));
+            return;
+        }
+        stat.ClearModifiers();
+    }
+
+    public void ClearAllStatModifiers()
+    {
+        foreach (var key in statCollection.Keys)
+        {
+            ClearStatModifiers(key);
+        }
+    }
+
+    public void ScaleStat(StatTypes statType, int level)
+    {
+        if (!Contains(statType))
+        {
+            Debug.LogError(string.Format("Trying to scale {0}, which doesn't exist.", statType.ToString()));
+            return;
+        }
+        var stat = GetStat(statType) as IStatScalable;
+        if (stat == null)
+        {
+            Debug.LogError(string.Format("Trying to scale {0}, which isn't scalable.", statType.ToString()));
+            return;
+        }
+        stat.ScaleStat(level);
+    }
+
+    public void ScaleStatCollection(int level)
+    {
+        foreach (var key in statCollection.Keys)
+        {
+            ScaleStat(key, level);
+        }
     }
 }

@@ -23,7 +23,6 @@ public abstract class StatLinker
 
     private void OnValueChanged(object sender, object e)
     {
-        Debug.Log("Linker got the value changed event");
         PostLinkedChangeEvent();
     }
 

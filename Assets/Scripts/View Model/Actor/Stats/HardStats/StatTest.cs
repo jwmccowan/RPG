@@ -23,6 +23,34 @@ public class StatTest : MonoBehaviour
         health.currentValue -= 1000f;
         health.currentValue += 20000f;
 
+        Debug.Log("====Adding 10 to base====");
+        health.AddModifier(new StatModifierBaseAdd(10f));
+        DisplayStats();
+
+        Debug.Log("====Adding 30% to base====");
+        health.AddModifier(new StatModifierBasePercent(.30f));
+        DisplayStats();
+
+        Debug.Log("====Adding 10% to total====");
+        health.AddModifier(new StatModifierTotalPercent(.10f));
+        DisplayStats();
+
+        Debug.Log("====Adding 30 to total====");
+        health.AddModifier(new StatModifierTotalAdd(30f));
+        DisplayStats();
+
+        Debug.Log("====Adding 30 armor to total====");
+        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 30f));
+        DisplayStats();
+
+        Debug.Log("====Adding 10 armor to total====");
+        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 10f));
+        DisplayStats();
+
+        Debug.Log("====Adding 50 armor to total====");
+        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 50f));
+        DisplayStats();
+
 
         DisplayStats();
     }

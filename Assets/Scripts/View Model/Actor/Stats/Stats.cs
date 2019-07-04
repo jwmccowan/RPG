@@ -8,7 +8,7 @@ public class Stats : MonoBehaviour
 
     public int this[StatTypes s]
     {
-        get { return Mathf.FloorToInt(data[(int)s].statValue); }
+        get { return 0; }// Mathf.FloorToInt(data[(int)s].statValue); }
         set { SetValue(s, value, true); }
     }
 

@@ -7,6 +7,7 @@ public interface IStatModifiable
     float statModifierValue { get; }
 
     void AddModifier(StatModifier statModifier);
+    void RemoveModifier(StatModifier statModifier);
     void ClearModifiers();
     void UpdateModifiers();
 }

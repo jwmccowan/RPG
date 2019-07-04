@@ -17,8 +17,9 @@ public abstract class StatModifier
     public float value
     {
         get { return _value; }
-        set {
-            if (value != _value)
+        set
+        {
+            if (!_value.Equals(value))
             {
                 _value = value;
                 this.PostNotification(ValueDidChange);
@@ -28,7 +29,7 @@ public abstract class StatModifier
 
     public StatModifier()
     {
-        _type = BonusTypes.None;
+        _type = BonusTypes.Untyped;
         _value = 0f;
     }
 
@@ -38,9 +39,17 @@ public abstract class StatModifier
         _value = 0f;
     }
 
+    public StatModifier(float value)
+    {
+        _type = BonusTypes.Untyped;
+        _value = value;
+    }
+
     public StatModifier(BonusTypes type, float value)
     {
         _type = type;
         _value = value;
     }
+
+    public abstract float ApplyModifier(float statValue, float modifierValue);
 }

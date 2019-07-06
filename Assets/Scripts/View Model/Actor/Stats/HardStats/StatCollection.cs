@@ -3,10 +3,22 @@ using UnityEngine;
 
 public class StatCollection : MonoBehaviour
 {
-    public static string StatValueWillChangeNotification = "StatCollection.StatValueWillChangeNotification";
-    public static string StatValueDidChangeNotification = "StatCollection.StatValueDidChangeNotification";
-    public static string StatCurrentValueWillChangeNotification = "StatCollection.StatCurrentValueWillChangeNotification";
-    public static string StatCurrentValueDidChangeNotification = "StatCollection.StatCurrentValueDidChangeNotification";
+    public static string ValueDidChange(StatTypes type)
+    {
+        return string.Format("StatCollection.{0}ValueDidChangeNotification", type.ToString());
+    }
+    public static string ValueWillChange(StatTypes type)
+    {
+        return string.Format("StatCollection.{0}ValueWillChangeNotification", type.ToString());
+    }
+    public static string CurrentValueDidChange(StatTypes type)
+    {
+        return string.Format("StatCollection.{0}CurrentValueDidChangeNotification", type.ToString());
+    }
+    public static string CurrentValueWillChange(StatTypes type)
+    {
+        return string.Format("StatCollection.{0}CurrentValueWillChangeNotification", type.ToString());
+    }
 
     private Dictionary<StatTypes, Stat> _statCollection;
 
@@ -60,6 +72,7 @@ public class StatCollection : MonoBehaviour
     protected T CreateStat<T>(StatTypes s) where T : Stat
     {
         T stat = System.Activator.CreateInstance<T>();
+        stat.statType = s;
         statCollection.Add(s, stat);
         return stat;
     }
@@ -113,7 +126,7 @@ public class StatCollection : MonoBehaviour
             Debug.LogError(string.Format("Trying to clear modifiers for {0}, which doesn't exist.", statType.ToString()));
             return;
         }
-        var stat = GetStat(statType) as IStatModifiable;
+        var stat = GetStat(statType) as StatModifiable;
         if (stat == null)
         {
             Debug.LogError(string.Format("Trying to clear modifiers for {0}, which isn't modifiable.", statType.ToString()));

@@ -19,9 +19,9 @@ public class StatRange : StatAttribute
         {
             ValueChangeException vce = new ValueChangeException((int) _currentValue, (int) value);
             //TODO: the vce object might change a bit here, let's not send anything for now
-            this.PostNotification(StatCollection.StatCurrentValueWillChangeNotification);
+            this.PostNotification(StatCollection.CurrentValueWillChange(statType));
             _currentValue = value;
-            this.PostNotification(StatCollection.StatCurrentValueDidChangeNotification);
+            this.PostNotification(StatCollection.CurrentValueDidChange(statType), this);
         }
     }
 

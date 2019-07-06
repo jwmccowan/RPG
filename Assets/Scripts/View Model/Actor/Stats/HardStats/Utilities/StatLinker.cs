@@ -18,7 +18,7 @@ public abstract class StatLinker
     public StatLinker(Stat stat)
     {
         _stat = stat;
-        this.AddListener(OnValueChanged, StatCollection.StatValueDidChangeNotification, stat);
+        this.AddListener(OnValueChanged, StatCollection.ValueDidChange(stat.statType));
     }
 
     private void OnValueChanged(object sender, object e)

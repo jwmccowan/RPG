@@ -11,7 +11,11 @@ public class StatModifierTotalPercent : StatModifier
         return statValue * modifierValue;
     }
 
-    public StatModifierTotalPercent(BonusTypes type) : base(type) { }
+    public override bool applyToBase
+    {
+        get { return false; }
+    }
+
     public StatModifierTotalPercent(float value) : base(value) { }
-    public StatModifierTotalPercent(BonusTypes type, float value) : base(type, value) { }
+    public StatModifierTotalPercent(float value, BonusTypes type) : base(value, type) { }
 }

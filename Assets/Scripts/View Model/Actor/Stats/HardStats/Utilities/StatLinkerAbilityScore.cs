@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StatLinkerAbilityScore : StatLinker
 {
     private float ratio;
+    private StatAbilityScore abilityScore;
 
     public override float value
     {
         get {
-            float abilityScoreBonus = Mathf.Floor(stat.statValue - 10);
-            return abilityScoreBonus * ratio;
+            return abilityScore.statAbilityScoreBonus * ratio;
         }
     }
 
-    public StatLinkerAbilityScore(Stat stat, float ratio)
-        : base(stat)
+    public StatLinkerAbilityScore(StatAbilityScore abilityScore, float ratio)
+        : base(abilityScore)
     {
         this.ratio = ratio;
+        this.abilityScore = abilityScore;
     }
 }

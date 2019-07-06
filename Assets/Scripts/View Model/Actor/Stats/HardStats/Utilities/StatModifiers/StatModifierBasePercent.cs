@@ -11,7 +11,6 @@ public class StatModifierBasePercent : StatModifier
         return statValue * modifierValue;
     }
 
-    public StatModifierBasePercent(BonusTypes type) : base(type) { }
     public StatModifierBasePercent(float value) : base(value) { }
-    public StatModifierBasePercent(BonusTypes type, float value) : base(type, value) { }
+    public StatModifierBasePercent(float value, BonusTypes type) : base(value, type) { }
 }

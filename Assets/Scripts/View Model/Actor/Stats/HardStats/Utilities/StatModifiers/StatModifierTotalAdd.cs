@@ -11,7 +11,11 @@ public class StatModifierTotalAdd : StatModifier
         return modifierValue;
     }
 
-    public StatModifierTotalAdd(BonusTypes type) : base(type) { }
+    public override bool applyToBase
+    {
+        get { return false; }
+    }
+
     public StatModifierTotalAdd(float value) : base(value) { }
-    public StatModifierTotalAdd(BonusTypes type, float value) : base(type, value) { }
+    public StatModifierTotalAdd(float value, BonusTypes type) : base(value, type) { }
 }

@@ -13,8 +13,8 @@ public class StatTest : MonoBehaviour
         DisplayStats();
 
         StatRange health = stats.GetStat<StatRange>(StatTypes.Stat_Max_HP);
-        this.AddListener(OnHealthWillChange, StatCollection.StatCurrentValueWillChangeNotification, health);
-        this.AddListener(OnHealthDidChange, StatCollection.StatCurrentValueDidChangeNotification, health);
+        this.AddListener(OnHealthWillChange, StatCollection.CurrentValueWillChange(health.statType));
+        this.AddListener(OnHealthDidChange, StatCollection.CurrentValueDidChange(health.statType));
         StatAttribute constitution = stats.GetStat<StatAttribute>(StatTypes.Ability_Score_Constitution);
         constitution.ScaleStat(8);
 
@@ -40,15 +40,15 @@ public class StatTest : MonoBehaviour
         DisplayStats();
 
         Debug.Log("====Adding 30 armor to total====");
-        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 30f));
+        health.AddModifier(new StatModifierTotalAdd(30f, BonusTypes.Armor));
         DisplayStats();
 
         Debug.Log("====Adding 10 armor to total====");
-        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 10f));
+        health.AddModifier(new StatModifierTotalAdd(10f, BonusTypes.Armor));
         DisplayStats();
 
         Debug.Log("====Adding 50 armor to total====");
-        health.AddModifier(new StatModifierTotalAdd(BonusTypes.Armor, 50f));
+        health.AddModifier(new StatModifierTotalAdd(50f, BonusTypes.Armor));
         DisplayStats();
 
 

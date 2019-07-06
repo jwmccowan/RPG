@@ -3,6 +3,7 @@
     private string _statName;
     private float _statValue;
     private float _statBaseValue;
+    private StatTypes _statType;
 
     /// <summary>
     /// The name of the stat.
@@ -22,6 +23,16 @@
     {
         get { return _statBaseValue; }
         set { _statBaseValue = value; }
+    }
+
+    /// <summary>
+    /// The value of the stat.
+    /// This is a property to allow more specific stats to overwrite.
+    /// </summary>
+    public virtual StatTypes statType
+    {
+        get { return _statType; }
+        set { _statType = value; }
     }
 
     /// <summary>

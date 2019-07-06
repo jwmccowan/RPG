@@ -8,26 +8,26 @@ public class DefaultStats : StatCollection
     {
         base.ConfigureStats();
 
-        StatAttribute might = GetOrCreateStat<StatAttribute>(StatTypes.Ability_Score_Might);
+        StatAbilityScore might = GetOrCreateStat<StatAbilityScore>(StatTypes.Ability_Score_Might);
         might.statName = "Might";
         might.statBaseValue = 10f;
 
-        StatAttribute perception = GetOrCreateStat<StatAttribute>(StatTypes.Ability_Score_Perception);
+        StatAbilityScore perception = GetOrCreateStat<StatAbilityScore>(StatTypes.Ability_Score_Perception);
         perception.statName = "Perception";
         perception.statBaseValue = 10f;
 
-        StatAttribute constitution = GetOrCreateStat<StatAttribute>(StatTypes.Ability_Score_Constitution);
+        StatAbilityScore constitution = GetOrCreateStat<StatAbilityScore>(StatTypes.Ability_Score_Constitution);
         constitution.statName = "Constitution";
         constitution.statBaseValue = 10f;
 
-        StatAttribute mobility = GetOrCreateStat<StatAttribute>(StatTypes.Ability_Score_Mobility);
+        StatAbilityScore mobility = GetOrCreateStat<StatAbilityScore>(StatTypes.Ability_Score_Mobility);
         mobility.statName = "Mobility";
         mobility.statBaseValue = 10f;
 
-        StatAttribute health = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Max_HP);
+        StatRange health = GetOrCreateStat<StatRange>(StatTypes.Stat_Max_HP);
         health.statName = "Health";
         health.statBaseValue = 20f;
-        health.AddAbilityScorePercentModifier(constitution, .05f);
+        health.AddModifier(new StatModifierBasePercentAbilityScore(.05f, constitution));
 
         StatAttribute initiative = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Initiative);
         initiative.statName = "Initiative";
@@ -39,30 +39,25 @@ public class DefaultStats : StatCollection
         accuracy.statBaseValue = 20f;
         accuracy.AddLinker(new StatLinkerAbilityScore(perception, 1f));
 
+        StatAttribute deflection = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Deflection);
+        deflection.statName = "Deflection";
+        deflection.statBaseValue = 20f;
+        deflection.AddLinker(new StatLinkerAbilityScore(mobility, 2f));
+
+        StatAttribute resolve = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Resolve);
+        resolve.statName = "Resolve";
+        resolve.statBaseValue = 20f;
+        resolve.AddLinker(new StatLinkerAbilityScore(might, 1f));
+        resolve.AddLinker(new StatLinkerAbilityScore(constitution, 1f));
+
         StatAttribute damageModifier = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Damage_Modifier);
         damageModifier.statName = "DamageModifier";
         damageModifier.statBaseValue = 1f;
-        damageModifier.AddAbilityScorePercentModifier(might, .03f);
+        damageModifier.AddModifier(new StatModifierBasePercentAbilityScore(.03f, might));
 
         StatAttribute movement = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Movement);
         movement.statName = "Movement";
         movement.statBaseValue = 3f;
         movement.AddLinker(new StatLinkerAbilityScore(mobility, .25f));
-
-        /*
-        Level,
-    Experience,
-    Ability_Score_Might,
-    Ability_Score_Constitution,
-    Ability_Score_Mobility,
-    Ability_Score_Perception,
-    Stat_Damage_Modifier,
-    Stat_Max_HP,
-    Stat_Accuracy,
-    Stat_Initiative,
-    Stat_Deflection,
-    Stat_Resolve,
-    Stat_Movement,
-    */
     }
 }

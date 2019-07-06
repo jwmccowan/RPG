@@ -8,18 +8,16 @@ using UnityEngine;
 /// attributes per level, but as a means of implementing as many stat
 /// types as possible, here we are
 /// </summary>
-public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable, IStatAbilityScorePercentModifiable
+public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
 {
     private float _statLevelValue;
     private float _statLinkerValue;
-    private float _statAbilityScoreBonus;
 
     private List<StatLinker> statLinkers;
-    private Dictionary<Stat, float> abilityScoreModifiers;
 
     public override float statBaseValue
     {
-        get { return (base.statBaseValue + statLevelValue + statLinkerValue) * (1 + statAbilityScoreBonus); }
+        get { return (base.statBaseValue + statLevelValue + statLinkerValue); }
     }
 
     public float statLevelValue
@@ -32,15 +30,9 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable, IStat
         get { return _statLinkerValue; }
     }
 
-    public float statAbilityScoreBonus
-    {
-        get { return _statAbilityScoreBonus; }
-    }
-
     public StatAttribute()
     {
         statLinkers = new List<StatLinker>();
-        abilityScoreModifiers = new Dictionary<Stat, float>();
     }
 
     public void AddLinker(StatLinker statLinker)
@@ -93,50 +85,8 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable, IStat
         }
     }
 
-    public void AddAbilityScorePercentModifier(Stat abilityScore, float ratio)
-    {
-        if (abilityScoreModifiers.ContainsKey(abilityScore))
-        {
-            ChangeAbilityScorePercentModifier(abilityScore, ratio);
-        }
-        abilityScoreModifiers.Add(abilityScore, ratio);
-        this.AddListener(OnAbilityScoreChanged, StatCollection.StatValueDidChangeNotification, abilityScore);
-        UpdateAbilityScoreModifiers();
-    }
-
-    public void ChangeAbilityScorePercentModifier(Stat abilityScore, float ratio)
-    {
-        abilityScoreModifiers[abilityScore] = ratio;
-        UpdateAbilityScoreModifiers();
-    }
-
-    public void RemoveAbilityScorePercentModifier(Stat abilityScore)
-    {
-        if (abilityScoreModifiers.ContainsKey(abilityScore))
-        {
-            abilityScoreModifiers.Remove(abilityScore);
-        }
-        this.RemoveListener(OnAbilityScoreChanged, StatCollection.StatValueDidChangeNotification, abilityScore);
-        UpdateAbilityScoreModifiers();
-    }
-
-    public void UpdateAbilityScoreModifiers()
-    {
-        _statAbilityScoreBonus = 0f;
-        foreach (var key in abilityScoreModifiers.Keys)
-        {
-            _statAbilityScoreBonus += (abilityScoreModifiers[key] * (key.statValue - 10f));
-        }
-        Debug.Log("eggs " + _statAbilityScoreBonus);
-    }
-
-    public void OnAbilityScoreChanged(object sender, object e)
-    {
-        UpdateAbilityScoreModifiers();
-    }
-
     private void PostValueDidChange()
     {
-        this.PostNotification(StatCollection.StatValueDidChangeNotification);
+        this.PostNotification(StatCollection.ValueDidChange(statType), this);
     }
 }

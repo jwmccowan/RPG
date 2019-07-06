@@ -77,12 +77,18 @@ public class StatModifiable : Stat, IStatModifiable
                 typedTotal += max;
             }
 
-            newStatModifierValue += group.First().ApplyModifier(statBaseValue + newStatModifierValue, untypedTotal + typedTotal);
+            float valueToSend = statBaseValue;
+            if (!group.First().applyToBase)
+            {
+                valueToSend += newStatModifierValue;
+            }
+
+            newStatModifierValue += group.First().ApplyModifier(valueToSend, untypedTotal + typedTotal);
         }
 
-        this.PostNotification(StatCollection.StatValueWillChangeNotification);
+        this.PostNotification(StatCollection.ValueWillChange(statType), this);
         _statModifierValue = newStatModifierValue;
-        this.PostNotification(StatCollection.StatValueDidChangeNotification);
+        this.PostNotification(StatCollection.ValueDidChange(statType), this);
     }
 
     private void OnModifierChanged(object sender, object e)

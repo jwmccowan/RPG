@@ -11,7 +11,6 @@ public class StatModifierBaseAdd : StatModifier
         return modifierValue;
     }
 
-    public StatModifierBaseAdd(BonusTypes type) : base(type) { }
     public StatModifierBaseAdd(float value) : base(value) { }
-    public StatModifierBaseAdd(BonusTypes type, float value) : base(type, value) { }
+    public StatModifierBaseAdd(float value, BonusTypes type) : base(value, type) { }
 }

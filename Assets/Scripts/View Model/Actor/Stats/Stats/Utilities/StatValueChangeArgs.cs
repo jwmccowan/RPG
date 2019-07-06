@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class StatValueChangeArgs
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private StatTypes _statType;
+    private float _oldValue;
+    private float _newValue;
 
-    // Update is called once per frame
-    void Update()
+    public StatTypes statType { get { return _statType; } }
+    public float oldValue { get { return _oldValue; } }
+    public float newValue { get { return _newValue; } }
+
+    public StatValueChangeArgs(StatTypes statType, float oldValue, float newValue)
     {
-        
+        this._statType = statType;
+        this._oldValue = oldValue;
+        this._newValue = newValue;
     }
 }

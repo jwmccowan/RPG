@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StatModifierTotalPercent : StatModifier
+﻿public class StatModifierTotalPercent : StatModifier
 {
     public override int order { get { return 30; } }
 

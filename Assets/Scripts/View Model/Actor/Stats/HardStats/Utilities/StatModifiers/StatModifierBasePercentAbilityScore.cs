@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StatModifierBasePercentAbilityScore : StatModifier
+﻿public class StatModifierBasePercentAbilityScore : StatModifier
 {
     private float abilityScoreBonus;
 

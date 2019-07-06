@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class StatModifier
+﻿public abstract class StatModifier
 {
     private float _value;
     private BonusTypes _type;

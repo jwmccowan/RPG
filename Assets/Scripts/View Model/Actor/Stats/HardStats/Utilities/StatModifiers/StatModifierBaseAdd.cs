@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StatModifierBaseAdd : StatModifier
+﻿public class StatModifierBaseAdd : StatModifier
 {
     public override int order { get { return 20; } }
 

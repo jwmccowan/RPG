@@ -7,11 +7,11 @@ public class CharacterSheet : MonoBehaviour
     public StatCollection stats;
     public Level level;
 
-    public int hp
+    public float hp
     {
         get
         {
-            return Mathf.FloorToInt(stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).currentValue);            
+            return stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).currentValue;            
         }
         set
         {

@@ -22,9 +22,9 @@ public class StatPanel : MonoBehaviour
         CharacterSheet sheet = obj.GetComponent<CharacterSheet>();
         if (sheet)
         {
-            hpLabel.text = string.Format("{0} / {1}", sheet.hp, sheet.stats[StatTypes.Stat_Max_HP]);
-            accLabel.text = string.Format("Acc.: {0}", sheet.stats[StatTypes.Stat_Accuracy]);
-            defLabel.text = string.Format("Def.: {0}", sheet.stats[StatTypes.Stat_Deflection]);
+            hpLabel.text = string.Format("{0} / {1}", Mathf.FloorToInt(sheet.hp), Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Max_HP]));
+            accLabel.text = string.Format("Acc.: {0}", Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Accuracy]));
+            defLabel.text = string.Format("Def.: {0}", Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Deflection]));
         }
     }
 }

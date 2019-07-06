@@ -11,17 +11,21 @@ public class StatRange : StatAttribute
     {
         get
         {
-            _currentValue = Mathf.Clamp(_currentValue, minValue, statValue);
             return _currentValue;
         }
 
         set
         {
-            ValueChangeException vce = new ValueChangeException((int) _currentValue, (int) value);
+            float newValue = Mathf.Clamp(value, minValue, statValue);
             //TODO: the vce object might change a bit here, let's not send anything for now
-            this.PostNotification(StatCollection.CurrentValueWillChange(statType));
-            _currentValue = value;
-            this.PostNotification(StatCollection.CurrentValueDidChange(statType), this);
+            if (!currentValue.Equals(newValue))
+            {
+                //TODO: vce should use float now
+                //ValueChangeException vce = new ValueChangeException(currentValue, value);
+                owner.PostNotification(StatCollection.CurrentValueWillChange(statType), this);
+                _currentValue = newValue;
+                owner.PostNotification(StatCollection.CurrentValueDidChange(statType), this);
+            }
         }
     }
 
@@ -29,11 +33,21 @@ public class StatRange : StatAttribute
     {
         _currentValue = 0;
         minValue = 0;
-        //this.AddListener(OnValueChanged, StatCollection.ValueDidChange, this);
+        this.AddListener(OnValueChanged, StatCollection.ValueDidChange(StatTypes.Stat_Max_HP), owner);
     }
 
     public void SetCurrentValueToMax()
     {
         _currentValue = statValue;
+    }
+
+    private void OnValueChanged(object sender, object e)
+    {
+        StatValueChangeArgs vca = e as StatValueChangeArgs;
+        float delta = vca.newValue - vca.oldValue;
+        if (delta > 0)
+        {
+            currentValue += delta;
+        }
     }
 }

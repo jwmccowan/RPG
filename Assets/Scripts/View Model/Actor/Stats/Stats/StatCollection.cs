@@ -48,9 +48,9 @@ public class StatCollection : MonoBehaviour
         }
     }
 
-    public static float GetAbilityScore(Stat s)
+    public static float GetAbilityScore(float value)
     {
-        return s.statValue - 10;
+        return value - 10f;
     }
 
     protected virtual void ConfigureStats() { }
@@ -78,6 +78,7 @@ public class StatCollection : MonoBehaviour
     {
         T stat = System.Activator.CreateInstance<T>();
         stat.statType = s;
+        stat.owner = this;
         statCollection.Add(s, stat);
         return stat;
     }

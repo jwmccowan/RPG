@@ -12,19 +12,19 @@
     public StatModifierBasePercentAbilityScore(float value, StatAbilityScore abilityScore) : base(value)
     {
         abilityScoreBonus = abilityScore.statAbilityScoreBonus;
-        this.AddListener(OnAbilityScoreChanged, StatCollection.ValueDidChange(abilityScore.statType));
+        this.AddListener(OnAbilityScoreChanged, StatCollection.ValueDidChange(abilityScore.statType), abilityScore.owner);
     }
 
     public StatModifierBasePercentAbilityScore(float value, BonusTypes type, StatAbilityScore abilityScore) : base(value, type)
     {
         abilityScoreBonus = abilityScore.statAbilityScoreBonus;
-        this.AddListener(OnAbilityScoreChanged, StatCollection.ValueDidChange(abilityScore.statType));
+        this.AddListener(OnAbilityScoreChanged, StatCollection.ValueDidChange(abilityScore.statType), abilityScore.owner);
     }
 
     private void OnAbilityScoreChanged(object sender, object e)
     {
-        Stat abilityScore = e as Stat;
-        abilityScoreBonus = StatCollection.GetAbilityScore(abilityScore);
+        StatValueChangeArgs vca = e as StatValueChangeArgs;
+        abilityScoreBonus = StatCollection.GetAbilityScore(vca.newValue);
         this.PostNotification(ValueDidChange);
     }
 }

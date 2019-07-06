@@ -4,6 +4,7 @@
     private float _statValue;
     private float _statBaseValue;
     private StatTypes _statType;
+    private StatCollection _owner;
 
     /// <summary>
     /// The name of the stat.
@@ -25,15 +26,25 @@
         set {
             if (_statBaseValue != value)
             {
+                float oldValue = statValue;
                 _statBaseValue = value;
-                this.PostNotification(StatCollection.ValueDidChange(statType), statType);
+                //TODO: I don't think this is right...
+                owner.PostNotification(StatCollection.ValueDidChange(statType), new StatValueChangeArgs(statType, oldValue, statValue));
             }
         }
     }
 
     /// <summary>
-    /// The value of the stat.
-    /// This is a property to allow more specific stats to overwrite.
+    /// The StatCollection which owns this stat.
+    /// </summary>
+    public StatCollection owner
+    {
+        get { return _owner; }
+        set { _owner = value; }
+    }
+
+    /// <summary>
+    /// The enum value of the stat.
     /// </summary>
     public virtual StatTypes statType
     {

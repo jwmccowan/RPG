@@ -14,15 +14,18 @@ public class StatTest : MonoBehaviour
         DisplayStats();
 
         StatRange health = stats.GetStat<StatRange>(StatTypes.Stat_Max_HP);
-        this.AddListener(OnHealthWillChange, StatCollection.CurrentValueWillChange(health.statType));
-        this.AddListener(OnHealthDidChange, StatCollection.CurrentValueDidChange(health.statType));
+        this.AddListener(OnHealthWillChange, StatCollection.CurrentValueWillChange(health.statType), stats);
+        this.AddListener(OnHealthDidChange, StatCollection.CurrentValueDidChange(health.statType), stats);
         StatAttribute constitution = stats.GetStat<StatAttribute>(StatTypes.Ability_Score_Constitution);
-        constitution.ScaleStat(8);
+        constitution.statBaseValue = 18f;
+
+        DisplayStats();
 
         health.SetCurrentValueToMax();
         health.currentValue -= 20f;
         health.currentValue -= 1000f;
         health.currentValue += 20000f;
+        health.currentValue -= 20f;
 
         Debug.Log("====Adding 10 to base====");
         health.AddModifier(new StatModifierBaseAdd(10f));
@@ -52,19 +55,18 @@ public class StatTest : MonoBehaviour
         health.AddModifier(new StatModifierTotalAdd(50f, BonusTypes.Armor));
         DisplayStats();
 
-
         DisplayStats();
     }
 
     void OnHealthWillChange(object sender, object e)
     {
-        StatRange health = sender as StatRange;
+        StatRange health = e as StatRange;
         Debug.Log(string.Format("Health will change from {0}", health.currentValue));
     }
 
     void OnHealthDidChange(object sender, object e)
     {
-        StatRange health = sender as StatRange;
+        StatRange health = e as StatRange;
         Debug.Log(string.Format("Health did change to {0}", health.currentValue));
     }
 

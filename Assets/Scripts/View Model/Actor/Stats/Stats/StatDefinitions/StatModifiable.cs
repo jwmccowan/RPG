@@ -86,9 +86,10 @@ public class StatModifiable : Stat, IStatModifiable
             newStatModifierValue += group.First().ApplyModifier(valueToSend, untypedTotal + typedTotal);
         }
 
-        this.PostNotification(StatCollection.ValueWillChange(statType), statType);
+        owner.PostNotification(StatCollection.ValueWillChange(statType), statType);
+        float oldValue = statValue;
         _statModifierValue = newStatModifierValue;
-        this.PostNotification(StatCollection.ValueDidChange(statType), statType);
+        owner.PostNotification(StatCollection.ValueDidChange(statType), new StatValueChangeArgs(statType, oldValue, statValue));
     }
 
     private void OnModifierChanged(object sender, object e)

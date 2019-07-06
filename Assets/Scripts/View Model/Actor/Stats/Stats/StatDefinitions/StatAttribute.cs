@@ -64,8 +64,9 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
     {
         if (_statLevelValue != level)
         {
+            float oldValue = statValue;
             _statLevelValue = level;
-            PostValueDidChange();
+            PostValueDidChange(oldValue);
         }
     }
 
@@ -84,12 +85,12 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
         }
         if (oldStatLinkerValue != _statLinkerValue)
         {
-            PostValueDidChange();
+            PostValueDidChange(statBaseValue + oldStatLinkerValue);
         }
     }
 
-    private void PostValueDidChange()
+    private void PostValueDidChange(float oldValue)
     {
-        this.PostNotification(StatCollection.ValueDidChange(statType), statType);
+        owner.PostNotification(StatCollection.ValueDidChange(statType), new StatValueChangeArgs(statType, oldValue, statValue));
     }
 }

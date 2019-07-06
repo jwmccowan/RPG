@@ -37,14 +37,14 @@ public class InitBattleState : BattleState
             GameObject instance = Instantiate(owner.heroPrefab);
             instance.name = name[i];
             CharacterSheet sheet = instance.AddComponent<CharacterSheet>();
-            sheet.level.experience += Level.ExperienceForLevel(2);
+            sheet.level.experience += sheet.level.ExperienceForLevel(2);
             // TOREMOVE
             // Replace with Pokemon levels, however that ends up looking
             //sheet.level.AddClassLevel(ClassType.Fighter);
             //sheet.level.AddClassLevel(ClassType.Fighter);
-            sheet.stats[StatTypes.Ability_Score_Perception] = Random.Range(9,18);
-            sheet.stats[StatTypes.Ability_Score_Might] = 12;
-            sheet.stats[StatTypes.Ability_Score_Constitution] = 12;
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Perception).statBaseValue = Random.Range(9, 18);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Might).statBaseValue = Random.Range(9, 18);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Constitution).statBaseValue = Random.Range(9, 18);
 
             Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
 

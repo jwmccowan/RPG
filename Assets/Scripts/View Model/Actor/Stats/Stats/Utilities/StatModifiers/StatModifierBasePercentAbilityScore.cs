@@ -23,8 +23,8 @@
 
     private void OnAbilityScoreChanged(object sender, object e)
     {
-        StatAbilityScore abilityScore = e as StatAbilityScore;
-        abilityScoreBonus = abilityScore.statAbilityScoreBonus;
+        Stat abilityScore = e as Stat;
+        abilityScoreBonus = StatCollection.GetAbilityScore(abilityScore);
         this.PostNotification(ValueDidChange);
     }
 }

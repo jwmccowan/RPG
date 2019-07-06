@@ -29,6 +29,7 @@ public class StatRange : StatAttribute
     {
         _currentValue = 0;
         minValue = 0;
+        //this.AddListener(OnValueChanged, StatCollection.ValueDidChange, this);
     }
 
     public void SetCurrentValueToMax()

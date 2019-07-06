@@ -13,13 +13,13 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
     private float _statLevelValue;
     private float _statLinkerValue;
 
-    public float linkerValueRatio;
+    public float levelValueRatio;
 
     private List<StatLinker> statLinkers;
 
     public override float statBaseValue
     {
-        get { return (base.statBaseValue + statLevelValue + (statLinkerValue * linkerValueRatio)); }
+        get { return (base.statBaseValue + statLinkerValue + (statLevelValue * levelValueRatio)); }
     }
 
     public float statLevelValue
@@ -35,7 +35,7 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
     public StatAttribute()
     {
         statLinkers = new List<StatLinker>();
-        linkerValueRatio = 0f;
+        levelValueRatio = 0f;
     }
 
     public void AddLinker(StatLinker statLinker)
@@ -90,6 +90,6 @@ public class StatAttribute : StatModifiable, IStatScalable, IStatLinkable
 
     private void PostValueDidChange()
     {
-        this.PostNotification(StatCollection.ValueDidChange(statType), this);
+        this.PostNotification(StatCollection.ValueDidChange(statType), statType);
     }
 }

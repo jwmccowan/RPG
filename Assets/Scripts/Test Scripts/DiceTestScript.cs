@@ -6,8 +6,7 @@ public class DiceTestScript : MonoBehaviour
 {
     GameObject hero;
     Roll HPGrowth;
-    Stats stats;
-    Level level;
+    CharacterSheet sheet;
 
     int[] d20List = new int[20];
     int[] d40List = new int[15];
@@ -54,22 +53,21 @@ public class DiceTestScript : MonoBehaviour
     void InitHero()
     {
         hero = new GameObject("Hero");
-        CharacterSheet sheet = hero.AddComponent<CharacterSheet>();
-        stats = sheet.stats;
-        /*stats[StatTypes.HP_Increases] = 15;
-        stats[StatTypes.Strength] = 16;
-        */
-        this.AddListener(OnLevelUp, Stats.DidChangeNotification(StatTypes.Level), stats);
+        sheet = hero.AddComponent<CharacterSheet>();
+        sheet.stats.GetStat<Stat>(StatTypes.Stat_Max_HP).statBaseValue = 15f;
+        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Might).statBaseValue = 16f;
+        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Constitution).statBaseValue = 13f;
+        this.AddListener(OnLevelUp, Level.LevelDidChange, sheet.level);
         HPGrowth = new Roll(1, 8, 2);
     }
 
     void LevelUp()
     {
-        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Stat_Max_HP]));
-        level.experience += Level.ExperienceForLevel(2);
-        level.experience += Level.ExperienceForLevel(3);
-        level.experience += Level.ExperienceForLevel(4);
-        level.experience += Level.ExperienceForLevel(5);
+        Debug.Log(string.Format("HP: {0}", sheet.stats[StatTypes.Stat_Max_HP]));
+        sheet.level.SetExperience(sheet.level.ExperienceForLevel(2));
+        sheet.level.SetExperience(sheet.level.ExperienceForLevel(3));
+        sheet.level.SetExperience(sheet.level.ExperienceForLevel(4));
+        sheet.level.SetExperience(sheet.level.ExperienceForLevel(5));
     }
 
     void Attack()
@@ -79,11 +77,9 @@ public class DiceTestScript : MonoBehaviour
 
     void OnLevelUp(object sender, object e)
     {
-        Info<StatTypes, int> info = e as Info<StatTypes, int>;
-        StatTypes s = info.arg0;
-        Debug.Log("Got to Level " + stats[StatTypes.Level]);
-        //stats[StatTypes.HP_Increases] += HPGrowth.NewRoll();
+        Debug.Log("Got to Level " + sheet.level.level);
+        sheet.stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).statBaseValue += HPGrowth.NewRoll();
         Debug.Log(string.Format("Rolled a {0} with 1d8+2", HPGrowth.value));
-        Debug.Log(string.Format("HP: {0}", stats[StatTypes.Stat_Max_HP]));
+        Debug.Log(string.Format("HP: {0}", sheet.stats[StatTypes.Stat_Max_HP]));
     }
 }

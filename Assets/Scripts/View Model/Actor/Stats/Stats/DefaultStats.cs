@@ -38,17 +38,20 @@ public class DefaultStats : StatCollection
         accuracy.statName = "Accuracy";
         accuracy.statBaseValue = 20f;
         accuracy.AddLinker(new StatLinkerAbilityScore(perception, 1f));
+        accuracy.levelValueRatio = 3f;
 
         StatAttribute deflection = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Deflection);
         deflection.statName = "Deflection";
         deflection.statBaseValue = 20f;
         deflection.AddLinker(new StatLinkerAbilityScore(mobility, 2f));
+        deflection.levelValueRatio = 3f;
 
         StatAttribute resolve = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Resolve);
         resolve.statName = "Resolve";
         resolve.statBaseValue = 20f;
         resolve.AddLinker(new StatLinkerAbilityScore(might, 1f));
         resolve.AddLinker(new StatLinkerAbilityScore(constitution, 1f));
+        resolve.levelValueRatio = 3f;
 
         StatAttribute damageModifier = GetOrCreateStat<StatAttribute>(StatTypes.Stat_Damage_Modifier);
         damageModifier.statName = "DamageModifier";

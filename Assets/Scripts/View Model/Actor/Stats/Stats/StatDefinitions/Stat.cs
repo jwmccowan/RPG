@@ -22,7 +22,13 @@
     public virtual float statBaseValue
     {
         get { return _statBaseValue; }
-        set { _statBaseValue = value; }
+        set {
+            if (_statBaseValue != value)
+            {
+                _statBaseValue = value;
+                this.PostNotification(StatCollection.ValueDidChange(statType), statType);
+            }
+        }
     }
 
     /// <summary>

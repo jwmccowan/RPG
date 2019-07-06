@@ -62,11 +62,11 @@ public class InitiativeController : MonoBehaviour
 
     void RollInitiative(Unit unit)
     {
-        Stats s = unit.GetComponent<Stats>();
+        CharacterSheet sheet = unit.GetComponent<CharacterSheet>();
         d20.NewRoll();
         this.PostNotification(InitiativeRollNotification, unit);
-        Debug.Log(string.Format("Rolled a {0} for initiative, plus {1}.", d20.value, s[StatTypes.Stat_Initiative]));
-        initiativeTracker[unit] = d20.value + s[StatTypes.Stat_Initiative];
+        Debug.Log(string.Format("Rolled a {0} for initiative, plus {1}.", d20.value, sheet.stats[StatTypes.Stat_Initiative]));
+        initiativeTracker[unit] = d20.value + Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Initiative]);
     }
     #endregion
 }

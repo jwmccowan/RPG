@@ -10,8 +10,7 @@ public class DefaultEffectTarget : AbilityEffectTarget
         {
             return false;
         }
-        Stats s = tile.content.GetComponent<Stats>();
-        //TOREMOVE: this should be current hp not max hp
-        return s != null && s[StatTypes.Stat_Max_HP] > 0;
+        CharacterSheet sheet = tile.content.GetComponent<CharacterSheet>();
+        return sheet != null && sheet.hp > 0;
     }
 }

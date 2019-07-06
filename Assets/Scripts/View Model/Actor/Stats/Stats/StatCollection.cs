@@ -35,17 +35,22 @@ public class StatCollection : MonoBehaviour
         }
     }
 
-    public float this[StatTypes s]
+    public int this[StatTypes s]
     {
         get
         {
             Stat stat = GetStat(s);
             if (stat != null)
             {
-                return stat.statValue;
+                return Mathf.FloorToInt(stat.statValue);
             }
-            return -1f;
+            return -1;
         }
+    }
+
+    public static float GetAbilityScore(Stat s)
+    {
+        return s.statValue - 10;
     }
 
     protected virtual void ConfigureStats() { }

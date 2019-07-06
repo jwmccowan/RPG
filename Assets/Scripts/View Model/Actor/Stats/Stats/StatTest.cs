@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class StatTest : MonoBehaviour
 {
-    private StatCollection stats;
+    private CharacterSheet sheet;
     // Start is called before the first frame update
     void Start()
     {
-        stats = GetComponent<DefaultStats>();
+        sheet = gameObject.AddComponent<CharacterSheet>();
+        StatCollection stats = sheet.stats;
 
         DisplayStats();
 
@@ -69,13 +70,17 @@ public class StatTest : MonoBehaviour
 
     void DisplayStats()
     {
+        Debug.Log("=======================");
+        Debug.Log("Displaying Cooper's Stats");
+        Debug.Log(string.Format("Level: {0}, Experience: {1}/{2}", sheet.level.level, sheet.level.experience, sheet.level.ExperienceForLevel(sheet.level.level + 1)));
         for (int i = 0; i< (int) StatTypes.Count; i++)
         {
-            var stat = stats.GetStat((StatTypes)i);
+            var stat = sheet.stats.GetStat((StatTypes)i);
             if (stat != null)
             {
                 Debug.Log(string.Format("{0}'s value is {1}", stat.statName, stat.statValue));
             }
         }
+        Debug.Log("========================");
     }
 }

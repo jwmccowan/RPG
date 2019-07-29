@@ -31,18 +31,21 @@ public class InitBattleState : BattleState
     {
         //This is temporary code for testing
         System.Type[] components = new System.Type[] { typeof(WalkMovement), typeof(FlyMovement), typeof(TeleportMovement) };
-        string[] name = new string[3] { "Cooper", "Anna", "Cat"};
+        string[] name = new string[3] { "Niko", "Mako", "Cara"};
         for (int i = 0; i < components.Length; i++)
         {
             GameObject instance = Instantiate(owner.heroPrefab);
             instance.name = name[i];
             CharacterSheet sheet = instance.AddComponent<CharacterSheet>();
-            sheet.level.experience += Level.ExperienceForLevel(2);
-            sheet.level.AddClassLevel(ClassType.Fighter);
-            sheet.level.AddClassLevel(ClassType.Fighter);
-            sheet.stats[StatTypes.Dexterity] = Random.Range(9,18);
-            sheet.stats[StatTypes.Wisdom] = 12;
-            sheet.stats[StatTypes.Constitution] = 12;
+            sheet.level.experience += sheet.level.ExperienceForLevel(2);
+            // TOREMOVE
+            // Replace with Bender levels, however that ends up looking
+            //sheet.level.AddClassLevel(ClassType.Fighter);
+            //sheet.level.AddClassLevel(ClassType.Fighter);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Perception).statBaseValue = Random.Range(9, 18);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Might).statBaseValue = Random.Range(9, 18);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Constitution).statBaseValue = Random.Range(9, 18);
+            sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Mobility).statBaseValue = Random.Range(9, 18);
 
             Point p = new Point((int)levelData.tilePositions[i * 5 + 8].x, (int)levelData.tilePositions[i * 5 + 8].y);
 

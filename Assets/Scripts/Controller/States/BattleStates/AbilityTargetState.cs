@@ -6,12 +6,13 @@ public class AbilityTargetState : BattleState
 {
     List<Tile> tiles;
     AbilityRange ar;
+    public static bool baseAttack = true;
 
     public override void Enter()
     {
         Debug.Log("AbilityTargetState Enter");
         base.Enter();
-        ar = turn.ability.GetComponent<AbilityRange>();
+        ar = turn.ability.abilityRange;
         SelectTiles();
         statPanelController.ShowPrimary(turn.actor.gameObject);
         if (ar.directionOriented) RefreshSecondaryStatPanel(pos);
@@ -49,7 +50,14 @@ public class AbilityTargetState : BattleState
         }
         else
         {
-            owner.ChangeState<CategorySelectionState>();
+            if (baseAttack)
+            {
+                owner.ChangeState<CommandSelectionState>();
+            }
+            else
+            {
+                owner.ChangeState<ActionSelectionState>();
+            }
         }
     }
 

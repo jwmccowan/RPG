@@ -5,24 +5,24 @@ using UnityEngine;
 public class BlessStatusEffect : StatusEffect
 {
     CharacterSheet sheet;
-    Bonus toHitBonus;
-    Bonus willBonus;
+    StatModifierTotalAdd accuracyBonus;
+    StatModifierTotalAdd resolveBonus;
 
     void OnEnable()
     {
         sheet = GetComponentInParent<CharacterSheet>();
         // We can calculate bonus value when we get more info in character sheet
-        Debug.Log(string.Format("Bless!! Previous ToHit: {0}.", sheet.stats[StatTypes.To_Hit]));
-        toHitBonus = new Bonus(StatTypes.To_Hit, BonusTypes.Morale, 1);
-        willBonus = new Bonus(StatTypes.Will, BonusTypes.Morale, 1);
-        sheet.AddBonus(toHitBonus);
-        sheet.AddBonus(willBonus);
-        Debug.Log(string.Format("After ToHit: {0}.", sheet.stats[StatTypes.To_Hit]));
+        Debug.Log(string.Format("Bless!! Previous ToHit: {0}.", sheet.stats[StatTypes.Stat_Accuracy]));
+        accuracyBonus = new StatModifierTotalAdd(1f, BonusTypes.Morale);
+        resolveBonus = new StatModifierTotalAdd(1f, BonusTypes.Morale);
+        sheet.stats.AddStatModifier(StatTypes.Stat_Accuracy, accuracyBonus);
+        sheet.stats.AddStatModifier(StatTypes.Stat_Resolve, accuracyBonus);
+        Debug.Log(string.Format("After ToHit: {0}.", sheet.stats[StatTypes.Stat_Accuracy]));
     }
 
     void OnDisable()
     {
-        sheet.RemoveBonus(toHitBonus);
-        sheet.RemoveBonus(willBonus);
+        sheet.stats.RemoveStatModifier(StatTypes.Stat_Accuracy, accuracyBonus);
+        sheet.stats.RemoveStatModifier(StatTypes.Stat_Resolve, accuracyBonus);
     }
 }

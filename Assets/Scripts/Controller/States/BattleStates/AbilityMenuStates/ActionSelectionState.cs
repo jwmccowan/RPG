@@ -26,7 +26,7 @@ public class ActionSelectionState : BaseAbilityMenuState
 
     protected override void Confirm()
     {
-        turn.Act(actionType);
+        AbilityTargetState.baseAttack = false;
         owner.ChangeState<AbilityTargetState>();
     }
 

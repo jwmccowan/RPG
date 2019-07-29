@@ -11,7 +11,7 @@ public class ConfirmAbilityTargetState : BattleState
     public override void Enter()
     {
         base.Enter();
-        aa = turn.ability.GetComponent<AbilityArea>();
+        aa = turn.ability.abilityArea;
         tiles = aa.GetTilesInArea(board, pos);
         board.SelectTiles(tiles);
         FindTargets();
@@ -113,7 +113,7 @@ public class ConfirmAbilityTargetState : BattleState
 
     int CalculateHitRate()
     {
-        Accuracy acc = turn.ability.GetComponentInChildren<Accuracy>();
+        Accuracy acc = turn.ability.accuracy;
         return 50 + acc.Calculate(turn.targets[index]);
     }
 

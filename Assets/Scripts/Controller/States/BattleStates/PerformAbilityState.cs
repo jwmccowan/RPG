@@ -7,7 +7,7 @@ public class PerformAbilityState : BattleState
     public override void Enter()
     {
         base.Enter();
-        turn.Act(ActionType.StandardAction);
+        turn.Act(turn.ability.actionType);
         StartCoroutine(Animate());
     }
 

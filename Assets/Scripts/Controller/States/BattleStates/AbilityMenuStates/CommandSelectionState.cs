@@ -27,7 +27,9 @@ public class CommandSelectionState : BaseAbilityMenuState
         switch (abilityMenuPanelController.selection)
         {
             case 0:
-                turn.ability = turn.actor.GetComponentInChildren<AbilityRange>().gameObject;
+                // TODO: this has to change obviously when we add more than one ability
+                turn.ability = turn.actor.GetComponentInChildren<Ability>();
+                AbilityTargetState.baseAttack = true;
                 owner.ChangeState<AbilityTargetState>();
                 break;
             case 1:
@@ -57,6 +59,6 @@ public class CommandSelectionState : BaseAbilityMenuState
         abilityMenuPanelController.Show(menuTitle, menuOptions);
         abilityMenuPanelController.SetLocked(0, turn.usedStandardAction);
         abilityMenuPanelController.SetLocked(1, turn.usedMoveAction);
-        abilityMenuPanelController.SetLocked(2, turn.usedMoveAction);
+        abilityMenuPanelController.SetLocked(2, turn.usedStandardAction);
     }
 }

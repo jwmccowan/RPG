@@ -5,29 +5,20 @@ using UnityEngine;
 public class StatBonusFeature : Feature
 {
     #region fields
-    public StatModifier modifier;
-    public StatTypes stat;
+    public Bonus bonus;
 
-    CharacterSheet sheet { get { return target.GetComponentInParent<CharacterSheet>(); } }
-    #endregion
-
-    #region public
-    public void SetModifier(StatTypes stat, StatModifier modifier)
-    {
-        this.stat = stat;
-        this.modifier = modifier;
-    }
+    BonusHandler bonusHandler { get { return target.GetComponentInParent<BonusHandler>(); } }
     #endregion
 
     #region protected
     protected override void OnApply()
     {
-        sheet.stats.AddStatModifier(stat, modifier);
+        bonusHandler.AddBonus(bonus);
     }
 
     protected override void OnRemove()
     {
-        sheet.stats.RemoveStatModifier(stat, modifier);
+        bonusHandler.RemoveBonus(bonus);
     }
     #endregion
 }

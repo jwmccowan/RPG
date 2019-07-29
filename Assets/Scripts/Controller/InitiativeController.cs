@@ -5,7 +5,7 @@ using UnityEngine;
 public class InitiativeController : MonoBehaviour
 {
     #region notifications
-    public const string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
+    public  string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
     public const string RoundBeganNotification = "InitiativeController.RoundBeganNotification";
     public const string TurnBeganNotification = "InitiativeController.TurnBeganNotification";
     public const string TurnEndedNotification = "InitiativeController.TurnEndedNotification";
@@ -39,7 +39,7 @@ public class InitiativeController : MonoBehaviour
 
             for (int i = units.Count - 1; i >= 0; i--)
             {
-                if (CanTakeTurn(units[i])) // maybe we need to do a "Cooper is sleeping" animation here or something.
+                if (CanTakeTurn(units[i]))
                 {
                     bc.turn.Change(units[i]);
                     yield return units[i];
@@ -62,11 +62,11 @@ public class InitiativeController : MonoBehaviour
 
     void RollInitiative(Unit unit)
     {
-        CharacterSheet sheet = unit.GetComponent<CharacterSheet>();
+        Stats s = unit.GetComponent<Stats>();
         d20.NewRoll();
         this.PostNotification(InitiativeRollNotification, unit);
-        Debug.Log(string.Format("Rolled a {0} for initiative, plus {1}.", d20.value, sheet.stats[StatTypes.Stat_Initiative]));
-        initiativeTracker[unit] = d20.value + Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Initiative]);
+        Debug.Log(string.Format("Rolled a {0} for initiative, plus {1}.", d20.value, s[StatTypes.Initiative]));
+        initiativeTracker[unit] = d20.value + s[StatTypes.Initiative];
     }
     #endregion
 }

@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4702767378951088130}
   - component: {fileID: 7043433986737147878}
   m_Layer: 0
-  m_Name: Accuracy Label
+  m_Name: To Hit Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Acc.: +5'
+  m_Text: 'To Hit: +5'
 --- !u!114 &7043433986737147878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 8246808465224202349}
   - component: {fileID: 4840305888017652029}
   m_Layer: 0
-  m_Name: Deflection Label
+  m_Name: AC Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Def.: 17'
+  m_Text: 'AC: 17'
 --- !u!114 &4840305888017652029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 3303603266667196390}
   - component: {fileID: 6266120230944379202}
   m_Layer: 0
-  m_Name: Accuracy Label
+  m_Name: To Hit Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -876,7 +876,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Acc.: +5'
+  m_Text: 'To Hit: +5'
 --- !u!114 &6266120230944379202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,8 +955,8 @@ MonoBehaviour:
   avatar: {fileID: 6756308809485288176}
   nameLabel: {fileID: 5020173853962157614}
   hpLabel: {fileID: 6289398543334321326}
-  accLabel: {fileID: 3303603266667196390}
-  defLabel: {fileID: 8246808465224202349}
+  strLabel: {fileID: 3303603266667196390}
+  acLabel: {fileID: 8246808465224202349}
 --- !u!114 &4137514529892310562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 4043752443648071686}
   - component: {fileID: 2263167965933793599}
   m_Layer: 0
-  m_Name: Deflection Label
+  m_Name: AC Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1189,7 +1189,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Def.: 17'
+  m_Text: 'AC: 17'
 --- !u!114 &2263167965933793599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,8 +1363,8 @@ MonoBehaviour:
   avatar: {fileID: 1019043874651514077}
   nameLabel: {fileID: 112121685586915186}
   hpLabel: {fileID: 166091661832872168}
-  accLabel: {fileID: 4702767378951088130}
-  defLabel: {fileID: 4043752443648071686}
+  strLabel: {fileID: 4702767378951088130}
+  acLabel: {fileID: 4043752443648071686}
 --- !u!114 &7078908291698700663
 MonoBehaviour:
   m_ObjectHideFlags: 0

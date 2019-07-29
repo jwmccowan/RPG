@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    CharacterSheet sheet;
-    public int range { get { return Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Movement]); } }
-    public int jumpHeight { get { return Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Movement] / 4); } }
+    Stats stats;
+    public int range { get { return stats[StatTypes.Movement]; } }
+    public int jumpHeight { get { return Mathf.FloorToInt(stats[StatTypes.Movement] / 4); } }
     protected Unit unit;
     protected Transform jumper;
 
@@ -18,7 +18,7 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Start()
     {
-        sheet = GetComponent<CharacterSheet>();
+        stats = GetComponent<Stats>();
     }
 
     public List<Tile> GetTilesInRange(Board board)
@@ -51,13 +51,13 @@ public abstract class Movement : MonoBehaviour
         
         TransformLocalEulerTweener t = (TransformLocalEulerTweener)transform.RotateToLocal(dir.ToEuler(), 0.25f, EasingEquations.EaseInOutQuad);
 
-        if (Mathf.Approximately(t.startTweenValue.y, 0f) && Mathf.Approximately(t.endTweenValue.y, 270f))
+        if (Mathf.Approximately(t.startValue.y, 0f) && Mathf.Approximately(t.endValue.y, 270f))
         {
-            t.startTweenValue = new Vector3(t.startTweenValue.x, 360f, t.startTweenValue.z);
+            t.startValue = new Vector3(t.startValue.x, 360f, t.startValue.z);
         }
-        else if (Mathf.Approximately(t.startTweenValue.y, 270f) && Mathf.Approximately(t.endTweenValue.y, 0f))
+        else if (Mathf.Approximately(t.startValue.y, 270f) && Mathf.Approximately(t.endValue.y, 0f))
         {
-            t.endTweenValue = new Vector3(t.startTweenValue.x, 360f, t.startTweenValue.z);
+            t.endValue = new Vector3(t.startValue.x, 360f, t.startValue.z);
         }
         unit.dir = dir;
 

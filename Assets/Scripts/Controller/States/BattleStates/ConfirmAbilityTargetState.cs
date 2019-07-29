@@ -11,16 +11,12 @@ public class ConfirmAbilityTargetState : BattleState
     public override void Enter()
     {
         base.Enter();
-        aa = turn.ability.abilityArea;
+        aa = turn.ability.GetComponent<AbilityArea>();
         tiles = aa.GetTilesInArea(board, pos);
         board.SelectTiles(tiles);
         FindTargets();
         RefreshPrimaryStatPanel(turn.actor.tile.pos);
-        if (turn.targets.Count > 0)
-        {
-            accuracyIndicator.Show();
-            SetTarget(0);
-        }
+        SetTarget(0);
     }
 
     public override void Exit()
@@ -29,7 +25,6 @@ public class ConfirmAbilityTargetState : BattleState
         board.DeselectTiles(tiles);
         statPanelController.HidePrimary();
         statPanelController.HideSecondary();
-        accuracyIndicator.Hide();
     }
 
     protected override void OnMove(object sender, object e)
@@ -100,25 +95,6 @@ public class ConfirmAbilityTargetState : BattleState
         if (turn.targets.Count > 0)
         {
             RefreshSecondaryStatPanel(turn.targets[index].pos);
-            UpdateAccuracyIndicator();
         }
-    }
-
-    void UpdateAccuracyIndicator()
-    {
-        int chance = CalculateHitRate();
-        int damage = EstimateDamage();
-        accuracyIndicator.SetStats(chance, damage);
-    }
-
-    int CalculateHitRate()
-    {
-        AbilityAccuracy acc = turn.ability.accuracy;
-        return 50 + acc.Calculate(turn.targets[index]);
-    }
-
-    int EstimateDamage()
-    {
-        return 20;
     }
 }

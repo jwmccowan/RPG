@@ -11,8 +11,7 @@ public class Turn
     public Tile startTile;
     public List<Tile> targets;
     public Directions startDir;
-    public Ability ability;
-    public ActionType plannedActionType;
+    public GameObject ability;
 
     public void Act(ActionType actionType)
     {

@@ -43,10 +43,11 @@ public class EquipmentTestScript : MonoBehaviour
         Debug.Log(string.Format("{0} un-equipped {1}.", eq.name, item.name));
     }
 
-    GameObject CreateConsumableItem(string title, int amount)
+    GameObject CreateConsumableItem(string title, StatTypes type, int amount)
     {
         GameObject item = new GameObject(title);
-        HealthModifierFeature smf = item.AddComponent<HealthModifierFeature>();
+        StatModifierFeature smf = item.AddComponent<StatModifierFeature>();
+        smf.statType = type;
         smf.value = amount;
         item.AddComponent<Consumable>();
         return item;
@@ -56,7 +57,7 @@ public class EquipmentTestScript : MonoBehaviour
     {
         GameObject item = new GameObject(title);
         StatBonusFeature sbf = item.AddComponent<StatBonusFeature>();
-        sbf.SetModifier(type, new StatModifierTotalAdd(amount, bonus));
+        sbf.bonus = new Bonus(type, bonus, amount);
         Equippable equip = item.AddComponent<Equippable>();
         equip.primarySlot = slots;
         return item;
@@ -73,21 +74,21 @@ public class EquipmentTestScript : MonoBehaviour
     {
         GameObject actor = new GameObject(title);
         CharacterSheet sheet = actor.AddComponent<CharacterSheet>();
-        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Perception).statBaseValue = 16;
-        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Might).statBaseValue = 17;
-        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Constitution).statBaseValue = 16;
-        sheet.stats.GetStat<Stat>(StatTypes.Ability_Score_Perception).statBaseValue = 16;
-        sheet.stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).SetCurrentValueToMax();
+        Stats s = sheet.stats;
+        s[StatTypes.Dexterity] = 16;
+        s[StatTypes.HP_Increases] = Random.Range(45, 90);
+        s[StatTypes.HP] = s[StatTypes.Max_HP];
+        s[StatTypes.Strength] = 17;
         return actor;
     }
 
     void CreateItems()
     {
-        inventory.Add(CreateConsumableItem("Health Potion", 15));
-        inventory.Add(CreateConsumableItem("Bomb", -25));
-        inventory.Add(CreateEquippableItem("Sword", StatTypes.Ability_Score_Might, BonusTypes.Enhancement, 4 ,EquipSlots.Hand));
-        inventory.Add(CreateEquippableItem("Broad Sword", StatTypes.Ability_Score_Might, BonusTypes.Enhancement, 8, (EquipSlots.Hand | EquipSlots.OffHand)));
-        inventory.Add(CreateEquippableItem("Shield", StatTypes.Stat_Deflection, BonusTypes.Armor, 4, EquipSlots.OffHand));
+        inventory.Add(CreateConsumableItem("Health Potion", StatTypes.HP, 15));
+        inventory.Add(CreateConsumableItem("Bomb", StatTypes.HP, -25));
+        inventory.Add(CreateEquippableItem("Sword", StatTypes.Strength, BonusTypes.Enhancement, 4 ,EquipSlots.Hand));
+        inventory.Add(CreateEquippableItem("Broad Sword", StatTypes.Strength, BonusTypes.Enhancement, 8, (EquipSlots.Hand | EquipSlots.OffHand)));
+        inventory.Add(CreateEquippableItem("Shield", StatTypes.AC, BonusTypes.Armor, 4, EquipSlots.OffHand));
     }
 
     void CreateCombatants()
@@ -129,23 +130,19 @@ public class EquipmentTestScript : MonoBehaviour
 
     void Attack(GameObject attacker, GameObject defender)
     {
-        CharacterSheet s1 = attacker.GetComponent<CharacterSheet>();
-        CharacterSheet s2 = defender.GetComponent<CharacterSheet>();
+        Stats s1 = attacker.GetComponent<Stats>();
+        Stats s2 = defender.GetComponent<Stats>();
 
-        int roll = Random.Range(1, 101);
-        int accuracy = s1.stats[StatTypes.Stat_Accuracy];
-        int deflection = s2.stats[StatTypes.Stat_Deflection];
-        int result = Random.Range(1, 101) + s1.stats[StatTypes.Stat_Accuracy] - s2.stats[StatTypes.Stat_Deflection];
+        int hit = Random.Range(1, 21) + s1[StatTypes.Strength_Bonus];
+        int ac = s2[StatTypes.AC];
 
-        Debug.Log(string.Format("{0} attacks!  {1} + {2} - {3} = {4}", attacker.name, roll, accuracy, deflection, result));
+        Debug.Log(string.Format("{0} rolled a {1} against ac {2}", attacker.name, hit, ac));
 
-        if (result >= 50)
+        if (hit >= ac)
         {
-            int damageRoll = Random.Range(1, 9);
-            float damageMod = s1.stats[StatTypes.Stat_Damage_Modifier];
-            int damage = Mathf.FloorToInt(damageRoll * damageMod);
-            s2.hp -= damage;
-            Debug.Log(string.Format("Hit! {0} did {1} damage ({2} * {3})!", attacker.name, damage, damageRoll, damageMod));
+            int damage = Random.Range(1, 9) + s1[StatTypes.Strength_Bonus];
+            s2[StatTypes.HP] -= damage;
+            Debug.Log(string.Format("Hit! {0} did {1} damage.", attacker.name, damage));
         }
         else
         {
@@ -199,9 +196,9 @@ public class EquipmentTestScript : MonoBehaviour
     {
         for (int i = 0; i < combatants.Count; i++)
         {
-            StatRange health = combatants[i].GetComponent<CharacterSheet>().stats.GetStat<StatRange>(StatTypes.Stat_Max_HP);
-            Debug.Log("Current HP: " + health.currentValue);
-            if (health.currentValue == 0)
+            Stats s = combatants[i].GetComponent<Stats>();
+            Debug.Log("Current HP: " + s[StatTypes.HP]);
+            if (s[StatTypes.HP] <= 0)
             {
                 return true;
             }
@@ -219,13 +216,8 @@ public class EquipmentTestScript : MonoBehaviour
 
     void LogToConsole(GameObject actor)
     {
-        CharacterSheet sheet = actor.GetComponent<CharacterSheet>();
-        string message = string.Format("Name:{0} HP:{1}/{2} Strength:{3} AC:{4}",
-            actor.name,
-            sheet.stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).currentValue,
-            sheet.stats[StatTypes.Stat_Max_HP],
-            sheet.stats[StatTypes.Stat_Accuracy],
-            sheet.stats[StatTypes.Stat_Deflection]);
+        Stats s = actor.GetComponent<Stats>();
+        string message = string.Format("Name:{0} HP:{1}/{2} Strength:{3} AC:{4}", actor.name, s[StatTypes.HP], s[StatTypes.Max_HP], s[StatTypes.Strength_Bonus], s[StatTypes.AC]);
         Debug.Log(message);
     }
 }

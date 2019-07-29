@@ -31,8 +31,8 @@ public class AbilityMenuPanelController : MonoBehaviour
     Tweener TogglePos(string pos)
     {
         Tweener t = panel.SetPosition(pos, true);
-        t.duration = 0.5f;
-        t.equation = EasingEquations.EaseOutQuad;
+        t.easingControl.duration = 0.5f;
+        t.easingControl.equation = EasingEquations.EaseOutQuad;
         return t;
     }
 
@@ -113,7 +113,7 @@ public class AbilityMenuPanelController : MonoBehaviour
     public void Hide()
     {
         Tweener t = TogglePos(HideKey);
-        this.AddListener(OnHideCompleted, EasingControl.CompleteEvent, panel.Transition);
+        this.AddListener(OnHideCompleted, EasingControl.CompletedEvent);
     }
 
     void OnHideCompleted(object sender, object e)
@@ -122,7 +122,7 @@ public class AbilityMenuPanelController : MonoBehaviour
         {
             Clear();
             canvas.SetActive(false);
-            this.RemoveListener(OnHideCompleted, EasingControl.CompleteEvent, panel.Transition);
+            this.RemoveListener(OnHideCompleted, EasingControl.CompletedEvent);
         }
     }
 

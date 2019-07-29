@@ -11,7 +11,7 @@ public class DownedEffectTarget : AbilityEffectTarget
             return false;
         }
 
-        CharacterSheet sheet = tile.content.GetComponent<CharacterSheet>();
-        return sheet != null && sheet.hp <= 0;
+        Stats s = tile.content.GetComponent<Stats>();
+        return s != null && s[StatTypes.HP] <= 0;
     }
 }

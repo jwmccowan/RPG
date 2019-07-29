@@ -8,15 +8,16 @@ public class TestLevelGrowth : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        this.AddListener(OnLevelChange, Level.LevelDidChange);
-        this.AddListener(OnExperienceException, Level.ExperienceWillChange);
+        DataController.instance.Load(null);
+        this.AddListener(OnLevelChange, Stats.DidChangeNotification(StatTypes.Level));
+        this.AddListener(OnExperienceException, Stats.WillChangeNotification(StatTypes.Experience));
     }
 
     // Update is called once per frame
     void OnDisable()
     {
-        this.RemoveListener(OnLevelChange, Level.LevelDidChange);
-        this.RemoveListener(OnExperienceException, Level.ExperienceWillChange);
+        this.RemoveListener(OnLevelChange, Stats.DidChangeNotification(StatTypes.Level));
+        this.RemoveListener(OnExperienceException, Stats.WillChangeNotification(StatTypes.Experience));
     }
 
     void Start()
@@ -27,11 +28,10 @@ public class TestLevelGrowth : MonoBehaviour
 
     void VerifyLevelToExperienceCalculations()
     {
-        Level level = gameObject.AddComponent<Level>();
         for (int i = 1; i < 6; ++i)
         {
-            int expLvl = level.ExperienceForLevel(i);
-            int lvlExp = level.LevelForExperience(expLvl);
+            int expLvl = Level.ExperienceForLevel(i);
+            int lvlExp = Level.LevelForExperience(expLvl);
 
             if (lvlExp != i)
             {
@@ -44,19 +44,21 @@ public class TestLevelGrowth : MonoBehaviour
         }
     }
 
-    void VerifySingleExperienceDistribution()
+    /*void VerifySingleExperienceDistribution()
     {
         Party heroes = new Party();
         for (int i = 0; i < 3; i++)
         {
         }
         GameObject actor1 = new GameObject("Hello There" + 1);
-        CharacterSheet sheet1 = actor1.AddComponent<CharacterSheet>();
-        sheet1.level.SetLevel(0 + 1);
+        actor1.AddComponent<Stats>();
+        Level level1 = actor1.AddComponent<Level>();
+        level1.Init(0 + 1);
         heroes.Add(actor1);
         GameObject actor2 = new GameObject("Hello There" + 2);
-        CharacterSheet sheet2 = actor2.AddComponent<CharacterSheet>();
-        sheet2.level.SetLevel(1 + 1);
+        actor2.AddComponent<Stats>();
+        Level level2 = actor2.AddComponent<Level>();
+        level2.Init(1 + 1);
         heroes.Add(actor2);
 
         Debug.Log("===== Before Adding Experience =====");
@@ -69,12 +71,12 @@ public class TestLevelGrowth : MonoBehaviour
         LogParty(heroes);
     }
 
-    void OnExperienceException1(object sender, object e)
+    void OnExperienceException(object sender, object e)
     {
         ValueChangeException vce = e as ValueChangeException;
         Debug.Log(vce.fromValue + "   " + vce.toValue);
         vce.AddModifier(new AddValueModifier(0, 200));
-    }
+    }*/
 
     void VerifySharedExperienceDistribution()
     {
@@ -92,9 +94,10 @@ public class TestLevelGrowth : MonoBehaviour
         for (int i = 0; i < names.Length; i++)
         {
             GameObject actor = new GameObject(names[i]);
+            actor.AddComponent<Stats>();
+            Level level = actor.AddComponent<Level>();
+            level.Init((int)Random.Range(1, 5));
             actor.AddComponent<CharacterSheet>();
-            Level level = actor.GetComponent<Level>();
-            level.SetLevel((int)Random.Range(1, 5));
             heroes.Add(actor);
         }
 
@@ -113,23 +116,25 @@ public class TestLevelGrowth : MonoBehaviour
         for (int i = 0; i < p.Count; i++)
         {
             GameObject actor = p[i];
-            CharacterSheet sheet = actor.GetComponent<CharacterSheet>();
-            Debug.Log(string.Format("Name: {0}\tLevel: {1}\tExp: {2}", actor.name, sheet.level.level, sheet.level.experience));
-            Debug.Log(string.Format("Perception: {0}\tAccuracy: {1}", sheet.stats[StatTypes.Ability_Score_Perception], sheet.stats[StatTypes.Stat_Accuracy]));
-            Debug.Log(string.Format("Mobility: {0}\tDeflection: {1}", sheet.stats[StatTypes.Ability_Score_Mobility], sheet.stats[StatTypes.Stat_Deflection]));
+            Level level = actor.GetComponent<Level>();
+            Stats stats = actor.GetComponent<Stats>();
+            Debug.Log(string.Format("Name: {0}\tLevel: {1}\tExp: {2}", actor.name, level.level, level.experience));
+            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus]));
+            Debug.Log(string.Format("Dexterity: {0}\tDexterityBonus: {1}\tDexterityBonusToAC: {2}\tAC: {3}", stats[StatTypes.Dexterity], stats[StatTypes.Dexterity_Bonus], stats[StatTypes.Dexterity_Bonus_To_AC], stats[StatTypes.AC]));
         }
     }
 
     void OnLevelChange(object sender, object args)
     {
-        Level level = sender as Level;
-        Debug.Log(level.name + " leveled up!");
+        Stats stats = sender as Stats;
+        Debug.Log(stats.name + " leveled up!");
     }
 
     void OnExperienceException(object sender, object args)
     {
-        GameObject actor = (sender as Level).gameObject;
-        ValueChangeException vce = args as ValueChangeException;
+        GameObject actor = (sender as Stats).gameObject;
+        Info<StatTypes, ValueChangeException> info = args as Info<StatTypes, ValueChangeException>;
+        ValueChangeException vce = info.arg1;
         int roll = Random.Range(0, 5);
         switch (roll)
         {

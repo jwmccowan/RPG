@@ -7,7 +7,6 @@ public class BattleState : State
     protected BattleController owner;
     public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
     public StatPanelController statPanelController { get { return owner.statPanelController; } }
-    public AccuracyIndicator accuracyIndicator { get { return owner.accuracyIndicator; } }
     public CameraRig cameraRig { get { return owner.cameraRig; } }
     public Board board { get { return owner.board; } }
     public LevelData levelData { get { return owner.levelData; } }

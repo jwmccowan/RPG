@@ -33,7 +33,7 @@ public class PanelTest : MonoBehaviour
             Tweener t = panel.SetPosition(Center, animated);
             if (t != null)
             {
-                t.easingControl.equation = EasingEquations.EaseInOutBack;
+                t.equation = EasingEquations.EaseInOutBack;
             }
         }
     }

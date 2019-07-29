@@ -12,19 +12,19 @@ public class StatPanel : MonoBehaviour
     public Image avatar;
     public Text nameLabel;
     public Text hpLabel;
-    public Text strLabel;
-    public Text acLabel;
+    public Text accLabel;
+    public Text defLabel;
 
     public void Display(GameObject obj)
     {
         background.sprite = Random.value > .5f ? enemyBackground : allyBackground;
         nameLabel.text = obj.name;
-        Stats stats = obj.GetComponent<Stats>();
-        if (stats)
+        CharacterSheet sheet = obj.GetComponent<CharacterSheet>();
+        if (sheet)
         {
-            hpLabel.text = string.Format("{0} / {1}", stats[StatTypes.HP], stats[StatTypes.Max_HP]);
-            strLabel.text = string.Format("To Hit: {0}", stats[StatTypes.Strength]);
-            acLabel.text = string.Format("AC: {0}", stats[StatTypes.AC]);
+            hpLabel.text = string.Format("{0} / {1}", Mathf.FloorToInt(sheet.hp), Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Max_HP]));
+            accLabel.text = string.Format("Acc.: {0}", Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Accuracy]));
+            defLabel.text = string.Format("Def.: {0}", Mathf.FloorToInt(sheet.stats[StatTypes.Stat_Deflection]));
         }
     }
 }

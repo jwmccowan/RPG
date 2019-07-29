@@ -35,6 +35,9 @@ public class StatusEffectTest : MonoBehaviour
             case 1:
                 Add<BlessStatusEffect>(target, 10);
                 break;
+            case 2:
+                Add<SleepStatusEffect>(target, 2);
+                break;
             default:
                 UnEquipCursedItem(target);
                 break;

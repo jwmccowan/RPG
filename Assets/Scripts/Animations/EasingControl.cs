@@ -4,19 +4,20 @@ using System.Collections;
 
 public class EasingControl : MonoBehaviour 
 {
-    #region Events
-    public const string UpdateEvent = "EasingControl.UpdateEvent";
-    public const string StateChangeEvent = "EasingControl.StateChangeEvent";
-    public const string CompletedEvent = "EasingControl.CompletedEvent";
-    public const string LoopedEvent = "EasingControl.LoopedEvent";
-    public event EventHandler updateEvent;
+	#region Events
+	/*public event EventHandler updateEvent;
 	public event EventHandler stateChangeEvent;
 	public event EventHandler completedEvent;
-	public event EventHandler loopedEvent;
-	#endregion
+	public event EventHandler loopedEvent;*/
 
-	#region Enums
-	public enum TimeType
+    public const string UpdateEvent = "EasingControl.UpdateEvent";
+    public const string StateChangeEvent = "EasingControl.StateChangeEvent";
+    public const string CompleteEvent = "EasingControl.CompletedEvent";
+    public const string LoopEvent = "EasingControl.LoopedEvent";
+    #endregion
+
+    #region Enums
+    public enum TimeType
 	{
 		Normal,
 		Real,
@@ -89,17 +90,20 @@ public class EasingControl : MonoBehaviour
 	
 	public void Pause ()
 	{
-		SetPlayState(PlayState.Paused);
+		if (IsPlaying)
+			SetPlayState(PlayState.Paused);
 	}
 	
 	public void Resume ()
 	{
-		SetPlayState(previousPlayState);
+		if (playState == PlayState.Paused)
+			SetPlayState(previousPlayState);
 	}
 	
 	public void Stop ()
 	{
 		SetPlayState(PlayState.Stopped);
+		previousPlayState = PlayState.Stopped;
 		loops = 0;
 		if (endBehaviour == EndBehaviour.Reset)
 			SeekToBeginning ();
@@ -111,12 +115,7 @@ public class EasingControl : MonoBehaviour
 		float newValue = (endValue - startValue) * currentTime + startValue;
 		currentOffset = newValue - currentValue;
 		currentValue = newValue;
-
-        this.PostNotification(UpdateEvent);
-        if (updateEvent != null)
-        {
-            updateEvent(this, EventArgs.Empty);
-        }
+		OnUpdate();
 	}
 	
 	public void SeekToBeginning ()
@@ -130,24 +129,48 @@ public class EasingControl : MonoBehaviour
 	}
 	#endregion
 
+	#region Protected
+	protected virtual void OnUpdate ()
+	{
+        this.PostNotification(UpdateEvent);
+    }
+
+	protected virtual void OnLoop ()
+	{
+        this.PostNotification(LoopEvent);
+	}
+
+	protected virtual void OnComplete ()
+	{
+        this.PostNotification(CompleteEvent);
+	}
+
+	protected virtual void OnStateChange ()
+	{
+        this.PostNotification(StateChangeEvent);
+	}
+	#endregion
+
 	#region Private
 	void SetPlayState (PlayState target)
 	{
-		if (playState == target)
-			return;
-		
-		previousPlayState = playState;
-		playState = target;
-
-        this.PostNotification(StateChangeEvent);
-        if (stateChangeEvent != null)
-        {
-            stateChangeEvent(this, EventArgs.Empty);
-        }
-		
-		StopCoroutine("Ticker");
-		if (IsPlaying)
-			StartCoroutine("Ticker");
+		if (isActiveAndEnabled)
+		{
+			if (playState == target)
+				return;
+			
+			previousPlayState = playState;
+			playState = target;
+			OnStateChange();
+			StopCoroutine("Ticker");
+			if (IsPlaying)
+				StartCoroutine("Ticker");
+		}
+		else
+		{
+			previousPlayState = target;
+			playState = PlayState.Paused;
+		}
 	}
 
 	IEnumerator Ticker ()
@@ -189,12 +212,7 @@ public class EasingControl : MonoBehaviour
 		float frameValue = (endValue - startValue) * equation (0.0f, 1.0f, currentTime) + startValue;
 		currentOffset = frameValue - currentValue;
 		currentValue = frameValue;
-
-        if (updateEvent != null)
-        {
-            this.PostNotification(UpdateEvent);
-            updateEvent(this, EventArgs.Empty);
-        }
+		OnUpdate();
 		
 		if (finished)
 		{
@@ -206,21 +224,12 @@ public class EasingControl : MonoBehaviour
 				else // PingPong
 					SetPlayState( playState == PlayState.Playing ? PlayState.Reversing : PlayState.Playing );
 
-                this.PostNotification(LoopedEvent);
-                if (loopedEvent != null)
-                {
-                    loopedEvent(this, EventArgs.Empty);
-                }
+				OnLoop();
 			} 
 			else
-            {
-                this.PostNotification(CompletedEvent);
-                if (completedEvent != null)
-                {
-                    completedEvent(this, EventArgs.Empty);
-                }
-
-                Stop();
+			{
+				OnComplete();
+				Stop ();
 			}
 		}
 	}

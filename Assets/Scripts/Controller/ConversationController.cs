@@ -34,7 +34,7 @@ public class ConversationController : MonoBehaviour
 
     private void OnDestroy()
     {
-        this.RemoveListener(OnCompletedEvent, EasingControl.CompletedEvent);
+        this.RemoveListener(OnCompletedEvent, EasingControl.CompleteEvent);
     }
 
     public void Show(ConversationData data)
@@ -86,7 +86,7 @@ public class ConversationController : MonoBehaviour
             }
             
             MovePanel(currentPanel, hide);
-            this.AddListener(OnCompletedEvent, EasingControl.CompletedEvent);
+            this.AddListener(OnCompletedEvent, EasingControl.CompleteEvent, currentPanel.panel.Transition);
             yield return null;
         }
 
@@ -97,16 +97,16 @@ public class ConversationController : MonoBehaviour
     void MovePanel(ConversationPanel obj, string pos)
     {
         transition = obj.panel.SetPosition(pos, true);
-        transition.easingControl.duration = 0.5f;
-        transition.easingControl.equation = EasingEquations.EaseOutQuad;
+        transition.duration = 0.5f;
+        transition.equation = EasingEquations.EaseOutQuad;
     }
 
     void OnCompletedEvent(object sender, object e)
     {
-        if ((object)sender == transition.easingControl)
+        if ((object)sender == transition)
         {
             conversation.MoveNext();
-            this.RemoveListener(OnCompletedEvent, EasingControl.CompletedEvent);
+            this.RemoveListener(OnCompletedEvent, EasingControl.CompleteEvent);
         }
     }
 }

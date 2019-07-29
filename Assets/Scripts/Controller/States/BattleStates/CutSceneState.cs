@@ -11,7 +11,7 @@ public class CutSceneState : BattleState
     {
         base.Awake();
         conversationController = owner.GetComponentInChildren<ConversationController>();
-        data = Resources.Load<ConversationData>("Conversations/TestConversation");
+        data = Resources.Load<ConversationData>("Conversations/IntroConversation");
     }
 
     protected override void OnDestroy()

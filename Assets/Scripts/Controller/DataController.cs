@@ -7,7 +7,8 @@ public class DataController
 {
     public static Dictionary<StatTypes, StatTypes> abilityScoresBonuses = new Dictionary<StatTypes, StatTypes>();
     public static Dictionary<StatTypes, List<StatTypes>> derivedStats = new Dictionary<StatTypes, List<StatTypes>>();
-    public static Dictionary<ClassType, Classes> classes = new Dictionary<ClassType, Classes>();
+    //TOREMOVE:
+    //public static Dictionary<ClassType, Classes> classes = new Dictionary<ClassType, Classes>();
     public static DataController instance = new DataController();
     public DatabaseService data;
 
@@ -19,7 +20,8 @@ public class DataController
             complete?.Invoke();
             GetAbilityScoreEntries();
             GetDerivedStats();
-            GetClasses();
+            // TOREMOVE:
+            //GetClasses();
         }); 
     }
 
@@ -45,7 +47,7 @@ public class DataController
         foreach(DerivedStat ds in derivedStatsTable)
         {
             StatTypes derivedFrom = (StatTypes)ds.derived_from;
-            StatTypes baseStat = (StatTypes)ds.base_stat;
+            StatTypes baseStat = (StatTypes)ds.stat_id;
             if (!derivedStats.ContainsKey(derivedFrom))
             {
                 derivedStats[derivedFrom] = new List<StatTypes>();
@@ -55,7 +57,8 @@ public class DataController
         }
     }
 
-    void GetClasses()
+    // TOREMOVE:
+    /*void GetClasses()
     {
         classes.Clear();
         var classesTable = data.connection.Table<Classes>();
@@ -63,7 +66,7 @@ public class DataController
         {
             classes[(ClassType)c.class_id] = c;
         }
-    }
+    }*/
 
     private DataController()
     {
@@ -79,7 +82,7 @@ public class DataController
     {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-        public int base_stat { get; set; }
+        public int stat_id { get; set; }
         public int derived_from { get; set; }
     }
 
@@ -91,7 +94,9 @@ public class DataController
         public int bonus_id { get; set; }
     }
 
-    public class Classes
+    // This should be deleted before checkin.
+    // Only keeping for reference for when we replace
+    /*public class Classes
     {
         [PrimaryKey, AutoIncrement]
         public int class_id { get; set; }
@@ -102,5 +107,5 @@ public class DataController
         public int reflex_growth_rate { get; set; }
         public int will_growth_rate { get; set; }
         public int skill_ranks { get; set; }
-    }
+    }*/
 }

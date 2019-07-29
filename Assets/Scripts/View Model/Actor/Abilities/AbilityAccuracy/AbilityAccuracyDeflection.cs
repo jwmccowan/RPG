@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AccuracyDeflection : AccuracyDefense
+public class AbilityAccuracyDeflection : AbilityAccuracyDefense
 {
     protected override int GetDefense(Unit unit)
     {

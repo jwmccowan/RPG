@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AccuracyFull : Accuracy
+public class AbilityAccuracyFull : AbilityAccuracy
 {
     public override int Calculate(Tile tile)
     {

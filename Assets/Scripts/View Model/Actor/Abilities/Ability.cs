@@ -21,8 +21,8 @@ public class Ability : MonoBehaviour
         get { return gameObject.GetComponentsInChildren<AbilityEffectTarget>(); }
     }
 
-    public Accuracy accuracy
+    public AbilityAccuracy accuracy
     {
-        get { return gameObject.GetComponent<Accuracy>(); }
+        get { return gameObject.GetComponent<AbilityAccuracy>(); }
     }
 }

@@ -113,7 +113,7 @@ public class ConfirmAbilityTargetState : BattleState
 
     int CalculateHitRate()
     {
-        Accuracy acc = turn.ability.accuracy;
+        AbilityAccuracy acc = turn.ability.accuracy;
         return 50 + acc.Calculate(turn.targets[index]);
     }
 

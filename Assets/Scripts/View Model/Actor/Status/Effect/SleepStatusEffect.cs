@@ -10,7 +10,7 @@ public class SleepStatusEffect : StatusEffect
     {
         unit = GetComponentInParent<Unit>();
         this.AddListener(OnTurnBegan, InitiativeController.TurnBeganNotification, unit);
-        this.AddListener(OnStatusCheck, Accuracy.StatusCheckNotification, unit);
+        this.AddListener(OnStatusCheck, AbilityAccuracy.StatusCheckNotification, unit);
     }
 
     void OnDisable()

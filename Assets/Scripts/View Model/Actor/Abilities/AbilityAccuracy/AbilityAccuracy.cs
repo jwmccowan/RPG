@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Accuracy : MonoBehaviour
+public abstract class AbilityAccuracy : MonoBehaviour
 {
     #region notifications
     public const string AutomaticHitNotification = "HitRate.AutomaticHitNotifiacation";

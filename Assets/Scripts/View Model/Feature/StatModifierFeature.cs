@@ -6,20 +6,22 @@ public class StatModifierFeature : Feature
 {
     #region fields
     public StatTypes statType;
-    public int value;
+    public float value;
 
-    Stats stats { get { return target.GetComponentInParent<Stats>(); } }
+    CharacterSheet sheet { get { return target.GetComponentInParent<CharacterSheet>(); } }
     #endregion
 
     #region protected
     protected override void OnApply()
     {
-        stats[statType] += value;
+        Stat stat = sheet.stats.GetStat<Stat>(statType);
+        stat.statBaseValue += value;
     }
 
     protected override void OnRemove()
     {
-        stats[statType] -= value;
+        Stat stat = sheet.stats.GetStat<Stat>(statType);
+        stat.statBaseValue -= value;
     }
     #endregion
 }

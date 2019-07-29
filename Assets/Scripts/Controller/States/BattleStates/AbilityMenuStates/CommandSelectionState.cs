@@ -27,12 +27,16 @@ public class CommandSelectionState : BaseAbilityMenuState
         switch (abilityMenuPanelController.selection)
         {
             case 0:
-                owner.ChangeState<MoveTargetState>();
+                turn.ability = turn.actor.GetComponentInChildren<AbilityRange>().gameObject;
+                owner.ChangeState<AbilityTargetState>();
                 break;
             case 1:
-                owner.ChangeState<CategorySelectionState>();
+                owner.ChangeState<MoveTargetState>();
                 break;
             case 2:
+                owner.ChangeState<CategorySelectionState>();
+                break;
+            case 3:
                 owner.ChangeState<SelectUnitState>();
                 break;
         }
@@ -44,13 +48,15 @@ public class CommandSelectionState : BaseAbilityMenuState
         {
             menuTitle = "Command";
             menuOptions = new List<string>(3);
+            menuOptions.Add("Attack");
             menuOptions.Add("Move");
-            menuOptions.Add("Action");
+            menuOptions.Add("Ability");
             menuOptions.Add("Hold");
         }
 
         abilityMenuPanelController.Show(menuTitle, menuOptions);
-        abilityMenuPanelController.SetLocked(0, turn.usedMoveAction);
-        abilityMenuPanelController.SetLocked(1, turn.usedMoveAction && turn.usedStandardAction && turn.usedSwiftAction);
+        abilityMenuPanelController.SetLocked(0, turn.usedStandardAction);
+        abilityMenuPanelController.SetLocked(1, turn.usedMoveAction);
+        abilityMenuPanelController.SetLocked(2, turn.usedMoveAction);
     }
 }

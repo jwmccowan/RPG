@@ -5,7 +5,7 @@ using UnityEngine;
 public class InitiativeController : MonoBehaviour
 {
     #region notifications
-    public  string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
+    public const string InitiativeRollNotification = "InitiativeController.InitiativeRollNotification";
     public const string RoundBeganNotification = "InitiativeController.RoundBeganNotification";
     public const string TurnBeganNotification = "InitiativeController.TurnBeganNotification";
     public const string TurnEndedNotification = "InitiativeController.TurnEndedNotification";
@@ -39,7 +39,7 @@ public class InitiativeController : MonoBehaviour
 
             for (int i = units.Count - 1; i >= 0; i--)
             {
-                if (CanTakeTurn(units[i]))
+                if (CanTakeTurn(units[i])) // maybe we need to do a "Cooper is sleeping" animation here or something.
                 {
                     bc.turn.Change(units[i]);
                     yield return units[i];

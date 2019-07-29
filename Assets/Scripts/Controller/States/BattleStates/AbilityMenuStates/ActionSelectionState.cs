@@ -26,7 +26,7 @@ public class ActionSelectionState : BaseAbilityMenuState
 
     protected override void Confirm()
     {
-        turn.ability = turn.actor.GetComponentInChildren<AbilityRange>().gameObject;
+        turn.Act(actionType);
         owner.ChangeState<AbilityTargetState>();
     }
 
@@ -42,33 +42,19 @@ public class ActionSelectionState : BaseAbilityMenuState
         switch (actionType)
         {
             case ActionType.StandardAction:
-                menuTitle = "Standard";
-                menuOptions.Add("Attack");
-                menuOptions.Add("Magic Missile");
-                menuOptions.Add("Bless");
-                menuOptions.Add("Shield Bash");
+                menuTitle = "Bending Abilities";
+                menuOptions.Add("Mass Heal");
+                menuOptions.Add("Direct Heal");
+                menuOptions.Add("Poison Spores");
+                menuOptions.Add("Growth");
                 //And then lock based on the character's situation
                 abilityMenuPanelController.SetLocked(1, true);
                 abilityMenuPanelController.SetLocked(2, true);
                 break;
-            case ActionType.MoveAction:
-                menuTitle = "Move";
-                menuOptions.Add("Draw Weapon");
-                menuOptions.Add("Open Door");
-                menuOptions.Add("Move");
-                break;
             case ActionType.FullRoundAction:
-                menuTitle = "Full Round";
-                menuOptions.Add("Full Attack");
-                menuOptions.Add("Summon Monster");
-                menuOptions.Add("Run");
-                break;
-            case ActionType.SwiftAction:
-                menuTitle = "Swift";
-                //Gettig lazy but this is all placeholder anyways
-                menuOptions.Add("Swift Action");
-                menuOptions.Add("Swift Action");
-                menuOptions.Add("Swift Action");
+                menuTitle = "Special Attacks";
+                menuOptions.Add("Solar Beam");
+                menuOptions.Add("Trample");
                 break;
             default:
                 Debug.LogError("Action Type not supported.");

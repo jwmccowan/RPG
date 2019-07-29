@@ -43,18 +43,20 @@ public class ActionSelectionState : BaseAbilityMenuState
         {
             case ActionType.StandardAction:
                 menuTitle = "Bending Abilities";
-                menuOptions.Add("Mass Heal");
-                menuOptions.Add("Direct Heal");
-                menuOptions.Add("Poison Spores");
-                menuOptions.Add("Growth");
+                menuOptions.Add("Liquid Healing");
+                menuOptions.Add("Rock Throw");
+                menuOptions.Add("Wind Blast");
+                menuOptions.Add("Flame Strike");
                 //And then lock based on the character's situation
                 abilityMenuPanelController.SetLocked(1, true);
                 abilityMenuPanelController.SetLocked(2, true);
                 break;
             case ActionType.FullRoundAction:
                 menuTitle = "Special Attacks";
-                menuOptions.Add("Solar Beam");
-                menuOptions.Add("Trample");
+                menuOptions.Add("Rocky Shell");
+                menuOptions.Add("Ignite");
+                menuOptions.Add("Typhoon");
+                menuOptions.Add("Resurrect");
                 break;
             default:
                 Debug.LogError("Action Type not supported.");

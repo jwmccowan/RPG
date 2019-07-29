@@ -6,6 +6,7 @@ public class BattleController : StateMachine
 {
     public AbilityMenuPanelController abilityMenuPanelController;
     public StatPanelController statPanelController;
+    public AccuracyIndicator accuracyIndicator;
     public CameraRig cameraRig;
     public Board board;
     public LevelData levelData;

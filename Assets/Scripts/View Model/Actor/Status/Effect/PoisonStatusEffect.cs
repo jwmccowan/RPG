@@ -21,8 +21,9 @@ public class PoisonStatusEffect : StatusEffect
     void OnTurnBegan(object sender, object e)
     {
         CharacterSheet sheet = GetComponentInParent<CharacterSheet>();
-        int damage = roll.NewRoll();
-        Debug.Log(string.Format("Doing {0} points of poison damage", damage));
-        sheet.stats.SetValue(StatTypes.HP, sheet.stats[StatTypes.HP] - damage, false);
+        roll.NewRoll();
+        Debug.Log(string.Format("Doing {0} points of poison damage", roll.value));
+        sheet.hp -= roll.value;
+        //sheet.stats.SetValue(StatTypes.HP, sheet.stats[StatTypes.HP] - damage, false);
     }
 }

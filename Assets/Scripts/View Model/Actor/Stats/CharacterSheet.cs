@@ -1,55 +1,57 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 
 public class CharacterSheet : MonoBehaviour
 {
     #region fields
-    public Stats stats;
-    AbilityScores abilityScores;
-    DerivedStats derivedStats;
-    BonusHandler bonusHandler;
-    public Health health;
+    public StatCollection stats;
     public Level level;
+
+    public float hp
+    {
+        get
+        {
+            return stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).currentValue;            
+        }
+        set
+        {
+            stats.GetStat<StatRange>(StatTypes.Stat_Max_HP).currentValue = value;
+        }
+    }
     #endregion
 
     #region MonoBehaviour
     void OnEnable()
     {
-        Init();
     }
 
     void Awake()
     {
-        stats = gameObject.AddComponent<Stats>();
-        abilityScores = gameObject.AddComponent<AbilityScores>();
-        derivedStats = gameObject.AddComponent<DerivedStats>();
-        bonusHandler = gameObject.AddComponent<BonusHandler>();
+        stats = gameObject.AddComponent<DefaultStats>();
         level = gameObject.AddComponent<Level>();
-        health = gameObject.AddComponent<Health>();
+        level.Init(1);
+
+        this.AddListener(OnCanLevelUp, Level.CanLevelUp, level);
+        this.AddListener(OnLevelUp, Level.LevelDidChange, level);
     }
     #endregion
 
     #region events
+    void OnCanLevelUp(object sender, object e)
+    {
+        int i = (int)e;
+        level.SetLevel(i);
+    }
+    void OnLevelUp(object sender, object e)
+    {
+        LevelChangeArgs args = e as LevelChangeArgs;
+        stats.ScaleStatCollection(args.newLevel);
+    }
     #endregion
 
     #region public
-    public void AddBonus(Bonus bonus)
-    {
-        bonusHandler.AddBonus(bonus);
-    }
-
-    public void RemoveBonus(Bonus bonus)
-    {
-        bonusHandler.RemoveBonus(bonus);
-    }
     #endregion
 
     #region private
-    void Init()
-    {
-        stats[StatTypes.AC] += 10;
-    }
     #endregion
 }

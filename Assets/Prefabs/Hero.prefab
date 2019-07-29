@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 395733658043857299}
   - component: {fileID: 3477023620592447338}
   - component: {fileID: 6917347898016024398}
+  - component: {fileID: 4055975749788386207}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -433,3 +434,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accuracyBonus: 5
+--- !u!114 &4055975749788386207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411700624145615007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6496140532cc0bc44883cb5e3ce576fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 0
